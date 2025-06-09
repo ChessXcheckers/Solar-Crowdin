@@ -13,13 +13,15 @@ const ChatBot = () => {
 
     setMessages(prev => [...prev, { text: inputValue, isBot: false }]);
     
-    // Simulate bot response
+    // Simulate bot response with more relevant answers
     setTimeout(() => {
       const responses = [
-        "Thanks for your question! The $SOLAR presale runs until September 10, 2025. 🚀",
-        "You can purchase $SOLAR tokens using ETH, BNB, USDT, or USDC. ☀️",
-        "Our solar AI technology uses machine learning to optimize energy production. 🧠",
-        "The current price is $0.063, with a listing price of $0.14. 💰"
+        "The $SOLAR presale is currently in Phase 1 at $0.063 per token. The listing price will be $0.14, offering a 122% potential gain! 🚀",
+        "You can purchase $SOLAR tokens using ETH, BNB, USDT, or USDC. Simply connect your wallet and choose your payment method. ☀️",
+        "Our solar AI technology uses machine learning to optimize energy production and distribution in real-time. 🧠",
+        "The current presale has raised over $1.34M with 142.7M tokens sold. Join over 2,800 active investors! 💰",
+        "Token vesting starts after TGE (Token Generation Event) scheduled for Q1 2025, with a 6-month gradual release. 📅",
+        "Our smart contract will be fully audited before launch. You can view the contract address once it's deployed. 🔒"
       ];
       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
       setMessages(prev => [...prev, { text: randomResponse, isBot: true }]);
@@ -31,15 +33,16 @@ const ChatBot = () => {
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {isOpen ? (
-        <div className="starburst-border rounded-lg w-80 h-96">
+        <div className="starburst-border rounded-lg w-80 h-96 cosmic-glow">
           <div className="bg-solar-dark rounded-lg h-full flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-solar-navy">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-solar-gold to-solar-orange rounded-full flex items-center justify-center text-sm">
+                <div className="w-8 h-8 bg-gradient-to-r from-solar-gold to-solar-orange rounded-full flex items-center justify-center text-sm animate-starburst">
                   ☀️
                 </div>
-                <span className="font-semibold text-solar-warm-white">SolarBot</span>
+                <span className="font-semibold text-solar-warm-white">SolarBot AI</span>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               </div>
               <button 
                 onClick={() => setIsOpen(false)}
@@ -55,7 +58,7 @@ const ChatBot = () => {
                 <div key={index} className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}>
                   <div className={`max-w-xs p-3 rounded-lg ${
                     message.isBot 
-                      ? 'bg-solar-navy text-solar-warm-white' 
+                      ? 'bg-solar-navy text-solar-warm-white starburst-border' 
                       : 'bg-solar-orange text-solar-warm-white'
                   }`}>
                     {message.text}
@@ -77,7 +80,7 @@ const ChatBot = () => {
                 />
                 <button 
                   onClick={handleSendMessage}
-                  className="solar-button px-3 py-2"
+                  className="solar-button px-3 py-2 cosmic-glow"
                 >
                   🚀
                 </button>
@@ -88,7 +91,7 @@ const ChatBot = () => {
       ) : (
         <button 
           onClick={() => setIsOpen(true)}
-          className="solar-button w-14 h-14 rounded-full cosmic-glow flex items-center justify-center text-2xl"
+          className="solar-button w-16 h-16 rounded-full cosmic-glow flex items-center justify-center text-2xl animate-starburst"
         >
           ☀️
         </button>
