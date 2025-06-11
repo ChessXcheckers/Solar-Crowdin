@@ -1,73 +1,92 @@
-# Welcome to your Lovable project
+# SolarCrowdIn
 
-## Project info
+A decentralized platform for solar energy investment and trading, integrating AI analytics for market insights.
 
-**URL**: https://lovable.dev/projects/1bb7314c-a24d-46ff-bf64-ab2862951bf8
+## Features
 
-## How can I edit this code?
+- Solar Farm Fractionalization
+- Carbon Credit Trading
+- Energy Trading
+- AI-powered Market Analytics
+- Smart Contract Integration
 
-There are several ways of editing your application.
+## Prerequisites
 
-**Use Lovable**
+- Node.js (v16+)
+- npm or yarn
+- Hardhat
+- MetaMask or similar Web3 wallet
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1bb7314c-a24d-46ff-bf64-ab2862951bf8) and start prompting.
+## Installation
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/solarcrowdin.git
+cd solarcrowdin
 ```
 
-**Edit a file directly in GitHub**
+2. Install dependencies:
+```bash
+npm install
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+3. Create a `.env` file in the root directory with the following variables:
+```env
+PRIVATE_KEY=your_wallet_private_key
+INFURA_API_KEY=your_infura_api_key
+MARKET_API_URL=your_market_data_api_url
+MARKET_API_KEY=your_market_data_api_key
+```
 
-**Use GitHub Codespaces**
+## Smart Contracts
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+The platform consists of four main smart contracts:
 
-## What technologies are used for this project?
+1. `SolarCrowdinToken.sol`: ERC20 token for platform transactions
+2. `SolarFarmFractionalization.sol`: Manages solar farm investments
+3. `CarbonCreditTrading.sol`: Handles carbon credit trading
+4. `EnergyTrading.sol`: Facilitates energy trading
 
-This project is built with:
+## Testing
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Run the test suite:
+```bash
+npm test
+```
 
-## How can I deploy this project?
+## Deployment
 
-Simply open [Lovable](https://lovable.dev/projects/1bb7314c-a24d-46ff-bf64-ab2862951bf8) and click on Share -> Publish.
+1. Compile contracts:
+```bash
+npm run compile
+```
 
-## Can I connect a custom domain to my Lovable project?
+2. Deploy to network:
+```bash
+npm run deploy -- <network>
+```
 
-Yes, you can!
+## AI Analytics
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+The platform includes AI-powered analytics for market insights. Run the analytics script:
+```bash
+npm run analytics -- <network>
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Security
+
+- All contracts are audited and follow OpenZeppelin standards
+- Access control implemented for sensitive operations
+- Regular security updates and monitoring
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## License
+
+MIT License - see LICENSE file for details

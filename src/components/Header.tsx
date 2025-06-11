@@ -1,14 +1,6 @@
-
-import { useState } from 'react';
+import WalletConnect from './WalletConnect';
 
 const Header = () => {
-  const [isConnected, setIsConnected] = useState(false);
-
-  const handleConnectWallet = () => {
-    // Placeholder for wallet connection
-    setIsConnected(!isConnected);
-  };
-
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-sm">
       <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
@@ -31,12 +23,7 @@ const Header = () => {
           </a>
         </nav>
 
-        <button 
-          onClick={handleConnectWallet}
-          className="solar-button cosmic-glow"
-        >
-          {isConnected ? '🔗 Connected' : '🌟 Connect Wallet'}
-        </button>
+        <WalletConnect />
       </div>
     </header>
   );
