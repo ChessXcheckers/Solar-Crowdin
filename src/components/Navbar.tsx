@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
@@ -29,6 +30,23 @@ export function Navbar() {
 
   const isConnected = !!address;
 
+  const handleConnect = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    try {
+      await connect('metamask');
+    } catch (error) {
+      console.error('Failed to connect wallet:', error);
+    }
+  };
+
+  const handleDisconnect = async () => {
+    try {
+      await disconnect();
+    } catch (error) {
+      console.error('Failed to disconnect wallet:', error);
+    }
+  };
+
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
@@ -40,17 +58,12 @@ export function Navbar() {
           {/* Logo */}
           <div className="flex-shrink-0">
             <a href="#" className="flex items-center">
-              <img
-                src="/logo.svg"
-                alt="Solar Crowdin"
-                className="h-8 w-auto"
-              />
               <span
-                className={`ml-2 text-xl font-bold ${
+                className={`text-xl font-bold ${
                   isScrolled ? 'text-gray-900' : 'text-white'
                 }`}
               >
-                Solar Crowdin
+                Solar Crowding
               </span>
             </a>
           </div>
@@ -61,10 +74,10 @@ export function Navbar() {
               <a
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-medium transition-colors ${
+                className={`text-sm font-medium transition-colors duration-200 ${
                   isScrolled
-                    ? 'text-gray-600 hover:text-gray-900'
-                    : 'text-gray-200 hover:text-white'
+                    ? 'text-gray-700 hover:text-gray-900'
+                    : 'text-white hover:text-gray-300'
                 }`}
               >
                 {item.name}
@@ -73,100 +86,93 @@ export function Navbar() {
           </div>
 
           {/* Wallet Connection */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:flex items-center space-x-4">
             {isConnected ? (
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-3">
                 <span className="text-sm text-gray-600">
-                  {`${address.slice(0, 6)}...${address.slice(-4)}`}
+                  {address?.slice(0, 6)}...{address?.slice(-4)}
                 </span>
                 <button
-                  onClick={disconnect}
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                  onClick={handleDisconnect}
+                  className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 transition-colors duration-200"
                 >
                   Disconnect
                 </button>
               </div>
             ) : (
               <button
-                onClick={connect}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                onClick={handleConnect}
+                className="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200"
               >
                 Connect Wallet
               </button>
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`inline-flex items-center justify-center p-2 rounded-md ${
-                isScrolled
-                  ? 'text-gray-600 hover:text-gray-900'
-                  : 'text-gray-200 hover:text-white'
+              className={`p-2 rounded-md ${
+                isScrolled ? 'text-gray-900' : 'text-white'
               }`}
             >
-              <span className="sr-only">Open main menu</span>
-              {isOpen ? (
-                <FiX className="block h-6 w-6" />
-              ) : (
-                <FiMenu className="block h-6 w-6" />
-              )}
+              {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Navigation */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white"
+            className="md:hidden bg-white shadow-lg"
           >
-            <div className="px-2 pt-2 pb-3 space-y-1">
+            <div className="px-4 py-6 space-y-4">
               {NAV_ITEMS.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                  className="block text-gray-700 hover:text-gray-900 text-sm font-medium"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}
                 </a>
               ))}
-              {isConnected ? (
-                <div className="px-3 py-2">
-                  <span className="block text-sm text-gray-600 mb-2">
-                    {`${address.slice(0, 6)}...${address.slice(-4)}`}
-                  </span>
+              
+              {/* Mobile Wallet Connection */}
+              <div className="pt-4 border-t border-gray-200">
+                {isConnected ? (
+                  <div className="space-y-3">
+                    <div className="text-sm text-gray-600">
+                      Connected: {address?.slice(0, 6)}...{address?.slice(-4)}
+                    </div>
+                    <button
+                      onClick={handleDisconnect}
+                      className="w-full bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 transition-colors duration-200"
+                    >
+                      Disconnect
+                    </button>
+                  </div>
+                ) : (
                   <button
-                    onClick={() => {
-                      disconnect();
-                      setIsOpen(false);
-                    }}
-                    className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
+                    onClick={handleConnect}
+                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200"
                   >
-                    Disconnect
+                    Connect Wallet
                   </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => {
-                    connect();
-                    setIsOpen(false);
-                  }}
-                  className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors"
-                >
-                  Connect Wallet
-                </button>
-              )}
+                )}
+              </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
     </nav>
   );
-} 
+}
+
+export default Navbar;

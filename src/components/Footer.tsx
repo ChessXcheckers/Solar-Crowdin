@@ -1,105 +1,64 @@
-import { FiGithub, FiTwitter, FiLinkedin, FiDiscord } from 'react-icons/fi';
 
-const FOOTER_LINKS = {
-  product: [
-    { name: 'Features', href: '#features' },
-    { name: 'Roadmap', href: '#roadmap' },
-    { name: 'Tokenomics', href: '#tokenomics' },
-    { name: 'Whitepaper', href: '/whitepaper.pdf' }
-  ],
-  company: [
-    { name: 'About', href: '#about' },
-    { name: 'Team', href: '#team' },
-    { name: 'Careers', href: '#careers' },
-    { name: 'Contact', href: '#contact' }
-  ],
-  resources: [
-    { name: 'Documentation', href: '/docs' },
-    { name: 'Blog', href: '/blog' },
-    { name: 'FAQ', href: '#faq' },
-    { name: 'Support', href: '/support' }
-  ],
-  legal: [
-    { name: 'Privacy Policy', href: '/privacy' },
-    { name: 'Terms of Service', href: '/terms' },
-    { name: 'Cookie Policy', href: '/cookies' }
-  ]
-};
+import { FiTwitter, FiGithub, FiMail } from 'react-icons/fi';
 
-const SOCIAL_LINKS = [
-  { name: 'GitHub', icon: FiGithub, href: 'https://github.com/solarcrowdin' },
-  { name: 'Twitter', icon: FiTwitter, href: 'https://twitter.com/solarcrowdin' },
-  { name: 'LinkedIn', icon: FiLinkedin, href: 'https://linkedin.com/company/solarcrowdin' },
-  { name: 'Discord', icon: FiDiscord, href: 'https://discord.gg/solarcrowdin' }
-];
-
-export function Footer() {
+const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
-          {/* Logo and Description */}
-          <div className="col-span-2 lg:col-span-1">
-            <img
-              src="/logo.svg"
-              alt="Solar Crowdin"
-              className="h-8 w-auto mb-4"
-            />
-            <p className="text-sm text-gray-400">
-              Revolutionizing renewable energy investment through blockchain technology.
+    <footer className="bg-solar-dark py-12">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <h3 className="text-xl font-bold text-solar-warm-white mb-4">
+              <span className="nebulae-text">Solar</span> Crowding
+            </h3>
+            <p className="text-solar-grey">
+              Powering the future with solar-driven AI technology.
             </p>
           </div>
-
-          {/* Links */}
-          {Object.entries(FOOTER_LINKS).map(([category, links]) => (
-            <div key={category}>
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-4">
-                {category}
-              </h3>
-              <ul className="space-y-3">
-                {links.map((link) => (
-                  <li key={link.name}>
-                    <a
-                      href={link.href}
-                      className="text-sm text-gray-400 hover:text-white transition-colors"
-                    >
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+          
+          <div>
+            <h4 className="text-lg font-semibold text-solar-warm-white mb-4">Quick Links</h4>
+            <ul className="space-y-2">
+              <li><a href="#features" className="text-solar-grey hover:text-solar-gold transition-colors">Features</a></li>
+              <li><a href="#tokenomics" className="text-solar-grey hover:text-solar-gold transition-colors">Tokenomics</a></li>
+              <li><a href="#roadmap" className="text-solar-grey hover:text-solar-gold transition-colors">Roadmap</a></li>
+              <li><a href="#team" className="text-solar-grey hover:text-solar-gold transition-colors">Team</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="text-lg font-semibold text-solar-warm-white mb-4">Resources</h4>
+            <ul className="space-y-2">
+              <li><a href="#" className="text-solar-grey hover:text-solar-gold transition-colors">Whitepaper</a></li>
+              <li><a href="#" className="text-solar-grey hover:text-solar-gold transition-colors">Documentation</a></li>
+              <li><a href="#faq" className="text-solar-grey hover:text-solar-gold transition-colors">FAQ</a></li>
+              <li><a href="#" className="text-solar-grey hover:text-solar-gold transition-colors">Support</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h4 className="text-lg font-semibold text-solar-warm-white mb-4">Connect</h4>
+            <div className="flex space-x-4">
+              <a href="#" className="text-solar-grey hover:text-solar-gold transition-colors">
+                <FiTwitter size={24} />
+              </a>
+              <a href="#" className="text-solar-grey hover:text-solar-gold transition-colors">
+                <FiGithub size={24} />
+              </a>
+              <a href="#" className="text-solar-grey hover:text-solar-gold transition-colors">
+                <FiMail size={24} />
+              </a>
             </div>
-          ))}
+          </div>
         </div>
-
-        {/* Bottom Section */}
-        <div className="mt-12 pt-8 border-t border-gray-800">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            {/* Copyright */}
-            <p className="text-sm text-gray-400">
-              © {new Date().getFullYear()} Solar Crowdin. All rights reserved.
-            </p>
-
-            {/* Social Links */}
-            <div className="flex space-x-6 mt-4 md:mt-0">
-              {SOCIAL_LINKS.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  <span className="sr-only">{link.name}</span>
-                  <link.icon className="h-6 w-6" />
-                </a>
-              ))}
-            </div>
-          </div>
+        
+        <div className="border-t border-solar-grey/20 mt-8 pt-8 text-center">
+          <p className="text-solar-grey">
+            © 2024 Solar Crowding. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

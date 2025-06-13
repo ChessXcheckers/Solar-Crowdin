@@ -1,3 +1,4 @@
+
 import { Toaster as HotToaster } from 'react-hot-toast';
 
 export function Toaster() {
@@ -12,14 +13,16 @@ export function Toaster() {
         },
         success: {
           duration: 3000,
-          theme: {
-            primary: '#4aed88',
+          style: {
+            background: '#4aed88',
+            color: '#fff',
           },
         },
         error: {
           duration: 4000,
-          theme: {
-            primary: '#ff4b4b',
+          style: {
+            background: '#ff4b4b',
+            color: '#fff',
           },
         },
       }}
