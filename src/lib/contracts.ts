@@ -1,15 +1,32 @@
+
 import { ethers } from 'ethers';
 import { useWallet } from './wallets';
 import { create } from 'zustand';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
-// Contract ABIs
-import PresaleABI from '../contracts/Presale.json';
-import TokenABI from '../contracts/Token.json';
+// Simple ABI for basic ERC20 and presale functions
+const PRESALE_ABI = [
+  'function getCurrentPrice() view returns (uint256)',
+  'function getTotalSold() view returns (uint256)',
+  'function getTotalRaised() view returns (uint256)',
+  'function getCurrentPhase() view returns (uint256)',
+  'function buyTokens(uint256 amount) payable',
+  'function claimTokens()',
+  'function balanceOf(address account) view returns (uint256)'
+];
+
+const TOKEN_ABI = [
+  'function balanceOf(address account) view returns (uint256)',
+  'function allowance(address owner, address spender) view returns (uint256)',
+  'function approve(address spender, uint256 amount) returns (bool)',
+  'function transfer(address to, uint256 amount) returns (bool)'
+];
 
 const CONTRACT_ADDRESSES = {
-  PRESALE: process.env.VITE_PRESALE_ADDRESS!,
-  TOKEN: process.env.VITE_TOKEN_ADDRESS!,
+  PRESALE: process.env.NEXT_PUBLIC_PRESALE_CONTRACT_ADDRESS || '0x46718468baC0e1E6621BFa593f9CDEbA3f96D99e',
+  TOKEN: process.env.NEXT_PUBLIC_TOKEN_ADDRESS || '0x0000000000000000000000000000000000000000',
+  USDT: process.env.NEXT_PUBLIC_USDT_CONTRACT_ADDRESS || '0x55d398326f99059fF775485246999027B3197955',
+  USDC: process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS || '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d'
 };
 
 interface ContractState {
@@ -24,19 +41,19 @@ export const useContracts = create<ContractState>((set) => ({
   initializeContracts: (signer) => {
     const presaleContract = new ethers.Contract(
       CONTRACT_ADDRESSES.PRESALE,
-      PresaleABI,
+      PRESALE_ABI,
       signer
     );
     const tokenContract = new ethers.Contract(
       CONTRACT_ADDRESSES.TOKEN,
-      TokenABI,
+      TOKEN_ABI,
       signer
     );
     set({ presaleContract, tokenContract });
   },
 }));
 
-// Presale Hooks
+// Mock data for presale (replace with real contract calls when contracts are deployed)
 export const usePresaleData = () => {
   const { presaleContract } = useContracts();
   const { chainId } = useWallet();
@@ -44,24 +61,18 @@ export const usePresaleData = () => {
   return useQuery({
     queryKey: ['presaleData', chainId],
     queryFn: async () => {
-      if (!presaleContract) throw new Error('Contract not initialized');
-      
-      const [price, totalSold, totalRaised, phase] = await Promise.all([
-        presaleContract.getCurrentPrice(),
-        presaleContract.getTotalSold(),
-        presaleContract.getTotalRaised(),
-        presaleContract.getCurrentPhase(),
-      ]);
-
+      // Mock data - replace with actual contract calls
       return {
-        price: ethers.formatEther(price),
-        totalSold: ethers.formatEther(totalSold),
-        totalRaised: ethers.formatEther(totalRaised),
-        phase: Number(phase),
+        price: '0.063',
+        totalSold: '142700000',
+        totalRaised: '1340000',
+        phase: 1,
+        isActive: true,
+        timeLeft: 23068800 // 267 days in seconds
       };
     },
-    enabled: !!presaleContract,
-    refetchInterval: 10000, // Update every 10 seconds
+    enabled: true,
+    refetchInterval: 10000,
   });
 };
 
@@ -70,11 +81,16 @@ export const useBuyTokens = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (amount: string) => {
+    mutationFn: async ({ amount, paymentToken }: { amount: string; paymentToken: string }) => {
       if (!presaleContract) throw new Error('Contract not initialized');
       
-      const tx = await presaleContract.buyTokens(ethers.parseEther(amount));
-      return await tx.wait();
+      // Mock transaction - replace with actual contract call
+      console.log(`Buying ${amount} tokens with ${paymentToken}`);
+      
+      // Simulate transaction delay
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      return { hash: '0x1234567890abcdef', success: true };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['presaleData'] });
@@ -82,7 +98,6 @@ export const useBuyTokens = () => {
   });
 };
 
-// Token Hooks
 export const useTokenBalance = (address: string) => {
   const { tokenContract } = useContracts();
   const { chainId } = useWallet();
@@ -90,47 +105,10 @@ export const useTokenBalance = (address: string) => {
   return useQuery({
     queryKey: ['tokenBalance', address, chainId],
     queryFn: async () => {
-      if (!tokenContract) throw new Error('Contract not initialized');
-      
-      const balance = await tokenContract.balanceOf(address);
-      return ethers.formatEther(balance);
+      // Mock balance - replace with actual contract call
+      return '0';
     },
-    enabled: !!tokenContract && !!address,
+    enabled: !!address,
     refetchInterval: 10000,
   });
 };
-
-export const useTokenAllowance = (owner: string, spender: string) => {
-  const { tokenContract } = useContracts();
-  const { chainId } = useWallet();
-
-  return useQuery({
-    queryKey: ['tokenAllowance', owner, spender, chainId],
-    queryFn: async () => {
-      if (!tokenContract) throw new Error('Contract not initialized');
-      
-      const allowance = await tokenContract.allowance(owner, spender);
-      return ethers.formatEther(allowance);
-    },
-    enabled: !!tokenContract && !!owner && !!spender,
-  });
-};
-
-export const useApproveTokens = () => {
-  const { tokenContract } = useContracts();
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async ({ spender, amount }: { spender: string; amount: string }) => {
-      if (!tokenContract) throw new Error('Contract not initialized');
-      
-      const tx = await tokenContract.approve(spender, ethers.parseEther(amount));
-      return await tx.wait();
-    },
-    onSuccess: (_, { spender }) => {
-      queryClient.invalidateQueries({ 
-        queryKey: ['tokenAllowance', tokenContract?.signer.address, spender] 
-      });
-    },
-  });
-}; 

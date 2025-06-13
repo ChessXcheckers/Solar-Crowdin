@@ -1,97 +1,89 @@
-import { useState } from 'react';
-import { useWallet, WalletType } from '@/lib/wallets';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/components/ui/use-toast';
 
-const WALLET_OPTIONS: { type: WalletType; name: string; icon: string }[] = [
-  { type: 'metamask', name: 'MetaMask', icon: '🦊' },
-  { type: 'phantom', name: 'Phantom', icon: '👻' },
-  { type: 'trust', name: 'Trust Wallet', icon: '🔒' },
-  { type: 'coinbase', name: 'Coinbase Wallet', icon: '💰' },
-  { type: 'walletconnect', name: 'WalletConnect', icon: '🔗' },
-];
+import { useWallet } from '../lib/wallets';
+import { useState } from 'react';
 
 const WalletConnect = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { address, walletType, isConnecting, error, connect, disconnect } = useWallet();
-  const { toast } = useToast();
+  const { address, isConnecting, connect, disconnect, error } = useWallet();
+  const [showModal, setShowModal] = useState(false);
 
-  const handleConnect = async (type: WalletType) => {
+  const isConnected = !!address;
+
+  const handleConnect = async (walletType: any) => {
     try {
-      await connect(type);
-      setIsOpen(false);
-      toast({
-        title: 'Wallet Connected',
-        description: `Successfully connected to ${type}`,
-      });
+      await connect(walletType);
+      setShowModal(false);
     } catch (err) {
-      toast({
-        title: 'Connection Failed',
-        description: err instanceof Error ? err.message : 'Failed to connect wallet',
-        variant: 'destructive',
-      });
+      console.error('Failed to connect wallet:', err);
     }
   };
 
-  const handleDisconnect = () => {
-    disconnect();
-    toast({
-      title: 'Wallet Disconnected',
-      description: 'Successfully disconnected wallet',
-    });
-  };
-
-  if (address) {
+  if (isConnected) {
     return (
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-solar-grey">
-          {address.slice(0, 6)}...{address.slice(-4)}
+      <div className="flex items-center space-x-4">
+        <span className="text-solar-warm-white text-sm">
+          {`${address.slice(0, 6)}...${address.slice(-4)}`}
         </span>
-        <Button
-          variant="outline"
-          onClick={handleDisconnect}
-          className="solar-button"
+        <button
+          onClick={disconnect}
+          className="solar-button text-sm"
         >
           Disconnect
-        </Button>
+        </button>
       </div>
     );
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button className="solar-button cosmic-glow">
-          {isConnecting ? 'Connecting...' : 'Connect Wallet'}
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="bg-solar-dark border-solar-gold">
-        <DialogHeader>
-          <DialogTitle className="text-solar-warm-white">Connect Wallet</DialogTitle>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          {WALLET_OPTIONS.map((wallet) => (
-            <Button
-              key={wallet.type}
-              variant="outline"
-              className="flex items-center justify-start gap-3 p-4 hover:bg-solar-navy/50 transition-colors"
-              onClick={() => handleConnect(wallet.type)}
-              disabled={isConnecting}
+    <>
+      <button
+        onClick={() => setShowModal(true)}
+        disabled={isConnecting}
+        className="solar-button"
+      >
+        {isConnecting ? 'Connecting...' : 'Connect Wallet'}
+      </button>
+
+      {showModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-solar-dark p-8 rounded-lg max-w-md w-full mx-4 starburst-border">
+            <h3 className="text-xl font-bold text-solar-warm-white mb-6">Connect Wallet</h3>
+            
+            <div className="space-y-4">
+              <button
+                onClick={() => handleConnect('metamask')}
+                className="w-full p-4 bg-solar-navy/50 hover:bg-solar-orange/10 rounded-lg text-solar-warm-white transition-colors duration-300"
+              >
+                🦊 MetaMask
+              </button>
+              <button
+                onClick={() => handleConnect('trust')}
+                className="w-full p-4 bg-solar-navy/50 hover:bg-solar-orange/10 rounded-lg text-solar-warm-white transition-colors duration-300"
+              >
+                🛡️ Trust Wallet
+              </button>
+              <button
+                onClick={() => handleConnect('coinbase')}
+                className="w-full p-4 bg-solar-navy/50 hover:bg-solar-orange/10 rounded-lg text-solar-warm-white transition-colors duration-300"
+              >
+                🔷 Coinbase Wallet
+              </button>
+            </div>
+
+            {error && (
+              <p className="text-red-400 text-sm mt-4">{error}</p>
+            )}
+
+            <button
+              onClick={() => setShowModal(false)}
+              className="mt-6 w-full p-2 text-solar-grey hover:text-solar-warm-white transition-colors duration-300"
             >
-              <span className="text-2xl">{wallet.icon}</span>
-              <span className="text-solar-warm-white">{wallet.name}</span>
-            </Button>
-          ))}
-        </div>
-        {error && (
-          <div className="text-red-500 text-sm mt-2">
-            {error}
+              Cancel
+            </button>
           </div>
-        )}
-      </DialogContent>
-    </Dialog>
+        </div>
+      )}
+    </>
   );
 };
 
-export default WalletConnect; 
+export default WalletConnect;

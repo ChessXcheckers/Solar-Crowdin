@@ -22,7 +22,7 @@ const FeaturesSection = () => {
   ];
 
   return (
-    <section className="section-spacing starburst-bg">
+    <section id="features" className="section-spacing starburst-bg">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-16 text-solar-warm-white">
           Revolutionary Solar AI Technology

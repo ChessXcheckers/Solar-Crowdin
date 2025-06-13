@@ -1,304 +1,122 @@
-import { useState, useCallback } from 'react';
-import { usePresale } from '../hooks/usePresale';
+
+import { useState } from 'react';
 import { useWallet } from '../lib/wallets';
-import { ethers } from 'ethers';
-import { toast } from 'react-hot-toast';
-import { motion } from 'framer-motion';
-import { FiClock, FiDollarSign, FiPercent, FiTrendingUp } from 'react-icons/fi';
-import { USDT_CONTRACT, USDC_CONTRACT } from '../constants/contracts';
+import { usePresaleData, useBuyTokens } from '../lib/contracts';
+import toast from 'react-hot-toast';
 
-export function PresaleCard() {
-  const { address, connect } = useWallet();
-  const {
-    presaleInfo,
-    loading,
-    error,
-    transactionStatus,
-    buyTokens,
-    claimTokens,
-    calculatePrice,
-    calculateTokens,
-    formatAmount,
-    formatAddress
-  } = usePresale();
-
+const PresaleCard = () => {
   const [amount, setAmount] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState<'BNB' | 'USDT' | 'USDC'>('BNB');
+  const [paymentToken, setPaymentToken] = useState('ETH');
+  const { address, connect } = useWallet();
+  const { data: presaleData } = usePresaleData();
+  const buyTokens = useBuyTokens();
 
-  const handleAmountChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value === '' || /^\d*\.?\d*$/.test(value)) {
-      setAmount(value);
+  const calculateTokens = () => {
+    if (!amount || !presaleData) return '0';
+    const tokens = parseFloat(amount) / parseFloat(presaleData.price);
+    return tokens.toLocaleString();
+  };
+
+  const handleBuy = async () => {
+    if (!address) {
+      await connect('metamask');
+      return;
     }
-  }, []);
 
-  const handleBuy = useCallback(async () => {
+    if (!amount || parseFloat(amount) <= 0) {
+      toast.error('Please enter a valid amount');
+      return;
+    }
+
     try {
-      if (!address) {
-        await connect();
-        return;
+      const result = await buyTokens.mutateAsync({ amount, paymentToken });
+      if (result.success) {
+        toast.success('Purchase successful!');
+        setAmount('');
       }
-
-      if (!amount) {
-        toast.error('Please enter an amount');
-        return;
-      }
-
-      await buyTokens(amount, paymentMethod);
-      setAmount('');
-    } catch (err) {
-      console.error('Failed to buy tokens:', err);
+    } catch (error) {
+      toast.error('Purchase failed. Please try again.');
+      console.error(error);
     }
-  }, [address, amount, paymentMethod, buyTokens, connect]);
-
-  const handleClaim = useCallback(async () => {
-    try {
-      if (!address) {
-        await connect();
-        return;
-      }
-
-      await claimTokens();
-    } catch (err) {
-      console.error('Failed to claim tokens:', err);
-    }
-  }, [address, claimTokens, connect]);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-600">
-        <p>Error: {error.message}</p>
-      </div>
-    );
-  }
-
-  if (!presaleInfo) {
-    return (
-      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-yellow-600">
-        <p>No presale information available</p>
-      </div>
-    );
-  }
-
-  const progress = (parseFloat(presaleInfo.totalSold) / parseFloat(presaleInfo.currentStage.totalTokens)) * 100;
-  const estimatedTokens = amount ? calculateTokens(amount, presaleInfo.currentStage, paymentMethod) : '0';
-  const estimatedPrice = amount ? calculatePrice(amount, presaleInfo.currentStage, paymentMethod) : '0';
+  };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-xl shadow-lg p-6 max-w-2xl mx-auto"
-    >
-      <div className="space-y-6">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-gray-900">Token Presale</h2>
-          {address && (
-            <span className="text-sm text-gray-500">
-              Connected: {formatAddress(address)}
-            </span>
-          )}
+    <div className="starburst-border rounded-lg max-w-md mx-auto">
+      <div className="bg-solar-dark card-spacing">
+        <div className="text-center mb-6">
+          <h3 className="text-2xl font-bold text-solar-warm-white mb-2">
+            🚀 Join the Solar Revolution
+          </h3>
+          <p className="text-solar-grey">
+            Current Price: <span className="text-solar-gold font-bold">${presaleData?.price || '0.063'}</span>
+          </p>
         </div>
 
-        {/* Timer */}
-        <div className="bg-blue-50 rounded-lg p-4">
-          <div className="flex items-center space-x-2 text-blue-600">
-            <FiClock className="w-5 h-5" />
-            <span className="font-medium">Time Remaining:</span>
-          </div>
-          <div className="grid grid-cols-4 gap-2 mt-2">
-            <div className="text-center">
-              <div className="text-2xl font-bold">{presaleInfo.timeLeft.days}</div>
-              <div className="text-sm text-gray-500">Days</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold">{presaleInfo.timeLeft.hours}</div>
-              <div className="text-sm text-gray-500">Hours</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold">{presaleInfo.timeLeft.minutes}</div>
-              <div className="text-sm text-gray-500">Minutes</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold">{presaleInfo.timeLeft.seconds}</div>
-              <div className="text-sm text-gray-500">Seconds</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Progress */}
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-500">Progress</span>
-            <span className="font-medium">{formatAmount(progress.toString())}%</span>
-          </div>
-          <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              className="h-full bg-blue-500"
-            />
-          </div>
-          <div className="flex justify-between text-sm text-gray-500">
-            <span>{formatAmount(presaleInfo.totalSold)} tokens sold</span>
-            <span>{formatAmount(presaleInfo.currentStage.totalTokens)} total</span>
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center space-x-2 text-gray-600">
-              <FiDollarSign className="w-5 h-5" />
-              <span className="font-medium">Total Raised</span>
-            </div>
-            <div className="mt-1 text-2xl font-bold">${formatAmount(presaleInfo.totalRaised)}</div>
-          </div>
-          <div className="bg-gray-50 rounded-lg p-4">
-            <div className="flex items-center space-x-2 text-gray-600">
-              <FiTrendingUp className="w-5 h-5" />
-              <span className="font-medium">Current Price</span>
-            </div>
-            <div className="mt-1 text-2xl font-bold">${formatAmount(presaleInfo.currentStage.price)}</div>
-          </div>
-        </div>
-
-        {/* Buy Form */}
         <div className="space-y-4">
-          <div className="flex space-x-4">
-            <button
-              onClick={() => setPaymentMethod('BNB')}
-              className={`flex-1 py-2 px-4 rounded-lg ${
-                paymentMethod === 'BNB'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
+          <div>
+            <label className="block text-solar-grey text-sm mb-2">Payment Currency</label>
+            <select 
+              value={paymentToken}
+              onChange={(e) => setPaymentToken(e.target.value)}
+              className="w-full p-3 bg-solar-navy/50 border border-solar-gold/30 rounded-lg text-solar-warm-white focus:border-solar-gold focus:outline-none"
             >
-              BNB
-            </button>
-            <button
-              onClick={() => setPaymentMethod('USDT')}
-              className={`flex-1 py-2 px-4 rounded-lg ${
-                paymentMethod === 'USDT'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              USDT
-            </button>
-            <button
-              onClick={() => setPaymentMethod('USDC')}
-              className={`flex-1 py-2 px-4 rounded-lg ${
-                paymentMethod === 'USDC'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              USDC
-            </button>
+              <option value="ETH">ETH</option>
+              <option value="BNB">BNB</option>
+              <option value="USDT">USDT</option>
+              <option value="USDC">USDC</option>
+            </select>
           </div>
 
-          <div className="relative">
+          <div>
+            <label className="block text-solar-grey text-sm mb-2">Amount ({paymentToken})</label>
             <input
-              type="text"
+              type="number"
               value={amount}
-              onChange={handleAmountChange}
-              placeholder={`Enter ${paymentMethod} amount`}
-              className="w-full py-3 px-4 pr-20 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => setAmount(e.target.value)}
+              placeholder="0.0"
+              className="w-full p-3 bg-solar-navy/50 border border-solar-gold/30 rounded-lg text-solar-warm-white focus:border-solar-gold focus:outline-none"
             />
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-              {paymentMethod}
-            </div>
           </div>
 
-          {amount && (
-            <div className="bg-gray-50 rounded-lg p-4 space-y-2">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">You will receive:</span>
-                <span className="font-medium">{formatAmount(estimatedTokens)} tokens</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-500">Estimated value:</span>
-                <span className="font-medium">${formatAmount(estimatedPrice)}</span>
-              </div>
+          <div className="bg-solar-navy/30 p-4 rounded-lg">
+            <div className="flex justify-between text-sm">
+              <span className="text-solar-grey">You will receive:</span>
+              <span className="text-solar-gold font-bold">{calculateTokens()} $SOLAR</span>
             </div>
-          )}
+          </div>
 
           <button
             onClick={handleBuy}
-            disabled={!presaleInfo.isActive || transactionStatus?.status === 'pending'}
-            className={`w-full py-3 px-4 rounded-lg font-medium ${
-              !presaleInfo.isActive
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : transactionStatus?.status === 'pending'
-                ? 'bg-blue-300 text-white cursor-wait'
-                : 'bg-blue-500 text-white hover:bg-blue-600'
-            }`}
+            disabled={buyTokens.isPending}
+            className="w-full solar-button cosmic-glow text-lg font-bold disabled:opacity-50"
           >
-            {!address
-              ? 'Connect Wallet'
-              : transactionStatus?.status === 'pending'
-              ? 'Processing...'
-              : 'Buy Tokens'}
+            {buyTokens.isPending ? '⏳ Processing...' : address ? '🚀 Buy Tokens' : '🔗 Connect Wallet'}
           </button>
 
-          {presaleInfo.isClaimable && (
-            <button
-              onClick={handleClaim}
-              disabled={transactionStatus?.status === 'pending'}
-              className={`w-full py-3 px-4 rounded-lg font-medium ${
-                transactionStatus?.status === 'pending'
-                  ? 'bg-green-300 text-white cursor-wait'
-                  : 'bg-green-500 text-white hover:bg-green-600'
-              }`}
-            >
-              {transactionStatus?.status === 'pending' ? 'Processing...' : 'Claim Tokens'}
-            </button>
+          {address && (
+            <div className="text-center">
+              <button className="text-solar-gold hover:text-solar-orange transition-colors duration-300 text-sm">
+                📊 View Transaction History
+              </button>
+            </div>
           )}
         </div>
 
-        {/* Transaction Status */}
-        {transactionStatus && (
-          <div
-            className={`p-4 rounded-lg ${
-              transactionStatus.status === 'success'
-                ? 'bg-green-50 text-green-600'
-                : transactionStatus.status === 'failed'
-                ? 'bg-red-50 text-red-600'
-                : 'bg-blue-50 text-blue-600'
-            }`}
-          >
-            <p className="font-medium">
-              {transactionStatus.type === 'approve'
-                ? 'Approving tokens...'
-                : transactionStatus.type === 'buy'
-                ? 'Buying tokens...'
-                : 'Claiming tokens...'}
-            </p>
-            {transactionStatus.hash && (
-              <a
-                href={`https://bscscan.com/tx/${transactionStatus.hash}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm underline mt-1 inline-block"
-              >
-                View on BscScan
-              </a>
-            )}
+        <div className="mt-6 pt-4 border-t border-solar-gold/20">
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="text-center">
+              <div className="text-solar-grey">Tokens Sold</div>
+              <div className="text-solar-gold font-bold">{presaleData?.totalSold ? `${(parseInt(presaleData.totalSold) / 1000000).toFixed(1)}M` : '142.7M'}</div>
+            </div>
+            <div className="text-center">
+              <div className="text-solar-grey">Raised</div>
+              <div className="text-solar-gold font-bold">${presaleData?.totalRaised ? `${(parseInt(presaleData.totalRaised) / 1000000).toFixed(2)}M` : '1.34M'}</div>
+            </div>
           </div>
-        )}
+        </div>
       </div>
-    </motion.div>
+    </div>
   );
-}
+};
 
 export default PresaleCard;
