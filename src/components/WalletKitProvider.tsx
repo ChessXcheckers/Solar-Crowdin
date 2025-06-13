@@ -2,12 +2,20 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 
+// Extend the Window interface to include ethereum
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
+
 interface WalletState {
   address: string | null;
   isConnecting: boolean;
   isConnected: boolean;
   walletType: string | null;
   error: string | null;
+  chainId?: number;
 }
 
 interface WalletContextType extends WalletState {
@@ -35,7 +43,8 @@ const WalletKitProvider: React.FC<WalletKitProviderProps> = ({ children }) => {
     isConnecting: false,
     isConnected: false,
     walletType: null,
-    error: null
+    error: null,
+    chainId: undefined
   });
 
   const connect = async (walletType: string) => {
@@ -48,12 +57,14 @@ const WalletKitProvider: React.FC<WalletKitProviderProps> = ({ children }) => {
         });
         
         if (accounts.length > 0) {
+          const chainId = await window.ethereum.request({ method: 'eth_chainId' });
           setWalletState({
             address: accounts[0],
             isConnecting: false,
             isConnected: true,
             walletType,
-            error: null
+            error: null,
+            chainId: parseInt(chainId, 16)
           });
           
           toast.success('Wallet connected successfully!');
@@ -79,7 +90,8 @@ const WalletKitProvider: React.FC<WalletKitProviderProps> = ({ children }) => {
       isConnecting: false,
       isConnected: false,
       walletType: null,
-      error: null
+      error: null,
+      chainId: undefined
     });
     toast.success('Wallet disconnected');
   };
@@ -94,11 +106,13 @@ const WalletKitProvider: React.FC<WalletKitProviderProps> = ({ children }) => {
           });
           
           if (accounts.length > 0) {
+            const chainId = await window.ethereum.request({ method: 'eth_chainId' });
             setWalletState(prev => ({
               ...prev,
               address: accounts[0],
               isConnected: true,
-              walletType: 'metamask'
+              walletType: 'metamask',
+              chainId: parseInt(chainId, 16)
             }));
           }
         } catch (error) {

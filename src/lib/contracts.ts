@@ -22,11 +22,12 @@ const TOKEN_ABI = [
   'function transfer(address to, uint256 amount) returns (bool)'
 ];
 
+// Use hardcoded addresses for now since process.env isn't available in browser
 const CONTRACT_ADDRESSES = {
-  PRESALE: process.env.NEXT_PUBLIC_PRESALE_CONTRACT_ADDRESS || '0x46718468baC0e1E6621BFa593f9CDEbA3f96D99e',
-  TOKEN: process.env.NEXT_PUBLIC_TOKEN_ADDRESS || '0x0000000000000000000000000000000000000000',
-  USDT: process.env.NEXT_PUBLIC_USDT_CONTRACT_ADDRESS || '0x55d398326f99059fF775485246999027B3197955',
-  USDC: process.env.NEXT_PUBLIC_USDC_CONTRACT_ADDRESS || '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d'
+  PRESALE: '0x46718468baC0e1E6621BFa593f9CDEbA3f96D99e',
+  TOKEN: '0x0000000000000000000000000000000000000000',
+  USDT: '0x55d398326f99059fF775485246999027B3197955',
+  USDC: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d'
 };
 
 interface ContractState {
@@ -56,10 +57,9 @@ export const useContracts = create<ContractState>((set) => ({
 // Mock data for presale (replace with real contract calls when contracts are deployed)
 export const usePresaleData = () => {
   const { presaleContract } = useContracts();
-  const { chainId } = useWallet();
 
   return useQuery({
-    queryKey: ['presaleData', chainId],
+    queryKey: ['presaleData'],
     queryFn: async () => {
       // Mock data - replace with actual contract calls
       return {
@@ -100,10 +100,9 @@ export const useBuyTokens = () => {
 
 export const useTokenBalance = (address: string) => {
   const { tokenContract } = useContracts();
-  const { chainId } = useWallet();
 
   return useQuery({
-    queryKey: ['tokenBalance', address, chainId],
+    queryKey: ['tokenBalance', address],
     queryFn: async () => {
       // Mock balance - replace with actual contract call
       return '0';
