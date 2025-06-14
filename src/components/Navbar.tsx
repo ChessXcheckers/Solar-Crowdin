@@ -30,6 +30,11 @@ export function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
   const isConnected = !!address;
 
   const handleConnect = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -93,7 +98,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center space-x-4">
             {isConnected ? (
               <div className="flex items-center space-x-3">
-                <span className="text-sm text-gray-600">
+                <span className={`text-sm ${isScrolled ? 'text-gray-600' : 'text-white'}`}>
                   {address?.slice(0, 6)}...{address?.slice(-4)}
                 </span>
                 <button
@@ -146,7 +151,6 @@ export function Navbar() {
                       ? 'text-orange-600'
                       : 'text-gray-700 hover:text-gray-900'
                   }`}
-                  onClick={() => setIsOpen(false)}
                 >
                   {item.name}
                 </Link>
