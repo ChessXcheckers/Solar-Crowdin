@@ -22,9 +22,10 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 relative">
       {/* Texture Overlay */}
       <div 
-        className="absolute inset-0 opacity-30 pointer-events-none"
+        className="absolute inset-0 opacity-20 pointer-events-none"
         style={{
-          backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M20 20c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z\'/%3E%3Cpath d=\'M0 0c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z\'/%3E%3Cpath d=\'M0 20c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z\'/%3E%3Cpath d=\'M20 0c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z\'/%3E%3C/g%3E%3C/svg%3E")'
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23333' fill-opacity='0.4'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1'/%3E%3Ccircle cx='17' cy='7' r='1'/%3E%3Ccircle cx='7' cy='17' r='1'/%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundSize: '20px 20px'
         }}
       ></div>
       
