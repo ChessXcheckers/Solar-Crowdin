@@ -9,13 +9,19 @@ import PresalePurchaseForm from './PresalePurchaseForm';
 import PresaleUserInfo from './PresaleUserInfo';
 
 const PresaleMain = () => {
+  console.log('PresaleMain rendering...');
+  
   const [amount, setAmount] = useState('');
   const [paymentToken, setPaymentToken] = useState('ETH');
   const { address, connect } = useWallet();
-  const { data: presaleData, isLoading: presaleLoading } = usePresaleData();
-  const { data: marketData } = useMarketData();
+  const { data: presaleData, isLoading: presaleLoading, error: presaleError } = usePresaleData();
+  const { data: marketData, error: marketError } = useMarketData();
   const { presaleInfo } = usePresale();
   const buyTokens = useBuyTokens();
+
+  // Log any errors
+  if (presaleError) console.error('Presale data error:', presaleError);
+  if (marketError) console.error('Market data error:', marketError);
 
   const calculateTokens = () => {
     if (!amount || !presaleData) return '0';
@@ -36,24 +42,35 @@ const PresaleMain = () => {
   };
 
   const handleBuy = async () => {
+    console.log('Handle buy clicked');
+    
     if (!address) {
-      await connect('metamask');
+      console.log('No address, attempting to connect wallet');
+      try {
+        await connect('metamask');
+      } catch (error) {
+        console.error('Failed to connect wallet:', error);
+      }
       return;
     }
 
     if (!amount || parseFloat(amount) <= 0) {
+      console.log('Invalid amount');
       return;
     }
 
     try {
+      console.log('Attempting to buy tokens:', { amount, paymentToken });
       await buyTokens.mutateAsync({ amount, paymentToken });
       setAmount('');
+      console.log('Buy successful');
     } catch (error) {
-      console.error(error);
+      console.error('Buy failed:', error);
     }
   };
 
   if (presaleLoading || !presaleData) {
+    console.log('Presale loading or no data');
     return (
       <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-8 max-w-2xl mx-auto border border-gray-200">
         <div className="animate-pulse space-y-4">
@@ -64,6 +81,8 @@ const PresaleMain = () => {
       </div>
     );
   }
+
+  console.log('Rendering PresaleMain with data:', { presaleData, marketData });
 
   return (
     <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-8 max-w-2xl mx-auto border border-gray-200">

@@ -1,15 +1,42 @@
 
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, ErrorBoundary } from 'react';
 import CountdownTimer from '@/components/CountdownTimer';
 
-// Lazy load components to help with any potential loading issues
-const PresaleMain = lazy(() => import('@/components/PresaleMain'));
-const UserBalance = lazy(() => import('@/components/UserBalance'));
-const VIPStatus = lazy(() => import('@/components/VIPStatus'));
-const TopHolders = lazy(() => import('@/components/TopHolders'));
-const TokenDetails = lazy(() => import('@/components/TokenDetails'));
-const UtilityBenefits = lazy(() => import('@/components/UtilityBenefits'));
-const HowToBuy = lazy(() => import('@/components/HowToBuy'));
+// Lazy load components with error boundaries
+const PresaleMain = lazy(() => import('@/components/PresaleMain').catch(err => {
+  console.error('Failed to load PresaleMain:', err);
+  return { default: () => <div className="p-4 text-red-600">Failed to load presale component</div> };
+}));
+
+const UserBalance = lazy(() => import('@/components/UserBalance').catch(err => {
+  console.error('Failed to load UserBalance:', err);
+  return { default: () => <div className="p-4 text-gray-600">Balance unavailable</div> };
+}));
+
+const VIPStatus = lazy(() => import('@/components/VIPStatus').catch(err => {
+  console.error('Failed to load VIPStatus:', err);
+  return { default: () => <div className="p-4 text-gray-600">VIP status unavailable</div> };
+}));
+
+const TopHolders = lazy(() => import('@/components/TopHolders').catch(err => {
+  console.error('Failed to load TopHolders:', err);
+  return { default: () => <div className="p-4 text-gray-600">Top holders unavailable</div> };
+}));
+
+const TokenDetails = lazy(() => import('@/components/TokenDetails').catch(err => {
+  console.error('Failed to load TokenDetails:', err);
+  return { default: () => <div className="p-4 text-gray-600">Token details unavailable</div> };
+}));
+
+const UtilityBenefits = lazy(() => import('@/components/UtilityBenefits').catch(err => {
+  console.error('Failed to load UtilityBenefits:', err);
+  return { default: () => <div className="p-4 text-gray-600">Utility benefits unavailable</div> };
+}));
+
+const HowToBuy = lazy(() => import('@/components/HowToBuy').catch(err => {
+  console.error('Failed to load HowToBuy:', err);
+  return { default: () => <div className="p-4 text-gray-600">How to buy guide unavailable</div> };
+}));
 
 const LoadingSpinner = () => (
   <div className="flex justify-center items-center p-8">
@@ -17,7 +44,17 @@ const LoadingSpinner = () => (
   </div>
 );
 
+const ComponentErrorBoundary = ({ children, fallback }: { children: React.ReactNode; fallback: React.ReactNode }) => {
+  return (
+    <ErrorBoundary fallback={fallback}>
+      {children}
+    </ErrorBoundary>
+  );
+};
+
 const Index = () => {
+  console.log('Index page rendering...');
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 relative">
       {/* Texture Overlay */}
@@ -52,39 +89,53 @@ const Index = () => {
         </div>
 
         {/* Main Presale Section */}
-        <Suspense fallback={<LoadingSpinner />}>
-          <PresaleMain />
-        </Suspense>
+        <ComponentErrorBoundary fallback={<div className="p-4 text-red-600">Presale section failed to load</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
+            <PresaleMain />
+          </Suspense>
+        </ComponentErrorBoundary>
 
         {/* User Balance */}
-        <Suspense fallback={<LoadingSpinner />}>
-          <UserBalance />
-        </Suspense>
+        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">Balance section unavailable</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
+            <UserBalance />
+          </Suspense>
+        </ComponentErrorBoundary>
 
         {/* VIP Status */}
-        <Suspense fallback={<LoadingSpinner />}>
-          <VIPStatus />
-        </Suspense>
+        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">VIP section unavailable</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
+            <VIPStatus />
+          </Suspense>
+        </ComponentErrorBoundary>
 
         {/* Top Holders Rewards */}
-        <Suspense fallback={<LoadingSpinner />}>
-          <TopHolders />
-        </Suspense>
+        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">Top holders section unavailable</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
+            <TopHolders />
+          </Suspense>
+        </ComponentErrorBoundary>
 
         {/* Token Details */}
-        <Suspense fallback={<LoadingSpinner />}>
-          <TokenDetails />
-        </Suspense>
+        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">Token details section unavailable</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
+            <TokenDetails />
+          </Suspense>
+        </ComponentErrorBoundary>
 
         {/* Utility & Benefits */}
-        <Suspense fallback={<LoadingSpinner />}>
-          <UtilityBenefits />
-        </Suspense>
+        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">Utility section unavailable</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
+            <UtilityBenefits />
+          </Suspense>
+        </ComponentErrorBoundary>
 
         {/* How to Buy */}
-        <Suspense fallback={<LoadingSpinner />}>
-          <HowToBuy />
-        </Suspense>
+        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">How to buy section unavailable</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
+            <HowToBuy />
+          </Suspense>
+        </ComponentErrorBoundary>
       </div>
 
       {/* Footer */}
