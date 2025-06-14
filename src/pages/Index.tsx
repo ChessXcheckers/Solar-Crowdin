@@ -1,3 +1,4 @@
+
 import { Suspense, lazy } from 'react';
 import CountdownTimer from '@/components/CountdownTimer';
 import ErrorBoundary from '@/components/ErrorBoundary';
@@ -44,14 +45,6 @@ const LoadingSpinner = () => (
   </div>
 );
 
-const ComponentErrorBoundary = ({ children, fallback }: { children: React.ReactNode; fallback: React.ReactNode }) => {
-  return (
-    <ErrorBoundary fallback={fallback}>
-      {children}
-    </ErrorBoundary>
-  );
-};
-
 const Index = () => {
   console.log('Index page rendering...');
 
@@ -89,53 +82,53 @@ const Index = () => {
         </div>
 
         {/* Main Presale Section */}
-        <ComponentErrorBoundary fallback={<div className="p-4 text-red-600">Presale section failed to load</div>}>
+        <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>
             <PresaleMain />
           </Suspense>
-        </ComponentErrorBoundary>
+        </ErrorBoundary>
 
         {/* User Balance */}
-        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">Balance section unavailable</div>}>
+        <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>
             <UserBalance />
           </Suspense>
-        </ComponentErrorBoundary>
+        </ErrorBoundary>
 
         {/* VIP Status */}
-        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">VIP section unavailable</div>}>
+        <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>
             <VIPStatus />
           </Suspense>
-        </ComponentErrorBoundary>
+        </ErrorBoundary>
 
         {/* Top Holders Rewards */}
-        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">Top holders section unavailable</div>}>
+        <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>
             <TopHolders />
           </Suspense>
-        </ComponentErrorBoundary>
+        </ErrorBoundary>
 
         {/* Token Details */}
-        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">Token details section unavailable</div>}>
+        <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>
             <TokenDetails />
           </Suspense>
-        </ComponentErrorBoundary>
+        </ErrorBoundary>
 
         {/* Utility & Benefits */}
-        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">Utility section unavailable</div>}>
+        <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>
             <UtilityBenefits />
           </Suspense>
-        </ComponentErrorBoundary>
+        </ErrorBoundary>
 
         {/* How to Buy */}
-        <ComponentErrorBoundary fallback={<div className="p-4 text-gray-600">How to buy section unavailable</div>}>
+        <ErrorBoundary>
           <Suspense fallback={<LoadingSpinner />}>
             <HowToBuy />
           </Suspense>
-        </ComponentErrorBoundary>
+        </ErrorBoundary>
       </div>
 
       {/* Footer */}
