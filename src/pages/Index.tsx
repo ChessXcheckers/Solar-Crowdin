@@ -13,14 +13,14 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-brand">
       {/* Header */}
-      <header className="bg-brand-surface/80 backdrop-blur-lg border-b border-brand-gold/20 sticky top-0 z-50">
+      <header className="bg-brand-surface/80 backdrop-blur-lg border-b border-brand-gold-500/20 sticky top-0 z-50">
         <div className="container-brand py-4 flex items-center justify-between">
           <SolarAILogo size="sm" />
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="/" className="text-brand-gold font-orbitron font-semibold">Home</a>
-            <a href="/about" className="text-brand-white hover:text-brand-gold transition-colors font-orbitron">About</a>
-            <a href="/tokenomics" className="text-brand-white hover:text-brand-gold transition-colors font-orbitron">Tokenomics</a>
-            <a href="/brand-guide" className="text-brand-white hover:text-brand-gold transition-colors font-orbitron">Brand</a>
+            <a href="/" className="text-brand-gold-500 font-orbitron font-semibold">Home</a>
+            <a href="/about" className="text-brand-white hover:text-brand-gold-500 transition-colors font-orbitron">About</a>
+            <a href="/tokenomics" className="text-brand-white hover:text-brand-gold-500 transition-colors font-orbitron">Tokenomics</a>
+            <a href="/brand-guide" className="text-brand-white hover:text-brand-gold-500 transition-colors font-orbitron">Brand</a>
           </nav>
           <div className="text-sm text-gray-400 font-orbitron">
             © 2025 Solar AI
@@ -39,7 +39,7 @@ const Index = () => {
             Harness the power of AI-driven solar solutions with Solar AI Token (SAI)
           </p>
           <div className="mb-8">
-            <p className="text-lg text-brand-gold font-orbitron mb-4">Presale ends in:</p>
+            <p className="text-lg text-brand-gold-500 font-orbitron mb-4">Presale ends in:</p>
             <CountdownTimer />
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -71,7 +71,7 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-brand-surface py-12 mt-16 border-t border-brand-gold/20">
+      <footer className="bg-brand-surface py-12 mt-16 border-t border-brand-gold-500/20">
         <div className="container-brand text-center">
           <SolarAILogo size="md" className="mb-6" />
           <p className="text-sm text-gray-400 font-orbitron">© 2025 Solar AI. All rights reserved.</p>

@@ -88,7 +88,7 @@
 
   /* Card System */
   .card-cosmic {
-    @apply bg-brand-surface/80 backdrop-blur-xl border border-brand-gold/20 
+    @apply bg-brand-surface/80 backdrop-blur-xl border border-brand-gold-500/20 
            rounded-2xl p-8 shadow-cosmic-glow;
   }
 
@@ -103,7 +103,7 @@
   }
 
   .text-brand {
-    @apply text-brand-gold font-orbitron font-bold;
+    @apply text-brand-gold-500 font-orbitron font-bold;
   }
 
   /* Layout Components */
