@@ -19,9 +19,12 @@ const LoadingSpinner = () => (
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 relative">
+      {/* Texture Overlay */}
+      <div className="absolute inset-0 opacity-30 bg-[url('data:image/svg+xml,%3Csvg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="%23000" fill-opacity="0.05"%3E%3Cpath d="M20 20c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z"/%3E%3Cpath d="M0 0c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z"/%3E%3Cpath d="M0 20c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z"/%3E%3Cpath d="M20 0c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z"/%3E%3C/g%3E%3C/svg%3E')] pointer-events-none"></div>
+      
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white/90 backdrop-blur-sm shadow-sm border-b relative z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="text-2xl font-bold text-gray-800">
             <span className="text-orange-600">Solar</span> Crowding
@@ -32,13 +35,13 @@ const Index = () => {
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+      <div className="max-w-7xl mx-auto px-4 py-8 space-y-8 relative z-10">
         {/* Countdown Timer */}
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+          <h1 className="text-4xl font-bold text-gray-800 mb-2 drop-shadow-sm">
             Join the <span className="text-orange-600">AI Solar Revolution</span>
           </h1>
-          <p className="text-gray-600 mb-8">Presale ends in:</p>
+          <p className="text-gray-700 mb-8 font-medium drop-shadow-sm">Presale ends in:</p>
           <CountdownTimer />
         </div>
 
@@ -79,7 +82,7 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8 mt-16">
+      <footer className="bg-gray-800/95 backdrop-blur-sm text-white py-8 mt-16 relative z-10">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-sm">© 2025 Solar Crowding AI. All rights reserved.</p>
           <p className="text-xs text-gray-400 mt-2">
