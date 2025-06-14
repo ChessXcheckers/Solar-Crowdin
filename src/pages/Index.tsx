@@ -12,7 +12,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white shadow-sm border-b sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="text-2xl font-bold text-gray-800">
             <span className="text-orange-600">Solar</span> Crowding
@@ -24,13 +24,18 @@ const Index = () => {
       </header>
 
       <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
-        {/* Countdown Timer */}
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
+        {/* Hero Section */}
+        <div className="text-center bg-white rounded-lg shadow-lg p-8 mb-8">
+          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
             Join the <span className="text-orange-600">AI Solar Revolution</span>
           </h1>
-          <p className="text-gray-600 mb-8">Presale ends in:</p>
-          <CountdownTimer />
+          <p className="text-xl text-gray-600 mb-8">
+            Harness the power of AI-driven solar solutions with Solar Crowding Token (SCT)
+          </p>
+          <div className="mb-8">
+            <p className="text-lg text-gray-700 mb-4">Presale ends in:</p>
+            <CountdownTimer />
+          </div>
         </div>
 
         {/* Main Presale Section */}
