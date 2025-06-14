@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Solar AI Brand System */
+/* Solar Crowdin Brand System */
 @layer base {
   :root {
     --background: 10 11 15; /* Brand Dark */
@@ -37,6 +37,36 @@
 
     --radius: 0.75rem;
   }
+
+  .light {
+    --background: 255 255 255; /* Light Background */
+    --foreground: 10 11 15; /* Dark Text */
+
+    --card: 248 250 252; /* Light Surface */
+    --card-foreground: 10 11 15;
+
+    --popover: 255 255 255;
+    --popover-foreground: 10 11 15;
+
+    --primary: 255 215 0; /* Keep Gold */
+    --primary-foreground: 10 11 15;
+
+    --secondary: 59 130 246; /* Keep Blue */
+    --secondary-foreground: 255 255 255;
+
+    --muted: 248 250 252;
+    --muted-foreground: 100 116 139;
+
+    --accent: 239 68 68; /* Keep Red */
+    --accent-foreground: 255 255 255;
+
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
+
+    --border: 226 232 240;
+    --input: 248 250 252;
+    --ring: 255 215 0;
+  }
 }
 
 @layer base {
@@ -45,8 +75,17 @@
   }
 
   body {
-    @apply bg-brand-dark text-brand-white font-inter antialiased;
+    @apply bg-background text-foreground font-inter antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  body.dark {
     background: linear-gradient(135deg, #0A0B0F 0%, #1A1B23 50%, #0A0B0F 100%);
+    min-height: 100vh;
+  }
+
+  body.light {
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 50%, #FFFFFF 100%);
     min-height: 100vh;
   }
 
@@ -56,9 +95,9 @@
 }
 
 @layer components {
-  /* Solar AI Button System */
+  /* Solar Crowdin Button System */
   .btn-cosmic {
-    @apply relative overflow-hidden bg-gradient-cosmic text-brand-white font-orbitron font-semibold 
+    @apply relative overflow-hidden bg-gradient-cosmic text-white font-orbitron font-semibold 
            px-8 py-4 rounded-xl transition-all duration-300 ease-out
            shadow-cosmic-glow hover:animate-pulse-cosmic
            before:absolute before:inset-0 before:bg-gradient-to-r 
@@ -69,31 +108,31 @@
   }
 
   .btn-gold {
-    @apply bg-gradient-gold text-brand-dark font-orbitron font-semibold 
+    @apply bg-gradient-gold text-slate-900 font-orbitron font-semibold 
            px-6 py-3 rounded-lg transition-all duration-300
            shadow-gold-glow hover:shadow-lg hover:scale-105;
   }
 
   .btn-blue {
-    @apply bg-gradient-blue text-brand-white font-orbitron font-semibold 
+    @apply bg-gradient-blue text-white font-orbitron font-semibold 
            px-6 py-3 rounded-lg transition-all duration-300
            shadow-blue-glow hover:shadow-lg hover:scale-105;
   }
 
   .btn-red {
-    @apply bg-gradient-red text-brand-white font-orbitron font-semibold 
+    @apply bg-gradient-red text-white font-orbitron font-semibold 
            px-6 py-3 rounded-lg transition-all duration-300
            shadow-red-glow hover:shadow-lg hover:scale-105;
   }
 
   /* Card System */
   .card-cosmic {
-    @apply bg-brand-surface/80 backdrop-blur-xl border border-brand-gold-500/20 
+    @apply bg-card/80 backdrop-blur-xl border border-primary/20 
            rounded-2xl p-8 shadow-cosmic-glow;
   }
 
   .card-glass {
-    @apply bg-brand-glass backdrop-blur-lg border border-white/10 
+    @apply bg-card/50 backdrop-blur-lg border border-border 
            rounded-xl p-6 shadow-xl;
   }
 
@@ -103,7 +142,7 @@
   }
 
   .text-brand {
-    @apply text-brand-gold-500 font-orbitron font-bold;
+    @apply text-primary font-orbitron font-bold;
   }
 
   /* Layout Components */
@@ -120,9 +159,8 @@
     @apply bg-gradient-cosmic;
   }
 
-  /* Remove circular dependency - use direct color values instead */
   .bg-surface {
-    background-color: #1A1B23; /* Use the same color as brand-surface */
+    @apply bg-card;
   }
 
   /* 3D Effect Utilities */

@@ -1,6 +1,7 @@
 
 import { BrowserRouter as Router } from 'react-router-dom';
 import WalletKitProvider from './components/WalletKitProvider';
+import { ThemeProvider } from './components/ThemeProvider';
 import { Toaster } from './components/Toaster';
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,21 +17,23 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Router basename="/">
-        <WalletKitProvider>
-          <Toaster />
-          <Sonner />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/tokenomics" element={<Tokenomics />} />
-            <Route path="/brand-guide" element={<BrandGuidePage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </WalletKitProvider>
-      </Router>
-    </TooltipProvider>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+      <TooltipProvider>
+        <Router basename="/">
+          <WalletKitProvider>
+            <Toaster />
+            <Sonner />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/tokenomics" element={<Tokenomics />} />
+              <Route path="/brand-guide" element={<BrandGuidePage />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </WalletKitProvider>
+        </Router>
+      </TooltipProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 

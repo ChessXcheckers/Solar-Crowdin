@@ -7,23 +7,27 @@ import TokenDetails from '@/components/TokenDetails';
 import UtilityBenefits from '@/components/UtilityBenefits';
 import HowToBuy from '@/components/HowToBuy';
 import CountdownTimer from '@/components/CountdownTimer';
-import SolarAILogo from '@/components/SolarAILogo';
+import SolarCrowdinLogo from '@/components/SolarCrowdinLogo';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-brand">
+    <div className="min-h-screen bg-background transition-colors duration-300">
       {/* Header */}
-      <header className="bg-[#1A1B23]/80 backdrop-blur-lg border-b border-brand-gold-500/20 sticky top-0 z-50">
+      <header className="bg-card/80 backdrop-blur-lg border-b border-primary/20 sticky top-0 z-50">
         <div className="container-brand py-4 flex items-center justify-between">
-          <SolarAILogo size="sm" />
+          <SolarCrowdinLogo size="sm" />
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="/" className="text-brand-gold-500 font-orbitron font-semibold">Home</a>
-            <a href="/about" className="text-brand-white hover:text-brand-gold-500 transition-colors font-orbitron">About</a>
-            <a href="/tokenomics" className="text-brand-white hover:text-brand-gold-500 transition-colors font-orbitron">Tokenomics</a>
-            <a href="/brand-guide" className="text-brand-white hover:text-brand-gold-500 transition-colors font-orbitron">Brand</a>
+            <a href="/" className="text-primary font-orbitron font-semibold">Home</a>
+            <a href="/about" className="text-foreground hover:text-primary transition-colors font-orbitron">About</a>
+            <a href="/tokenomics" className="text-foreground hover:text-primary transition-colors font-orbitron">Tokenomics</a>
+            <a href="/brand-guide" className="text-foreground hover:text-primary transition-colors font-orbitron">Brand</a>
           </nav>
-          <div className="text-sm text-gray-400 font-orbitron">
-            © 2025 Solar AI
+          <div className="flex items-center space-x-4">
+            <ThemeToggle />
+            <div className="text-sm text-muted-foreground font-orbitron">
+              © 2025 Solar Crowdin
+            </div>
           </div>
         </div>
       </header>
@@ -31,15 +35,15 @@ const Index = () => {
       <div className="container-brand py-8 space-y-16">
         {/* Hero Section */}
         <div className="text-center card-cosmic mb-16">
-          <SolarAILogo size="xl" className="mb-8" />
+          <SolarCrowdinLogo size="xl" className="mb-8" />
           <h1 className="text-4xl md:text-6xl font-orbitron font-black text-cosmic mb-6">
-            Join the <span className="text-brand-blue-400">AI Solar Revolution</span>
+            Join the <span className="bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">Solar Revolution</span>
           </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Harness the power of AI-driven solar solutions with Solar AI Token (SAI)
+          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+            Harness the power of community-driven solar solutions with Solar Crowdin Token (SCT)
           </p>
           <div className="mb-8">
-            <p className="text-lg text-brand-gold-500 font-orbitron mb-4">Presale ends in:</p>
+            <p className="text-lg text-primary font-orbitron mb-4">Presale ends in:</p>
             <CountdownTimer />
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -71,11 +75,11 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-[#1A1B23] py-12 mt-16 border-t border-brand-gold-500/20">
+      <footer className="bg-card py-12 mt-16 border-t border-primary/20">
         <div className="container-brand text-center">
-          <SolarAILogo size="md" className="mb-6" />
-          <p className="text-sm text-gray-400 font-orbitron">© 2025 Solar AI. All rights reserved.</p>
-          <p className="text-xs text-gray-500 mt-2 font-inter">
+          <SolarCrowdinLogo size="md" className="mb-6" />
+          <p className="text-sm text-muted-foreground font-orbitron">© 2025 Solar Crowdin. All rights reserved.</p>
+          <p className="text-xs text-muted-foreground mt-2 font-inter">
             Demo presale page - For demonstration purposes only
           </p>
         </div>
