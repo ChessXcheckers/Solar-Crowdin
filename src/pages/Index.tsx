@@ -7,34 +7,44 @@ import TokenDetails from '@/components/TokenDetails';
 import UtilityBenefits from '@/components/UtilityBenefits';
 import HowToBuy from '@/components/HowToBuy';
 import CountdownTimer from '@/components/CountdownTimer';
+import SolarAILogo from '@/components/SolarAILogo';
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50">
+    <div className="min-h-screen bg-gradient-brand">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="text-2xl font-bold text-gray-800">
-            <span className="text-orange-600">Solar</span> Crowding
-          </div>
-          <div className="text-sm text-gray-600">
-            © 2025 Solar Crowding AI
+      <header className="bg-brand-surface/80 backdrop-blur-lg border-b border-brand-gold/20 sticky top-0 z-50">
+        <div className="container-brand py-4 flex items-center justify-between">
+          <SolarAILogo size="sm" />
+          <nav className="hidden md:flex items-center space-x-8">
+            <a href="/" className="text-brand-gold font-orbitron font-semibold">Home</a>
+            <a href="/about" className="text-brand-white hover:text-brand-gold transition-colors font-orbitron">About</a>
+            <a href="/tokenomics" className="text-brand-white hover:text-brand-gold transition-colors font-orbitron">Tokenomics</a>
+            <a href="/brand-guide" className="text-brand-white hover:text-brand-gold transition-colors font-orbitron">Brand</a>
+          </nav>
+          <div className="text-sm text-gray-400 font-orbitron">
+            © 2025 Solar AI
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+      <div className="container-brand py-8 space-y-16">
         {/* Hero Section */}
-        <div className="text-center bg-white rounded-lg shadow-lg p-8 mb-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
-            Join the <span className="text-orange-600">AI Solar Revolution</span>
+        <div className="text-center card-cosmic mb-16">
+          <SolarAILogo size="xl" className="mb-8" />
+          <h1 className="text-4xl md:text-6xl font-orbitron font-black text-cosmic mb-6">
+            Join the <span className="text-brand-blue-400">AI Solar Revolution</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            Harness the power of AI-driven solar solutions with Solar Crowding Token (SCT)
+          <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+            Harness the power of AI-driven solar solutions with Solar AI Token (SAI)
           </p>
           <div className="mb-8">
-            <p className="text-lg text-gray-700 mb-4">Presale ends in:</p>
+            <p className="text-lg text-brand-gold font-orbitron mb-4">Presale ends in:</p>
             <CountdownTimer />
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="btn-cosmic">📄 Read Whitepaper</button>
+            <button className="btn-gold">🔗 View Contract</button>
           </div>
         </div>
 
@@ -61,10 +71,11 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8 mt-16">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-sm">© 2025 Solar Crowding AI. All rights reserved.</p>
-          <p className="text-xs text-gray-400 mt-2">
+      <footer className="bg-brand-surface py-12 mt-16 border-t border-brand-gold/20">
+        <div className="container-brand text-center">
+          <SolarAILogo size="md" className="mb-6" />
+          <p className="text-sm text-gray-400 font-orbitron">© 2025 Solar AI. All rights reserved.</p>
+          <p className="text-xs text-gray-500 mt-2 font-inter">
             Demo presale page - For demonstration purposes only
           </p>
         </div>
