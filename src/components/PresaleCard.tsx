@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useWallet } from '../lib/wallets';
 import { usePresaleData, useBuyTokens } from '../lib/contracts';
@@ -106,11 +105,15 @@ const PresaleCard = () => {
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="text-center">
               <div className="text-solar-grey">Tokens Sold</div>
-              <div className="text-solar-gold font-bold">{presaleData?.totalSold ? `${(parseInt(presaleData.totalSold) / 1000000).toFixed(1)}M` : '142.7M'}</div>
+              <div className="text-solar-gold font-bold">
+                {presaleData?.totalSold ? `${(parseInt(presaleData.totalSold) / 1000000).toFixed(1)}M` : '142.7M'}
+              </div>
             </div>
             <div className="text-center">
               <div className="text-solar-grey">Raised</div>
-              <div className="text-solar-gold font-bold">${presaleData?.totalRaised ? `${(parseInt(presaleData.totalRaised) / 1000000).toFixed(2)}M` : '1.34M'}</div>
+              <div className="text-solar-gold font-bold">
+                ${presaleData?.totalRaised ? `${(parseInt(presaleData.totalRaised) / 1000000).toFixed(2)}M` : '8.99M'}
+              </div>
             </div>
           </div>
         </div>

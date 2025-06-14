@@ -1,6 +1,6 @@
-
-import { Suspense, lazy, ErrorBoundary } from 'react';
+import { Suspense, lazy } from 'react';
 import CountdownTimer from '@/components/CountdownTimer';
+import ErrorBoundary from '@/components/ErrorBoundary';
 
 // Lazy load components with error boundaries
 const PresaleMain = lazy(() => import('@/components/PresaleMain').catch(err => {

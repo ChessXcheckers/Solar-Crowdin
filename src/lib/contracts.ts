@@ -3,10 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 
 // Mock data for when APIs fail
 const MOCK_PRESALE_DATA = {
-  price: '0.01',
-  raised: '2500000',
-  target: '5000000',
-  progress: 50,
+  price: '0.063',
+  nextPrice: '0.070',
+  priceIncrease: '+11%',
+  progress: 57.08,
+  totalSold: '142700000',
+  totalRaised: '8990100',
+  raised: '8990100',
+  target: '15750000',
   timeLeft: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
 };
 
