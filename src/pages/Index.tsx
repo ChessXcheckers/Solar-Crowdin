@@ -24,7 +24,7 @@ const Index = () => {
       <div 
         className="absolute inset-0 opacity-30 pointer-events-none"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000' fill-opacity='0.05'%3E%3Cpath d='M20 20c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z'/%3E%3Cpath d='M0 0c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z'/%3E%3Cpath d='M0 20c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z'/%3E%3Cpath d='M20 0c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z'/%3E%3C/g%3E%3C/svg%3E")`
+          backgroundImage: 'url("data:image/svg+xml;charset=UTF-8,%3Csvg width=\'40\' height=\'40\' viewBox=\'0 0 40 40\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'%23000\' fill-opacity=\'0.05\'%3E%3Cpath d=\'M20 20c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z\'/%3E%3Cpath d=\'M0 0c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z\'/%3E%3Cpath d=\'M0 20c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z\'/%3E%3Cpath d=\'M20 0c0 0 0-8 0-8s8 0 8 0 0 8 0 8-8 0-8 0z\'/%3E%3C/g%3E%3C/svg%3E")'
         }}
       ></div>
       
