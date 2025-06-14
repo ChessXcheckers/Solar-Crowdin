@@ -120,8 +120,9 @@
     @apply bg-gradient-cosmic;
   }
 
-  .bg-brand-surface {
-    @apply bg-brand-surface;
+  /* Remove circular dependency - use direct color values instead */
+  .bg-surface {
+    background-color: #1A1B23; /* Use the same color as brand-surface */
   }
 
   /* Animation Utilities */

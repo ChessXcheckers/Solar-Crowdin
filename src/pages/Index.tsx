@@ -13,7 +13,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-brand">
       {/* Header */}
-      <header className="bg-brand-surface/80 backdrop-blur-lg border-b border-brand-gold-500/20 sticky top-0 z-50">
+      <header className="bg-[#1A1B23]/80 backdrop-blur-lg border-b border-brand-gold-500/20 sticky top-0 z-50">
         <div className="container-brand py-4 flex items-center justify-between">
           <SolarAILogo size="sm" />
           <nav className="hidden md:flex items-center space-x-8">
@@ -71,7 +71,7 @@ const Index = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-brand-surface py-12 mt-16 border-t border-brand-gold-500/20">
+      <footer className="bg-[#1A1B23] py-12 mt-16 border-t border-brand-gold-500/20">
         <div className="container-brand text-center">
           <SolarAILogo size="md" className="mb-6" />
           <p className="text-sm text-gray-400 font-orbitron">© 2025 Solar AI. All rights reserved.</p>
