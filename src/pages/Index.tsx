@@ -3,41 +3,14 @@ import { Suspense, lazy } from 'react';
 import CountdownTimer from '@/components/CountdownTimer';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
-// Lazy load components with error boundaries
-const PresaleMain = lazy(() => import('@/components/PresaleMain').catch(err => {
-  console.error('Failed to load PresaleMain:', err);
-  return { default: () => <div className="p-4 text-red-600">Failed to load presale component</div> };
-}));
-
-const UserBalance = lazy(() => import('@/components/UserBalance').catch(err => {
-  console.error('Failed to load UserBalance:', err);
-  return { default: () => <div className="p-4 text-gray-600">Balance unavailable</div> };
-}));
-
-const VIPStatus = lazy(() => import('@/components/VIPStatus').catch(err => {
-  console.error('Failed to load VIPStatus:', err);
-  return { default: () => <div className="p-4 text-gray-600">VIP status unavailable</div> };
-}));
-
-const TopHolders = lazy(() => import('@/components/TopHolders').catch(err => {
-  console.error('Failed to load TopHolders:', err);
-  return { default: () => <div className="p-4 text-gray-600">Top holders unavailable</div> };
-}));
-
-const TokenDetails = lazy(() => import('@/components/TokenDetails').catch(err => {
-  console.error('Failed to load TokenDetails:', err);
-  return { default: () => <div className="p-4 text-gray-600">Token details unavailable</div> };
-}));
-
-const UtilityBenefits = lazy(() => import('@/components/UtilityBenefits').catch(err => {
-  console.error('Failed to load UtilityBenefits:', err);
-  return { default: () => <div className="p-4 text-gray-600">Utility benefits unavailable</div> };
-}));
-
-const HowToBuy = lazy(() => import('@/components/HowToBuy').catch(err => {
-  console.error('Failed to load HowToBuy:', err);
-  return { default: () => <div className="p-4 text-gray-600">How to buy guide unavailable</div> };
-}));
+// Lazy load components with proper error handling
+const PresaleMain = lazy(() => import('@/components/PresaleMain'));
+const UserBalance = lazy(() => import('@/components/UserBalance'));
+const VIPStatus = lazy(() => import('@/components/VIPStatus'));
+const TopHolders = lazy(() => import('@/components/TopHolders'));
+const TokenDetails = lazy(() => import('@/components/TokenDetails'));
+const UtilityBenefits = lazy(() => import('@/components/UtilityBenefits'));
+const HowToBuy = lazy(() => import('@/components/HowToBuy'));
 
 const LoadingSpinner = () => (
   <div className="flex justify-center items-center p-8">
@@ -57,7 +30,7 @@ const Index = () => {
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23ff6b35' stroke-width='1' stroke-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm-16-16v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3Cpath d='M14 14l2-2m4 2l-2-2m2 2l2 2m-2 2l2 2m-2-2l-2 2'/%3E%3C/g%3E%3C/svg%3E")`,
           backgroundSize: '60px 60px'
         }}
-      ></div>
+      />
       
       {/* Header */}
       <header className="bg-white/90 backdrop-blur-sm shadow-sm border-b relative z-10">

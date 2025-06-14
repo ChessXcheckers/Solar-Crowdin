@@ -12,8 +12,8 @@ const VIPStatus = () => {
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8">
-      <h3 className="text-2xl font-bold text-center mb-6">Your VIP Status</h3>
+    <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-8 border border-gray-200">
+      <h3 className="text-2xl font-bold text-center mb-6 text-gray-800">Your VIP Status</h3>
       
       <div className="text-center mb-8">
         <div className="inline-block bg-gradient-to-r from-orange-400 to-yellow-500 text-white px-6 py-3 rounded-full text-xl font-bold">
@@ -23,7 +23,7 @@ const VIPStatus = () => {
       </div>
 
       <div className="space-y-4">
-        <h4 className="text-lg font-semibold text-center">VIP Levels</h4>
+        <h4 className="text-lg font-semibold text-center text-gray-700">VIP Levels</h4>
         {vipLevels.map((vip) => (
           <div key={vip.level} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
             <div className="flex items-center space-x-4">
@@ -31,7 +31,7 @@ const VIPStatus = () => {
                 {vip.level}
               </div>
               <div>
-                <p className="font-semibold">VIP {vip.level}</p>
+                <p className="font-semibold text-gray-800">VIP {vip.level}</p>
                 <p className="text-gray-600">{vip.tokens.toLocaleString()} SCT</p>
               </div>
             </div>
