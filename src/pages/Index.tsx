@@ -1,12 +1,21 @@
 
-import PresaleMain from '@/components/PresaleMain';
-import UserBalance from '@/components/UserBalance';
-import VIPStatus from '@/components/VIPStatus';
-import TopHolders from '@/components/TopHolders';
-import TokenDetails from '@/components/TokenDetails';
-import UtilityBenefits from '@/components/UtilityBenefits';
-import HowToBuy from '@/components/HowToBuy';
+import { Suspense, lazy } from 'react';
 import CountdownTimer from '@/components/CountdownTimer';
+
+// Lazy load components to help with any potential loading issues
+const PresaleMain = lazy(() => import('@/components/PresaleMain'));
+const UserBalance = lazy(() => import('@/components/UserBalance'));
+const VIPStatus = lazy(() => import('@/components/VIPStatus'));
+const TopHolders = lazy(() => import('@/components/TopHolders'));
+const TokenDetails = lazy(() => import('@/components/TokenDetails'));
+const UtilityBenefits = lazy(() => import('@/components/UtilityBenefits'));
+const HowToBuy = lazy(() => import('@/components/HowToBuy'));
+
+const LoadingSpinner = () => (
+  <div className="flex justify-center items-center p-8">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
+  </div>
+);
 
 const Index = () => {
   return (
@@ -34,25 +43,39 @@ const Index = () => {
         </div>
 
         {/* Main Presale Section */}
-        <PresaleMain />
+        <Suspense fallback={<LoadingSpinner />}>
+          <PresaleMain />
+        </Suspense>
 
         {/* User Balance */}
-        <UserBalance />
+        <Suspense fallback={<LoadingSpinner />}>
+          <UserBalance />
+        </Suspense>
 
         {/* VIP Status */}
-        <VIPStatus />
+        <Suspense fallback={<LoadingSpinner />}>
+          <VIPStatus />
+        </Suspense>
 
         {/* Top Holders Rewards */}
-        <TopHolders />
+        <Suspense fallback={<LoadingSpinner />}>
+          <TopHolders />
+        </Suspense>
 
         {/* Token Details */}
-        <TokenDetails />
+        <Suspense fallback={<LoadingSpinner />}>
+          <TokenDetails />
+        </Suspense>
 
         {/* Utility & Benefits */}
-        <UtilityBenefits />
+        <Suspense fallback={<LoadingSpinner />}>
+          <UtilityBenefits />
+        </Suspense>
 
         {/* How to Buy */}
-        <HowToBuy />
+        <Suspense fallback={<LoadingSpinner />}>
+          <HowToBuy />
+        </Suspense>
       </div>
 
       {/* Footer */}
