@@ -77,43 +77,16 @@ export function usePresale() {
         return;
       }
 
-      // Mock data for now - replace with actual contract calls
-      const mockPresaleInfo: PresaleInfo = {
-        currentStage: {
-          id: 1,
-          price: '0.063',
-          minBuy: '10',
-          maxBuy: '10000',
-          totalTokens: '1000000',
-          soldTokens: '250000',
-          startTime: Math.floor(Date.now() / 1000) - 86400,
-          endTime: Math.floor(Date.now() / 1000) + 2592000 // 30 days from now
-        },
-        totalRaised: '15750',
-        totalSold: '250000',
-        userPurchased: '0',
-        userReferralBonus: '0',
-        isActive: true,
-        isClaimable: false,
-        bnbPrice: '600',
-        isBlacklisted: false,
-        userBalance: {
-          bnb: '1.5',
-          usdt: '1000',
-          usdc: '1000',
-          tokens: '0'
-        },
-        timeLeft: calculateTimeLeft(Math.floor(Date.now() / 1000) + 2592000)
-      };
-
-      setPresaleInfo(mockPresaleInfo);
+      // Real contract integration would go here
+      // For now, set basic structure without demo data
+      setPresaleInfo(null);
     } catch (err) {
       setError(err instanceof Error ? err : new Error('Failed to fetch presale info'));
       toast.error('Failed to fetch presale information');
     } finally {
       setLoading(false);
     }
-  }, [address, calculateTimeLeft]);
+  }, [address]);
 
   useEffect(() => {
     fetchPresaleInfo();
@@ -137,135 +110,38 @@ export function usePresale() {
     if (numAmount > maxAmount) {
       throw new Error(`Maximum amount is ${maxAmount} ${paymentMethod}`);
     }
-
-    // Check user balance
-    if (presaleInfo?.userBalance) {
-      const balance = parseFloat(presaleInfo.userBalance[paymentMethod.toLowerCase()]);
-      if (numAmount > balance) {
-        throw new Error('Insufficient balance');
-      }
-    }
-  }, [presaleInfo?.userBalance]);
-
-  const calculatePrice = useCallback((amount: string, stage: Stage, paymentMethod: 'BNB' | 'USDT' | 'USDC') => {
-    if (!amount) return '0';
-    const numAmount = parseFloat(amount);
-    const stagePrice = parseFloat(stage.price);
-
-    if (paymentMethod === 'BNB' && presaleInfo?.bnbPrice) {
-      const bnbPrice = parseFloat(presaleInfo.bnbPrice);
-      return (numAmount * bnbPrice).toString();
-    }
-
-    return (numAmount * stagePrice).toString();
-  }, [presaleInfo?.bnbPrice]);
-
-  const calculateTokens = useCallback((amount: string, stage: Stage, paymentMethod: 'BNB' | 'USDT' | 'USDC') => {
-    if (!amount) return '0';
-    const numAmount = parseFloat(amount);
-    const stagePrice = parseFloat(stage.price);
-
-    if (paymentMethod === 'BNB' && presaleInfo?.bnbPrice) {
-      const bnbPrice = parseFloat(presaleInfo.bnbPrice);
-      const usdtAmount = numAmount * bnbPrice;
-      return (usdtAmount / stagePrice).toString();
-    }
-
-    return (numAmount / stagePrice).toString();
-  }, [presaleInfo?.bnbPrice]);
+  }, []);
 
   const buyTokens = useCallback(async (amount: string, paymentMethod: 'BNB' | 'USDT' | 'USDC') => {
     try {
-      if (!presaleInfo?.isActive) {
-        throw new Error('Presale is not active');
-      }
-
-      if (presaleInfo.isBlacklisted) {
-        throw new Error('Address is blacklisted');
-      }
-
       validateAmount(amount, paymentMethod);
       setLoading(true);
 
-      // Mock transaction for now
-      setTransactionStatus({
-        hash: '',
-        status: 'pending',
-        type: 'buy',
-        amount,
-        token: paymentMethod
-      });
-
-      // Simulate transaction delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      setTransactionStatus({
-        hash: '0x' + Math.random().toString(16).slice(2),
-        status: 'success',
-        type: 'buy',
-        amount,
-        token: paymentMethod
-      });
-
-      toast.success('Tokens purchased successfully!');
-      await fetchPresaleInfo();
+      // Real contract interaction would go here
+      toast.success('Connect to real contract for token purchase');
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to buy tokens';
       toast.error(message);
-
-      if (transactionStatus) {
-        setTransactionStatus({
-          ...transactionStatus,
-          status: 'failed'
-        });
-      }
-
       throw err;
     } finally {
       setLoading(false);
     }
-  }, [presaleInfo, fetchPresaleInfo, validateAmount, transactionStatus]);
+  }, [validateAmount]);
 
   const claimTokens = useCallback(async () => {
     try {
-      if (!presaleInfo?.isClaimable) {
-        throw new Error('Tokens are not claimable yet');
-      }
-
       setLoading(true);
-      setTransactionStatus({
-        hash: '',
-        status: 'pending',
-        type: 'claim'
-      });
-
-      // Simulate transaction delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
-
-      setTransactionStatus({
-        hash: '0x' + Math.random().toString(16).slice(2),
-        status: 'success',
-        type: 'claim'
-      });
-
-      toast.success('Tokens claimed successfully!');
-      await fetchPresaleInfo();
+      
+      // Real contract interaction would go here
+      toast.success('Connect to real contract for token claiming');
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to claim tokens';
       toast.error(message);
-
-      if (transactionStatus) {
-        setTransactionStatus({
-          ...transactionStatus,
-          status: 'failed'
-        });
-      }
-
       throw err;
     } finally {
       setLoading(false);
     }
-  }, [presaleInfo, fetchPresaleInfo, transactionStatus]);
+  }, []);
 
   const formatAmount = useCallback((amount: string, decimals: number = 2) => {
     return parseFloat(amount).toFixed(decimals);
@@ -283,8 +159,6 @@ export function usePresale() {
     transactionStatus,
     buyTokens,
     claimTokens,
-    calculatePrice,
-    calculateTokens,
     formatAmount,
     formatAddress,
     refresh: fetchPresaleInfo

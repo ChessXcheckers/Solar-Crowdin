@@ -2,22 +2,24 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { Link, useLocation } from 'react-router-dom';
 import { useWallet } from '../lib/wallets';
 
 const NAV_ITEMS = [
-  { name: 'Home', href: '#' },
-  { name: 'About', href: '#about' },
-  { name: 'Tokenomics', href: '#tokenomics' },
-  { name: 'Roadmap', href: '#roadmap' },
-  { name: 'Team', href: '#team' },
-  { name: 'FAQ', href: '#faq' },
-  { name: 'Contact', href: '#contact' }
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Tokenomics', path: '/tokenomics' },
+  { name: 'Roadmap', path: '/roadmap' },
+  { name: 'Team', path: '/team' },
+  { name: 'FAQ', path: '/faq' },
+  { name: 'Contact', path: '/contact' }
 ];
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { address, walletType, connect, disconnect } = useWallet();
+  const { address, connect, disconnect } = useWallet();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,31 +59,33 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="#" className="flex items-center">
+            <Link to="/" className="flex items-center">
               <span
                 className={`text-xl font-bold ${
                   isScrolled ? 'text-gray-900' : 'text-white'
                 }`}
               >
-                Solar Crowding
+                <span className="text-orange-600">Solar</span> Crowding
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {NAV_ITEMS.map((item) => (
-              <a
+              <Link
                 key={item.name}
-                href={item.href}
+                to={item.path}
                 className={`text-sm font-medium transition-colors duration-200 ${
-                  isScrolled
+                  location.pathname === item.path
+                    ? 'text-orange-600'
+                    : isScrolled
                     ? 'text-gray-700 hover:text-gray-900'
                     : 'text-white hover:text-gray-300'
                 }`}
               >
                 {item.name}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -102,7 +106,7 @@ export function Navbar() {
             ) : (
               <button
                 onClick={handleConnect}
-                className="bg-blue-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200"
+                className="bg-orange-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors duration-200"
               >
                 Connect Wallet
               </button>
@@ -134,14 +138,18 @@ export function Navbar() {
           >
             <div className="px-4 py-6 space-y-4">
               {NAV_ITEMS.map((item) => (
-                <a
+                <Link
                   key={item.name}
-                  href={item.href}
-                  className="block text-gray-700 hover:text-gray-900 text-sm font-medium"
+                  to={item.path}
+                  className={`block text-sm font-medium ${
+                    location.pathname === item.path
+                      ? 'text-orange-600'
+                      : 'text-gray-700 hover:text-gray-900'
+                  }`}
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}
-                </a>
+                </Link>
               ))}
               
               {/* Mobile Wallet Connection */}
@@ -161,7 +169,7 @@ export function Navbar() {
                 ) : (
                   <button
                     onClick={handleConnect}
-                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200"
+                    className="w-full bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors duration-200"
                   >
                     Connect Wallet
                   </button>
