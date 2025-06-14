@@ -32,10 +32,10 @@ const Index = () => {
       {/* Header */}
       <header className="bg-white/90 backdrop-blur-sm shadow-sm border-b relative z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="text-2xl font-bold text-gray-800">
+          <div className="text-2xl font-bold text-gray-900 drop-shadow-sm">
             <span className="text-orange-600">Solar</span> Crowding
           </div>
-          <div className="text-sm text-gray-600">
+          <div className="text-sm text-gray-700 drop-shadow-sm">
             © 2025 Solar Crowding AI
           </div>
         </div>
@@ -44,10 +44,10 @@ const Index = () => {
       <div className="max-w-7xl mx-auto px-4 py-8 space-y-8 relative z-10">
         {/* Countdown Timer */}
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-2 drop-shadow-sm">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2 drop-shadow-md">
             Join the <span className="text-orange-600">AI Solar Revolution</span>
           </h1>
-          <p className="text-gray-700 mb-8 font-medium drop-shadow-sm">Presale ends in:</p>
+          <p className="text-gray-800 mb-8 font-medium drop-shadow-sm">Presale ends in:</p>
           <CountdownTimer />
         </div>
 
