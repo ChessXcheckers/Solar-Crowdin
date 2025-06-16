@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useWallet } from '../lib/wallets';
 import { usePresaleData, useBuyTokens, useMarketData } from '../lib/contracts';
 import { usePresale } from '../hooks/usePresale';
@@ -8,7 +8,7 @@ import PresaleCountdown from './PresaleCountdown';
 import PresalePurchaseForm from './PresalePurchaseForm';
 import PresaleUserInfo from './PresaleUserInfo';
 
-const PresaleMain = () => {
+const PresaleMain: React.FC = () => {
   console.log('PresaleMain rendering...');
   
   const [amount, setAmount] = useState('');
@@ -23,13 +23,14 @@ const PresaleMain = () => {
   if (presaleError) console.error('Presale data error:', presaleError);
   if (marketError) console.error('Market data error:', marketError);
 
-  const calculateTokens = () => {
+  // Memoize calculations to prevent unnecessary re-renders
+  const calculateTokens = useMemo(() => {
     if (!amount || !presaleData) return '0';
     const tokens = parseFloat(amount) / parseFloat(presaleData.price);
     return tokens.toLocaleString(undefined, { maximumFractionDigits: 2 });
-  };
+  }, [amount, presaleData]);
 
-  const calculateUSDValue = () => {
+  const calculateUSDValue = useMemo(() => {
     if (!amount || !marketData) return '0';
     const rates: Record<string, number> = {
       'ETH': marketData.eth,
@@ -39,7 +40,7 @@ const PresaleMain = () => {
     };
     const usdValue = parseFloat(amount) * (rates[paymentToken] || 1);
     return usdValue.toLocaleString(undefined, { style: 'currency', currency: 'USD' });
-  };
+  }, [amount, marketData, paymentToken]);
 
   const handleBuy = async () => {
     console.log('Handle buy clicked');
@@ -102,8 +103,8 @@ const PresaleMain = () => {
         isConnected={!!address}
         marketData={marketData}
         presaleData={presaleData}
-        calculateTokens={calculateTokens}
-        calculateUSDValue={calculateUSDValue}
+        calculateTokens={() => calculateTokens}
+        calculateUSDValue={() => calculateUSDValue}
       />
 
       <PresaleUserInfo 

@@ -1,5 +1,5 @@
 
-import { Suspense, lazy } from 'react';
+import React, { Suspense, lazy } from 'react';
 import CountdownTimer from '@/components/CountdownTimer';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
@@ -12,13 +12,21 @@ const TokenDetails = lazy(() => import('@/components/TokenDetails'));
 const UtilityBenefits = lazy(() => import('@/components/UtilityBenefits'));
 const HowToBuy = lazy(() => import('@/components/HowToBuy'));
 
-const LoadingSpinner = () => (
+const LoadingSpinner: React.FC = () => (
   <div className="flex justify-center items-center p-8">
     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600"></div>
   </div>
 );
 
-const Index = () => {
+const LazySection: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <ErrorBoundary>
+    <Suspense fallback={<LoadingSpinner />}>
+      {children}
+    </Suspense>
+  </ErrorBoundary>
+);
+
+const Index: React.FC = () => {
   console.log('Index page rendering...');
 
   return (
@@ -55,53 +63,39 @@ const Index = () => {
         </div>
 
         {/* Main Presale Section */}
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingSpinner />}>
-            <PresaleMain />
-          </Suspense>
-        </ErrorBoundary>
+        <LazySection>
+          <PresaleMain />
+        </LazySection>
 
         {/* User Balance */}
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingSpinner />}>
-            <UserBalance />
-          </Suspense>
-        </ErrorBoundary>
+        <LazySection>
+          <UserBalance />
+        </LazySection>
 
         {/* VIP Status */}
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingSpinner />}>
-            <VIPStatus />
-          </Suspense>
-        </ErrorBoundary>
+        <LazySection>
+          <VIPStatus />
+        </LazySection>
 
         {/* Top Holders Rewards */}
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingSpinner />}>
-            <TopHolders />
-          </Suspense>
-        </ErrorBoundary>
+        <LazySection>
+          <TopHolders />
+        </LazySection>
 
         {/* Token Details */}
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingSpinner />}>
-            <TokenDetails />
-          </Suspense>
-        </ErrorBoundary>
+        <LazySection>
+          <TokenDetails />
+        </LazySection>
 
         {/* Utility & Benefits */}
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingSpinner />}>
-            <UtilityBenefits />
-          </Suspense>
-        </ErrorBoundary>
+        <LazySection>
+          <UtilityBenefits />
+        </LazySection>
 
         {/* How to Buy */}
-        <ErrorBoundary>
-          <Suspense fallback={<LoadingSpinner />}>
-            <HowToBuy />
-          </Suspense>
-        </ErrorBoundary>
+        <LazySection>
+          <HowToBuy />
+        </LazySection>
       </div>
 
       {/* Footer */}

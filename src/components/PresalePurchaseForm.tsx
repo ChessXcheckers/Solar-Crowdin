@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import React from 'react';
 import { Button } from './ui/button';
 
 interface PresalePurchaseFormProps {
@@ -23,7 +23,7 @@ interface PresalePurchaseFormProps {
   calculateUSDValue: () => string;
 }
 
-const PresalePurchaseForm = ({
+const PresalePurchaseForm: React.FC<PresalePurchaseFormProps> = ({
   amount,
   setAmount,
   paymentToken,
@@ -35,7 +35,7 @@ const PresalePurchaseForm = ({
   presaleData,
   calculateTokens,
   calculateUSDValue
-}: PresalePurchaseFormProps) => {
+}) => {
   return (
     <div className="space-y-4">
       <div>
