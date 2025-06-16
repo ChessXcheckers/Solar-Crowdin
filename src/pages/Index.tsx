@@ -2,6 +2,7 @@
 import React, { Suspense, lazy } from 'react';
 import CountdownTimer from '@/components/CountdownTimer';
 import ErrorBoundary from '@/components/ErrorBoundary';
+import AIChatBot from '@/components/AIChatBot';
 
 // Lazy load components with proper error handling
 const PresaleMain = lazy(() => import('@/components/PresaleMain'));
@@ -40,22 +41,14 @@ const Index: React.FC = () => {
         }}
       />
       
-      {/* Header */}
+      {/* Header - Logo Only */}
       <header className="bg-white/90 backdrop-blur-sm shadow-sm border-b relative z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <img 
-              src="/lovable-uploads/dfd85afc-5560-4a65-9550-9643be9ce3d3.png" 
-              alt="SolarCrowdin Logo" 
-              className="h-12 w-auto"
-            />
-            <div className="text-2xl font-bold text-gray-900 drop-shadow-sm">
-              <span className="text-orange-600">Solar</span>Crowdin
-            </div>
-          </div>
-          <div className="text-sm text-gray-700 drop-shadow-sm">
-            © 2025 SolarCrowdin AI
-          </div>
+        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-center">
+          <img 
+            src="/lovable-uploads/dfd85afc-5560-4a65-9550-9643be9ce3d3.png" 
+            alt="SolarCrowdin Logo" 
+            className="h-16 w-auto"
+          />
         </div>
       </header>
 
@@ -104,6 +97,9 @@ const Index: React.FC = () => {
           <HowToBuy />
         </LazySection>
       </div>
+
+      {/* AI Chat Bot */}
+      <AIChatBot />
 
       {/* Footer */}
       <footer className="bg-gray-800/95 backdrop-blur-sm text-white py-8 mt-16 relative z-10">

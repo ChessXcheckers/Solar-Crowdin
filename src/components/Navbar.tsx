@@ -56,22 +56,22 @@ export function Navbar() {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-lg' : 'bg-transparent'
+      className={`fixed w-full z-40 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-white/95 backdrop-blur-md shadow-xl border-b border-orange-200' 
+          : 'bg-gradient-to-r from-white/10 to-orange-50/10 backdrop-blur-sm'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center">
-              <span
-                className={`text-xl font-bold ${
-                  isScrolled ? 'text-gray-900' : 'text-white'
-                }`}
-              >
-                <span className="text-orange-600">Solar</span> Crowding
-              </span>
+            <Link to="/" className="flex items-center space-x-3">
+              <img 
+                src="/lovable-uploads/dfd85afc-5560-4a65-9550-9643be9ce3d3.png" 
+                alt="SolarCrowdin Logo" 
+                className="h-10 w-auto"
+              />
             </Link>
           </div>
 
@@ -81,12 +81,12 @@ export function Navbar() {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-sm font-medium transition-colors duration-200 ${
+                className={`text-sm font-medium transition-all duration-300 hover:scale-105 ${
                   location.pathname === item.path
-                    ? 'text-orange-600'
+                    ? 'text-orange-600 font-semibold'
                     : isScrolled
-                    ? 'text-gray-700 hover:text-gray-900'
-                    : 'text-white hover:text-gray-300'
+                    ? 'text-gray-700 hover:text-orange-600'
+                    : 'text-gray-800 hover:text-orange-600'
                 }`}
               >
                 {item.name}
@@ -98,12 +98,12 @@ export function Navbar() {
           <div className="hidden md:flex items-center space-x-4">
             {isConnected ? (
               <div className="flex items-center space-x-3">
-                <span className={`text-sm ${isScrolled ? 'text-gray-600' : 'text-white'}`}>
+                <span className={`text-sm font-medium ${isScrolled ? 'text-gray-600' : 'text-gray-700'}`}>
                   {address?.slice(0, 6)}...{address?.slice(-4)}
                 </span>
                 <button
                   onClick={handleDisconnect}
-                  className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 transition-colors duration-200"
+                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 shadow-lg"
                 >
                   Disconnect
                 </button>
@@ -111,7 +111,7 @@ export function Navbar() {
             ) : (
               <button
                 onClick={handleConnect}
-                className="bg-orange-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors duration-200"
+                className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 shadow-lg"
               >
                 Connect Wallet
               </button>
@@ -122,8 +122,8 @@ export function Navbar() {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-md ${
-                isScrolled ? 'text-gray-900' : 'text-white'
+              className={`p-2 rounded-md transition-colors duration-300 ${
+                isScrolled ? 'text-gray-900 hover:text-orange-600' : 'text-gray-800 hover:text-orange-600'
               }`}
             >
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
@@ -139,17 +139,17 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white shadow-lg"
+            className="md:hidden bg-white/95 backdrop-blur-md shadow-xl border-t border-orange-200"
           >
             <div className="px-4 py-6 space-y-4">
               {NAV_ITEMS.map((item) => (
                 <Link
                   key={item.name}
                   to={item.path}
-                  className={`block text-sm font-medium ${
+                  className={`block text-sm font-medium transition-colors duration-300 ${
                     location.pathname === item.path
-                      ? 'text-orange-600'
-                      : 'text-gray-700 hover:text-gray-900'
+                      ? 'text-orange-600 font-semibold'
+                      : 'text-gray-700 hover:text-orange-600'
                   }`}
                 >
                   {item.name}
@@ -160,12 +160,12 @@ export function Navbar() {
               <div className="pt-4 border-t border-gray-200">
                 {isConnected ? (
                   <div className="space-y-3">
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm text-gray-600 font-medium">
                       Connected: {address?.slice(0, 6)}...{address?.slice(-4)}
                     </div>
                     <button
                       onClick={handleDisconnect}
-                      className="w-full bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-red-700 transition-colors duration-200"
+                      className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300"
                     >
                       Disconnect
                     </button>
@@ -173,7 +173,7 @@ export function Navbar() {
                 ) : (
                   <button
                     onClick={handleConnect}
-                    className="w-full bg-orange-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-orange-700 transition-colors duration-200"
+                    className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300"
                   >
                     Connect Wallet
                   </button>
