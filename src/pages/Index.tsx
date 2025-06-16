@@ -43,11 +43,18 @@ const Index: React.FC = () => {
       {/* Header */}
       <header className="bg-white/90 backdrop-blur-sm shadow-sm border-b relative z-10">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="text-2xl font-bold text-gray-900 drop-shadow-sm">
-            <span className="text-orange-600">Solar</span> Crowding
+          <div className="flex items-center space-x-3">
+            <img 
+              src="/lovable-uploads/dfd85afc-5560-4a65-9550-9643be9ce3d3.png" 
+              alt="SolarCrowdin Logo" 
+              className="h-12 w-auto"
+            />
+            <div className="text-2xl font-bold text-gray-900 drop-shadow-sm">
+              <span className="text-orange-600">Solar</span>Crowdin
+            </div>
           </div>
           <div className="text-sm text-gray-700 drop-shadow-sm">
-            © 2025 Solar Crowding AI
+            © 2025 SolarCrowdin AI
           </div>
         </div>
       </header>
@@ -101,9 +108,9 @@ const Index: React.FC = () => {
       {/* Footer */}
       <footer className="bg-gray-800/95 backdrop-blur-sm text-white py-8 mt-16 relative z-10">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-sm">© 2025 Solar Crowding AI. All rights reserved.</p>
+          <p className="text-sm">© 2025 SolarCrowdin AI. All rights reserved.</p>
           <p className="text-xs text-gray-400 mt-2">
-            Demo presale page - For demonstration purposes only
+            SLC Token Presale - Join the Solar Revolution
           </p>
         </div>
       </footer>
