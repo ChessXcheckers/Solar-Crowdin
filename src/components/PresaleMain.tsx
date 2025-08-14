@@ -7,12 +7,15 @@ import PresaleStats from './PresaleStats';
 import PresaleCountdown from './PresaleCountdown';
 import PresalePurchaseForm from './PresalePurchaseForm';
 import PresaleUserInfo from './PresaleUserInfo';
+import WalletConnectModal from './WalletConnectModal';
+import { FiCreditCard } from 'react-icons/fi';
 
 const PresaleMain: React.FC = () => {
   console.log('PresaleMain rendering...');
   
   const [amount, setAmount] = useState('');
   const [paymentToken, setPaymentToken] = useState('ETH');
+  const [showWalletModal, setShowWalletModal] = useState(false);
   const { address, connect } = useWallet();
   const { data: presaleData, isLoading: presaleLoading, error: presaleError } = usePresaleData();
   const { data: marketData, error: marketError } = useMarketData();
@@ -46,12 +49,8 @@ const PresaleMain: React.FC = () => {
     console.log('Handle buy clicked');
     
     if (!address) {
-      console.log('No address, attempting to connect wallet');
-      try {
-        await connect('metamask');
-      } catch (error) {
-        console.error('Failed to connect wallet:', error);
-      }
+      console.log('No address, showing wallet modal');
+      setShowWalletModal(true);
       return;
     }
 
@@ -86,32 +85,64 @@ const PresaleMain: React.FC = () => {
   console.log('Rendering PresaleMain with data:', { presaleData, marketData });
 
   return (
-    <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-8 max-w-2xl mx-auto border border-gray-200">
-      <PresaleStats presaleData={presaleData} />
-      
-      {presaleInfo?.timeLeft && (
-        <PresaleCountdown timeLeft={presaleInfo.timeLeft} />
-      )}
+    <>
+      <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl p-8 max-w-2xl mx-auto border border-orange-200/30 relative overflow-hidden">
+        {/* Glassmorphic background effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 to-blue-50/20 backdrop-blur-3xl"></div>
+        
+        <div className="relative z-10">
+          {/* Wallet Status Banner */}
+          {!address && (
+            <div className="bg-gradient-to-r from-orange-100 to-orange-50 border-l-4 border-orange-500 p-4 mb-6 rounded-lg">
+              <div className="flex items-center">
+                <FiCreditCard className="text-orange-600 mr-3" size={20} />
+                <div className="flex-1">
+                  <p className="text-orange-800 font-medium">Connect your wallet to participate in the presale</p>
+                  <p className="text-orange-600 text-sm">Secure transactions with MetaMask, Trust Wallet, or Coinbase</p>
+                </div>
+                <button
+                  onClick={() => setShowWalletModal(true)}
+                  className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 shadow-lg"
+                >
+                  Connect
+                </button>
+              </div>
+            </div>
+          )}
 
-      <PresalePurchaseForm
-        amount={amount}
-        setAmount={setAmount}
-        paymentToken={paymentToken}
-        setPaymentToken={setPaymentToken}
-        onBuy={handleBuy}
-        isLoading={buyTokens.isPending}
-        isConnected={!!address}
-        marketData={marketData}
-        presaleData={presaleData}
-        calculateTokens={() => calculateTokens}
-        calculateUSDValue={() => calculateUSDValue}
-      />
+          <PresaleStats presaleData={presaleData} />
+          
+          {presaleInfo?.timeLeft && (
+            <PresaleCountdown timeLeft={presaleInfo.timeLeft} />
+          )}
 
-      <PresaleUserInfo 
-        address={address}
-        userBalance={presaleInfo?.userBalance}
+          <PresalePurchaseForm
+            amount={amount}
+            setAmount={setAmount}
+            paymentToken={paymentToken}
+            setPaymentToken={setPaymentToken}
+            onBuy={handleBuy}
+            isLoading={buyTokens.isPending}
+            isConnected={!!address}
+            marketData={marketData}
+            presaleData={presaleData}
+            calculateTokens={() => calculateTokens}
+            calculateUSDValue={() => calculateUSDValue}
+          />
+
+          <PresaleUserInfo 
+            address={address}
+            userBalance={presaleInfo?.userBalance}
+          />
+        </div>
+      </div>
+
+      {/* Wallet Connect Modal */}
+      <WalletConnectModal 
+        isOpen={showWalletModal}
+        onClose={() => setShowWalletModal(false)}
       />
-    </div>
+    </>
   );
 };
 
