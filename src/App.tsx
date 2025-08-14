@@ -14,8 +14,11 @@ import Team from "./pages/Team";
 import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
-import ErrorBoundary from './components/ErrorBoundary';
+import ProductionErrorBoundary from './components/ProductionErrorBoundary';
 import Navbar from './components/Navbar';
+import { analytics, measureWebVitals } from './utils/analytics';
+import { setupCSP, performSecurityChecks } from './utils/security';
+import { useEffect } from 'react';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,32 +29,45 @@ const queryClient = new QueryClient({
   },
 });
 
-const App = () => (
-  <ErrorBoundary>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Router>
-          <WalletKitProvider>
-            <div className="min-h-screen">
-              <Navbar />
-              <Toaster />
-              <Sonner />
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/tokenomics" element={<Tokenomics />} />
-                <Route path="/roadmap" element={<Roadmap />} />
-                <Route path="/team" element={<Team />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </div>
-          </WalletKitProvider>
-        </Router>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </ErrorBoundary>
-);
+const App = () => {
+  useEffect(() => {
+    // Initialize production features
+    analytics.init();
+    measureWebVitals();
+    setupCSP();
+    performSecurityChecks();
+
+    // Track initial page view
+    analytics.page(window.location.pathname);
+  }, []);
+
+  return (
+    <ProductionErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Router>
+            <WalletKitProvider>
+              <div className="min-h-screen">
+                <Navbar />
+                <Toaster />
+                <Sonner />
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/tokenomics" element={<Tokenomics />} />
+                  <Route path="/roadmap" element={<Roadmap />} />
+                  <Route path="/team" element={<Team />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
+            </WalletKitProvider>
+          </Router>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ProductionErrorBoundary>
+  );
+};
 
 export default App;
