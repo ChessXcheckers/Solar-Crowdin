@@ -73,7 +73,7 @@ const PresalePurchaseForm: React.FC<PresalePurchaseFormProps> = ({
       <div className="bg-gray-50/90 backdrop-blur-sm p-4 rounded-lg border">
         <div className="flex justify-between text-sm mb-2">
           <span className="text-gray-600 font-medium">You will receive:</span>
-          <span className="font-bold text-orange-600">{calculateTokens()} SCT</span>
+          <span className="font-bold text-orange-600">{calculateTokens()} SLC</span>
         </div>
         {amount && (
           <div className="flex justify-between text-xs text-gray-500">

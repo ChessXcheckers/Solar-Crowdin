@@ -12,7 +12,7 @@ const UserBalance = () => {
         </div>
         <div>
           <p className="text-3xl font-bold text-gray-800">{userBalance.toLocaleString()}</p>
-          <p className="text-gray-600">SCT</p>
+          <p className="text-gray-600">SLC</p>
         </div>
       </div>
       

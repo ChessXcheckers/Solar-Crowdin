@@ -21,7 +21,7 @@ const TopHolders = () => {
             </div>
             <div className="text-right">
               <p className="font-bold text-orange-600">{reward.reward.toLocaleString()}</p>
-              <p className="text-sm text-gray-500">SCT Reward</p>
+              <p className="text-sm text-gray-500">SLC Reward</p>
             </div>
           </div>
         ))}

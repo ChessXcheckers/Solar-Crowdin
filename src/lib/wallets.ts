@@ -1,4 +1,4 @@
 
-export { useWalletKit as useWallet } from '../components/WalletKitProvider';
+export { useUniversalWallet as useWallet } from '../components/UniversalWalletProvider';
 
-export type WalletType = 'metamask' | 'trust' | 'coinbase' | 'phantom';
+export type WalletType = 'metamask' | 'trust' | 'coinbase' | 'phantom' | 'binance' | 'walletconnect';

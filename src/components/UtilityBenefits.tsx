@@ -11,7 +11,7 @@ const UtilityBenefits = () => {
     {
       icon: TrendingUp,
       title: 'Staking for Passive Rewards',
-      description: 'Stake your SCT tokens to earn passive income and additional rewards'
+      description: 'Stake your SLC tokens to earn passive income and additional rewards'
     },
     {
       icon: Zap,

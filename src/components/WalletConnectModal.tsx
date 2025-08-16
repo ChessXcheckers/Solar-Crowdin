@@ -33,7 +33,7 @@ const WalletConnectModal: React.FC<WalletConnectModalProps> = ({ isOpen, onClose
     }
   ];
 
-  const handleConnect = async (walletType: string) => {
+  const handleConnect = async (walletType: 'metamask' | 'trust' | 'coinbase') => {
     setSelectedWallet(walletType);
     try {
       await connect(walletType);
@@ -90,7 +90,7 @@ const WalletConnectModal: React.FC<WalletConnectModalProps> = ({ isOpen, onClose
                 {wallets.map((wallet) => (
                   <button
                     key={wallet.id}
-                    onClick={() => handleConnect(wallet.id)}
+                    onClick={() => handleConnect(wallet.id as 'metamask' | 'trust' | 'coinbase')}
                     disabled={isConnecting && selectedWallet === wallet.id}
                     className="w-full p-4 border-2 border-gray-200 rounded-xl hover:border-orange-300 hover:bg-orange-50 transition-all duration-200 group disabled:opacity-50 disabled:cursor-not-allowed"
                   >

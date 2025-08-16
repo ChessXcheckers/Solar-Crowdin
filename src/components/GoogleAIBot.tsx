@@ -1,63 +1,128 @@
-
-import { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMessageCircle, FiX, FiSend } from 'react-icons/fi';
+import { toast } from 'react-hot-toast';
 
-const AIChatBot = () => {
+const GOOGLE_AI_API_KEY = 'AIzaSyD_4IQvTGmdf1LNLVnmw46dKsEsJnw_C-w';
+
+interface Message {
+  text: string;
+  isBot: boolean;
+  timestamp: number;
+}
+
+const GoogleAIBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<Message[]>([
     { 
-      text: "Hello! I'm SolarBot ☀️ Your AI assistant for SolarCrowdin. How can I help you with the SLC presale?", 
-      isBot: true 
+      text: "Hello! I'm SolarBot AI ☀️ Your intelligent assistant for SolarCrowdin. I can help you with the SLC presale, answer technical questions, and guide you through the platform. How can I assist you today?", 
+      isBot: true,
+      timestamp: Date.now()
     }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const generateBotResponse = (userMessage: string) => {
-    const lowerMessage = userMessage.toLowerCase();
-    
-    if (lowerMessage.includes('price') || lowerMessage.includes('cost')) {
-      return "The SLC token presale is currently priced at $0.063 per token. After listing, the price will be $0.14, offering potential gains of 122%! 🚀";
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const callGoogleAI = async (userMessage: string): Promise<string> => {
+    try {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GOOGLE_AI_API_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `You are SolarBot AI, an expert assistant for SolarCrowdin - a revolutionary solar energy crowdfunding platform. 
+
+Context:
+- SolarCrowdin is launching the SLC token presale at $0.063 per token
+- Listing price will be $0.14 (122% potential gain)
+- Total supply: 6 billion SLC tokens
+- VIP levels offer increasing bonuses (20% to 100%)
+- Platform supports ETH, BNB, USDT, USDC payments
+- Contract address: 0xeaa91F0ef29ECE13dB9F2B46982DDbFa9ff83412
+- Focus on solar energy, AI optimization, and sustainable technology
+
+User question: ${userMessage}
+
+Please provide a helpful, accurate response about SolarCrowdin, the SLC token, or related topics. Keep responses conversational but informative. Use relevant emojis. If asked about topics outside of SolarCrowdin/crypto/solar energy, politely redirect to SolarCrowdin topics.`
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.7,
+            topK: 40,
+            topP: 0.95,
+            maxOutputTokens: 1024,
+          },
+          safetySettings: [
+            {
+              category: "HARM_CATEGORY_HARASSMENT",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            },
+            {
+              category: "HARM_CATEGORY_HATE_SPEECH",
+              threshold: "BLOCK_MEDIUM_AND_ABOVE"
+            }
+          ]
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || 
+        "I apologize, but I'm having trouble processing your request right now. Please try asking about the SLC presale, tokenomics, or how to participate!";
+    } catch (error) {
+      console.error('Google AI API Error:', error);
+      return "I'm experiencing technical difficulties. Please try again in a moment, or ask me about the SLC token presale basics!";
     }
-    
-    if (lowerMessage.includes('buy') || lowerMessage.includes('purchase')) {
-      return "You can purchase SLC tokens using ETH, BNB, USDT, or USDC. Simply connect your wallet above and choose your payment method. The minimum purchase is $10. 💰";
-    }
-    
-    if (lowerMessage.includes('vip') || lowerMessage.includes('bonus')) {
-      return "VIP levels offer increasing bonuses: VIP 1 (20,000 SLC) = 20% bonus, VIP 2 (50,000 SLC) = 40% bonus, up to VIP 5 (500,000 SLC) = 100% bonus! ⭐";
-    }
-    
-    if (lowerMessage.includes('supply') || lowerMessage.includes('tokenomics')) {
-      return "Total supply is 6 billion SLC tokens: 30% public sale, 15% private sale, 10% marketing, 10% team, 10% reserve, 5% charity, 5% airdrop. 📊";
-    }
-    
-    if (lowerMessage.includes('contract') || lowerMessage.includes('address')) {
-      return "The SLC token contract address is: 0xeaa91F0ef29ECE13dB9F2B46982DDbFa9ff83412. Always verify contracts before transactions! 🔒";
-    }
-    
-    if (lowerMessage.includes('claim') || lowerMessage.includes('vesting')) {
-      return "Token claiming will be available after the presale ends. Vesting details will be announced closer to the Token Generation Event (TGE). 📅";
-    }
-    
-    return "I'm here to help with SolarCrowdin questions! Ask me about token prices, how to buy, VIP levels, tokenomics, or anything else about the SLC presale. ☀️";
   };
 
   const handleSendMessage = async () => {
-    if (!inputValue.trim()) return;
+    if (!inputValue.trim() || isLoading) return;
 
-    const userMessage = inputValue;
-    setMessages(prev => [...prev, { text: userMessage, isBot: false }]);
+    const userMessage = inputValue.trim();
+    const newMessage: Message = {
+      text: userMessage,
+      isBot: false,
+      timestamp: Date.now()
+    };
+
+    setMessages(prev => [...prev, newMessage]);
     setInputValue('');
     setIsLoading(true);
 
-    // Simulate API delay
-    setTimeout(() => {
-      const botResponse = generateBotResponse(userMessage);
-      setMessages(prev => [...prev, { text: botResponse, isBot: true }]);
+    try {
+      const aiResponse = await callGoogleAI(userMessage);
+      const botMessage: Message = {
+        text: aiResponse,
+        isBot: true,
+        timestamp: Date.now()
+      };
+      setMessages(prev => [...prev, botMessage]);
+    } catch (error) {
+      toast.error('Failed to get AI response');
+      const errorMessage: Message = {
+        text: "Sorry, I'm having trouble connecting right now. Please try again or ask me about the SLC presale basics!",
+        isBot: true,
+        timestamp: Date.now()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -80,14 +145,14 @@ const AIChatBot = () => {
             {/* Header */}
             <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-4 flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
-                  ☀️
+                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center animate-pulse">
+                  🤖
                 </div>
                 <div>
                   <h3 className="text-white font-semibold">SolarBot AI</h3>
                   <div className="flex items-center space-x-1">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-white/80 text-xs">Online</span>
+                    <span className="text-white/80 text-xs">Powered by Google AI</span>
                   </div>
                 </div>
               </div>
@@ -113,7 +178,7 @@ const AIChatBot = () => {
                       ? 'bg-white/80 text-gray-800 border border-orange-200' 
                       : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white'
                   }`}>
-                    <p className="text-sm">{message.text}</p>
+                    <p className="text-sm whitespace-pre-wrap">{message.text}</p>
                   </div>
                 </motion.div>
               ))}
@@ -133,6 +198,7 @@ const AIChatBot = () => {
                   </div>
                 </motion.div>
               )}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Input */}
@@ -143,7 +209,7 @@ const AIChatBot = () => {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Ask about SLC presale..."
+                  placeholder="Ask about SLC presale, solar energy, or anything..."
                   className="flex-1 bg-white/80 border border-orange-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                   disabled={isLoading}
                 />
@@ -166,7 +232,7 @@ const AIChatBot = () => {
             onClick={() => setIsOpen(true)}
             className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all duration-300"
           >
-            <FiMessageCircle size={24} />
+            <span className="text-2xl">🤖</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -174,4 +240,4 @@ const AIChatBot = () => {
   );
 };
 
-export default AIChatBot;
+export default GoogleAIBot;

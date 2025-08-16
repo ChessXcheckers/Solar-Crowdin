@@ -1,6 +1,6 @@
 
 import { BrowserRouter as Router } from 'react-router-dom';
-import WalletKitProvider from './components/WalletKitProvider';
+import UniversalWalletProvider from './components/UniversalWalletProvider';
 import { Toaster } from './components/Toaster';
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -46,7 +46,7 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Router>
-            <WalletKitProvider>
+            <UniversalWalletProvider>
               <div className="min-h-screen">
                 <Navbar />
                 <Toaster />
@@ -62,7 +62,7 @@ const App = () => {
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>
-            </WalletKitProvider>
+            </UniversalWalletProvider>
           </Router>
         </TooltipProvider>
       </QueryClientProvider>

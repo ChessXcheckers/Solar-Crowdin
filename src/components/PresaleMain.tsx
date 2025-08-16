@@ -7,7 +7,7 @@ import PresaleStats from './PresaleStats';
 import PresaleCountdown from './PresaleCountdown';
 import PresalePurchaseForm from './PresalePurchaseForm';
 import PresaleUserInfo from './PresaleUserInfo';
-import WalletConnectModal from './WalletConnectModal';
+import UniversalWalletModal from './UniversalWalletModal';
 import { FiCreditCard } from 'react-icons/fi';
 
 const PresaleMain: React.FC = () => {
@@ -138,9 +138,9 @@ const PresaleMain: React.FC = () => {
       </div>
 
       {/* Wallet Connect Modal */}
-      <WalletConnectModal 
-        isOpen={showWalletModal}
-        onClose={() => setShowWalletModal(false)}
+      <UniversalWalletModal 
+        isOpen={showWalletModal} 
+        onClose={() => setShowWalletModal(false)} 
       />
     </>
   );

@@ -19,7 +19,7 @@ const PresaleUserInfo = ({ address, userBalance }: PresaleUserInfoProps) => {
         <div className="font-medium">BNB: {userBalance.bnb}</div>
         <div className="font-medium">USDT: {userBalance.usdt}</div>
         <div className="font-medium">USDC: {userBalance.usdc}</div>
-        <div className="font-medium">SCT: {userBalance.tokens}</div>
+        <div className="font-medium">SLC: {userBalance.tokens}</div>
       </div>
     </div>
   );

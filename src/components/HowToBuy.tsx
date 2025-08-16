@@ -13,7 +13,7 @@ const HowToBuy = () => {
       step: 2,
       icon: CreditCard,
       title: 'Select Currency',
-      description: 'Choose from ETH, USDT, or USDC to purchase SCT tokens'
+      description: 'Choose from ETH, USDT, or USDC to purchase SLC tokens'
     },
     {
       step: 3,
@@ -37,7 +37,7 @@ const HowToBuy = () => {
       step: 6,
       icon: Download,
       title: 'Import Token',
-      description: 'Add SCT to your wallet using the contract address'
+      description: 'Add SLC to your wallet using the contract address'
     }
   ];
 
