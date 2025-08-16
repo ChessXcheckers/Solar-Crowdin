@@ -2,7 +2,7 @@
 import React, { Suspense, lazy } from 'react';
 import CountdownTimer from '@/components/CountdownTimer';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import AIChatBot from '@/components/AIChatBot';
+import GoogleAIBot from '@/components/GoogleAIBot';
 
 // Lazy load components with proper error handling
 const PresaleMain = lazy(() => import('@/components/PresaleMain'));
@@ -41,65 +41,57 @@ const Index: React.FC = () => {
         }}
       />
       
-      {/* Header - Logo Only */}
-      <header className="bg-white/90 backdrop-blur-sm shadow-sm border-b relative z-10">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-center">
-          <img 
-            src="/lovable-uploads/dfd85afc-5560-4a65-9550-9643be9ce3d3.png" 
-            alt="SolarCrowdin Logo" 
-            className="h-16 w-auto"
-          />
+      {/* Main Content - Add proper top padding to account for fixed navbar */}
+      <div className="pt-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
+          {/* Countdown Timer */}
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-900 mb-2 drop-shadow-md">
+              Join the <span className="text-orange-600">AI Solar Revolution</span>
+            </h1>
+            <p className="text-gray-800 mb-8 font-medium drop-shadow-sm">Presale ends in:</p>
+            <CountdownTimer />
+          </div>
+
+          {/* Main Presale Section */}
+          <LazySection>
+            <PresaleMain />
+          </LazySection>
+
+          {/* User Balance */}
+          <LazySection>
+            <UserBalance />
+          </LazySection>
+
+          {/* VIP Status */}
+          <LazySection>
+            <VIPStatus />
+          </LazySection>
+
+          {/* Top Holders Rewards */}
+          <LazySection>
+            <TopHolders />
+          </LazySection>
+
+          {/* Token Details */}
+          <LazySection>
+            <TokenDetails />
+          </LazySection>
+
+          {/* Utility & Benefits */}
+          <LazySection>
+            <UtilityBenefits />
+          </LazySection>
+
+          {/* How to Buy */}
+          <LazySection>
+            <HowToBuy />
+          </LazySection>
         </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 py-8 space-y-8 relative z-10">
-        {/* Countdown Timer */}
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2 drop-shadow-md">
-            Join the <span className="text-orange-600">AI Solar Revolution</span>
-          </h1>
-          <p className="text-gray-800 mb-8 font-medium drop-shadow-sm">Presale ends in:</p>
-          <CountdownTimer />
-        </div>
-
-        {/* Main Presale Section */}
-        <LazySection>
-          <PresaleMain />
-        </LazySection>
-
-        {/* User Balance */}
-        <LazySection>
-          <UserBalance />
-        </LazySection>
-
-        {/* VIP Status */}
-        <LazySection>
-          <VIPStatus />
-        </LazySection>
-
-        {/* Top Holders Rewards */}
-        <LazySection>
-          <TopHolders />
-        </LazySection>
-
-        {/* Token Details */}
-        <LazySection>
-          <TokenDetails />
-        </LazySection>
-
-        {/* Utility & Benefits */}
-        <LazySection>
-          <UtilityBenefits />
-        </LazySection>
-
-        {/* How to Buy */}
-        <LazySection>
-          <HowToBuy />
-        </LazySection>
       </div>
 
       {/* AI Chat Bot */}
-      <AIChatBot />
+      <GoogleAIBot />
 
       {/* Footer */}
       <footer className="bg-gray-800/95 backdrop-blur-sm text-white py-8 mt-16 relative z-10">

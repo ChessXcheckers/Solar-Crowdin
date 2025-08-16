@@ -1,6 +1,7 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMessageCircle, FiX, FiSend } from 'react-icons/fi';
+import { FiMessageCircle, FiX, FiSend, FiMinimize2, FiMaximize2 } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 
 const GOOGLE_AI_API_KEY = 'AIzaSyD_4IQvTGmdf1LNLVnmw46dKsEsJnw_C-w';
@@ -13,6 +14,7 @@ interface Message {
 
 const GoogleAIBot: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     { 
       text: "Hello! I'm SolarBot AI ☀️ Your intelligent assistant for SolarCrowdin. I can help you with the SLC presale, answer technical questions, and guide you through the platform. How can I assist you today?", 
@@ -133,95 +135,111 @@ Please provide a helpful, accurate response about SolarCrowdin, the SLC token, o
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-6 right-6 z-[9000]">
       <AnimatePresence>
         {isOpen ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            className="bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-orange-200 w-80 h-96 flex flex-col overflow-hidden"
+            className={`bg-white rounded-xl shadow-2xl border border-orange-200 flex flex-col overflow-hidden ${
+              isMinimized 
+                ? 'w-80 h-16' 
+                : 'w-80 sm:w-96 h-96 sm:h-[500px]'
+            }`}
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-4 flex items-center justify-between">
+            <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-4 flex items-center justify-between flex-shrink-0">
               <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center animate-pulse">
-                  🤖
+                <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                  <span className="text-lg">🤖</span>
                 </div>
                 <div>
-                  <h3 className="text-white font-semibold">SolarBot AI</h3>
+                  <h3 className="text-white font-semibold text-sm">SolarBot AI</h3>
                   <div className="flex items-center space-x-1">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <span className="text-white/80 text-xs">Powered by Google AI</span>
                   </div>
                 </div>
               </div>
-              <button 
-                onClick={() => setIsOpen(false)}
-                className="text-white/80 hover:text-white transition-colors"
-              >
-                <FiX size={20} />
-              </button>
-            </div>
-
-            {/* Messages */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gradient-to-b from-orange-50/30 to-white/30">
-              {messages.map((message, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
-                >
-                  <div className={`max-w-xs p-3 rounded-lg ${
-                    message.isBot 
-                      ? 'bg-white/80 text-gray-800 border border-orange-200' 
-                      : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white'
-                  }`}>
-                    <p className="text-sm whitespace-pre-wrap">{message.text}</p>
-                  </div>
-                </motion.div>
-              ))}
-              
-              {isLoading && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="flex justify-start"
-                >
-                  <div className="bg-white/80 border border-orange-200 p-3 rounded-lg">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"></div>
-                      <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                      <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input */}
-            <div className="p-4 border-t border-orange-200 bg-white/50">
-              <div className="flex space-x-2">
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Ask about SLC presale, solar energy, or anything..."
-                  className="flex-1 bg-white/80 border border-orange-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                  disabled={isLoading}
-                />
+              <div className="flex items-center space-x-2">
                 <button 
-                  onClick={handleSendMessage}
-                  disabled={isLoading || !inputValue.trim()}
-                  className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-2 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  onClick={() => setIsMinimized(!isMinimized)}
+                  className="text-white/80 hover:text-white transition-colors p-1"
                 >
-                  <FiSend size={16} />
+                  {isMinimized ? <FiMaximize2 size={16} /> : <FiMinimize2 size={16} />}
+                </button>
+                <button 
+                  onClick={() => setIsOpen(false)}
+                  className="text-white/80 hover:text-white transition-colors p-1"
+                >
+                  <FiX size={18} />
                 </button>
               </div>
             </div>
+
+            {/* Messages */}
+            {!isMinimized && (
+              <>
+                <div className="flex-1 p-4 overflow-y-auto space-y-3 bg-gradient-to-b from-orange-50/30 to-white/30 min-h-0">
+                  {messages.map((message, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
+                    >
+                      <div className={`max-w-[85%] p-3 rounded-lg text-sm leading-relaxed ${
+                        message.isBot 
+                          ? 'bg-white border border-orange-200 text-gray-800 shadow-sm' 
+                          : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm'
+                      }`}>
+                        <p className="whitespace-pre-wrap break-words">{message.text}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                  
+                  {isLoading && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="flex justify-start"
+                    >
+                      <div className="bg-white border border-orange-200 p-3 rounded-lg shadow-sm">
+                        <div className="flex space-x-1">
+                          <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                          <div className="w-2 h-2 bg-orange-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                  <div ref={messagesEndRef} />
+                </div>
+
+                {/* Input */}
+                <div className="p-4 border-t border-orange-200 bg-white/80 backdrop-blur-sm flex-shrink-0">
+                  <div className="flex space-x-2">
+                    <input
+                      type="text"
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                      onKeyPress={handleKeyPress}
+                      placeholder="Ask about SLC presale, solar energy..."
+                      className="flex-1 bg-white border border-orange-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent text-gray-800 placeholder-gray-500"
+                      disabled={isLoading}
+                    />
+                    <button 
+                      onClick={handleSendMessage}
+                      disabled={isLoading || !inputValue.trim()}
+                      className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white p-2 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                    >
+                      <FiSend size={16} />
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </motion.div>
         ) : (
           <motion.button

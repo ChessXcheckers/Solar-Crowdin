@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWallet } from '../lib/wallets';
@@ -49,21 +50,22 @@ const WalletConnectModal: React.FC<WalletConnectModalProps> = ({ isOpen, onClose
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop - Higher z-index than navbar */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999]"
             onClick={onClose}
           />
           
-          {/* Modal */}
+          {/* Modal - Highest z-index */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
+            onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
               {/* Header */}
@@ -75,7 +77,7 @@ const WalletConnectModal: React.FC<WalletConnectModalProps> = ({ isOpen, onClose
                   </div>
                   <button
                     onClick={onClose}
-                    className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+                    className="p-2 hover:bg-white/20 rounded-lg transition-colors z-[10001] relative"
                   >
                     <FiX size={20} />
                   </button>
@@ -86,7 +88,7 @@ const WalletConnectModal: React.FC<WalletConnectModalProps> = ({ isOpen, onClose
               </div>
 
               {/* Wallet Options */}
-              <div className="p-6 space-y-3">
+              <div className="p-6 space-y-3 max-h-96 overflow-y-auto">
                 {wallets.map((wallet) => (
                   <button
                     key={wallet.id}

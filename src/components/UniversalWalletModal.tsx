@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useUniversalWallet, WalletType, WalletInfo } from './UniversalWalletProvider';
@@ -62,25 +63,26 @@ const UniversalWalletModal: React.FC<UniversalWalletModalProps> = ({ isOpen, onC
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Backdrop - Higher z-index than navbar */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999]"
             onClick={onClose}
           />
           
-          {/* Modal */}
+          {/* Modal - Highest z-index */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden max-h-[90vh] flex flex-col">
               {/* Header */}
-              <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 text-white">
+              <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 text-white flex-shrink-0">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
                     <FiCreditCard size={24} />
@@ -88,7 +90,7 @@ const UniversalWalletModal: React.FC<UniversalWalletModalProps> = ({ isOpen, onC
                   </div>
                   <button
                     onClick={onClose}
-                    className="p-1 hover:bg-white/20 rounded-lg transition-colors"
+                    className="p-2 hover:bg-white/20 rounded-lg transition-colors z-[10001] relative"
                   >
                     <FiX size={20} />
                   </button>
@@ -99,7 +101,7 @@ const UniversalWalletModal: React.FC<UniversalWalletModalProps> = ({ isOpen, onC
               </div>
 
               {/* Wallet Options */}
-              <div className="p-6 space-y-3 max-h-96 overflow-y-auto">
+              <div className="p-6 space-y-3 overflow-y-auto flex-1">
                 {supportedWallets.map((wallet) => (
                   <button
                     key={wallet.id}
@@ -136,7 +138,7 @@ const UniversalWalletModal: React.FC<UniversalWalletModalProps> = ({ isOpen, onC
 
               {/* Error Message */}
               {error && (
-                <div className="mx-6 mb-6 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2">
+                <div className="mx-6 mb-6 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start space-x-2 flex-shrink-0">
                   <FiAlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-red-600 text-sm font-medium">Connection Error</p>
@@ -146,7 +148,7 @@ const UniversalWalletModal: React.FC<UniversalWalletModalProps> = ({ isOpen, onC
               )}
 
               {/* Footer */}
-              <div className="bg-gray-50 px-6 py-4">
+              <div className="bg-gray-50 px-6 py-4 flex-shrink-0">
                 <div className="flex items-center justify-center space-x-2 text-xs text-gray-500">
                   <FiCheckCircle className="w-3 h-3" />
                   <span>Secure connection • Your keys, your crypto</span>
