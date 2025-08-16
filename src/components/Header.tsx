@@ -1,5 +1,5 @@
 
-import WalletConnect from './WalletConnect';
+import { ConnectButton } from './ConnectButton';
 
 const Header = () => {
   const scrollToSection = (sectionId: string) => {
@@ -49,7 +49,7 @@ const Header = () => {
           </button>
         </nav>
 
-        <WalletConnect />
+        <ConnectButton />
       </div>
     </header>
   );

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { Link, useLocation } from 'react-router-dom';
-import { useWallet } from '../lib/wallets';
+import { ConnectButton } from './ConnectButton';
 
 const NAV_ITEMS = [
   { name: 'Home', path: '/' },
@@ -18,7 +18,6 @@ const NAV_ITEMS = [
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { address, connect, disconnect } = useWallet();
   const location = useLocation();
 
   useEffect(() => {
@@ -34,25 +33,6 @@ export function Navbar() {
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
-
-  const isConnected = !!address;
-
-  const handleConnect = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    try {
-      await connect('metamask');
-    } catch (error) {
-      console.error('Failed to connect wallet:', error);
-    }
-  };
-
-  const handleDisconnect = async () => {
-    try {
-      await disconnect();
-    } catch (error) {
-      console.error('Failed to disconnect wallet:', error);
-    }
-  };
 
   return (
     <nav
@@ -95,27 +75,8 @@ export function Navbar() {
           </div>
 
           {/* Wallet Connection */}
-          <div className="hidden md:flex items-center space-x-4">
-            {isConnected ? (
-              <div className="flex items-center space-x-3">
-                <span className={`text-sm font-medium ${isScrolled ? 'text-gray-600' : 'text-gray-700'}`}>
-                  {address?.slice(0, 6)}...{address?.slice(-4)}
-                </span>
-                <button
-                  onClick={handleDisconnect}
-                  className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 shadow-lg"
-                >
-                  Disconnect
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={handleConnect}
-                className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-300 hover:scale-105 shadow-lg"
-              >
-                Connect Wallet
-              </button>
-            )}
+          <div className="hidden md:flex items-center">
+            <ConnectButton />
           </div>
 
           {/* Mobile menu button */}
@@ -158,26 +119,7 @@ export function Navbar() {
               
               {/* Mobile Wallet Connection */}
               <div className="pt-4 border-t border-gray-200">
-                {isConnected ? (
-                  <div className="space-y-3">
-                    <div className="text-sm text-gray-600 font-medium">
-                      Connected: {address?.slice(0, 6)}...{address?.slice(-4)}
-                    </div>
-                    <button
-                      onClick={handleDisconnect}
-                      className="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300"
-                    >
-                      Disconnect
-                    </button>
-                  </div>
-                ) : (
-                  <button
-                    onClick={handleConnect}
-                    className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300"
-                  >
-                    Connect Wallet
-                  </button>
-                )}
+                <ConnectButton />
               </div>
             </div>
           </motion.div>

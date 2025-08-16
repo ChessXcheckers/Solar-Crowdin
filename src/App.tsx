@@ -1,6 +1,5 @@
 
 import { BrowserRouter as Router } from 'react-router-dom';
-import UniversalWalletProvider from './components/UniversalWalletProvider';
 import { Toaster } from './components/Toaster';
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -46,7 +45,6 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Router>
-            <UniversalWalletProvider>
               <div className="min-h-screen">
                 <Navbar />
                 <Toaster />
@@ -62,7 +60,6 @@ const App = () => {
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>
-            </UniversalWalletProvider>
           </Router>
         </TooltipProvider>
       </QueryClientProvider>

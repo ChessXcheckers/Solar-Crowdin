@@ -1,13 +1,12 @@
 
 import React, { useState, useMemo } from 'react';
-import { useWallet } from '../lib/wallets';
+import { useAccount } from 'wagmi';
 import { usePresaleData, useBuyTokens, useMarketData } from '../lib/contracts';
 import { usePresale } from '../hooks/usePresale';
 import PresaleStats from './PresaleStats';
 import PresaleCountdown from './PresaleCountdown';
 import PresalePurchaseForm from './PresalePurchaseForm';
 import PresaleUserInfo from './PresaleUserInfo';
-import UniversalWalletModal from './UniversalWalletModal';
 import { FiCreditCard } from 'react-icons/fi';
 
 const PresaleMain: React.FC = () => {
@@ -15,8 +14,7 @@ const PresaleMain: React.FC = () => {
   
   const [amount, setAmount] = useState('');
   const [paymentToken, setPaymentToken] = useState('ETH');
-  const [showWalletModal, setShowWalletModal] = useState(false);
-  const { address, connect } = useWallet();
+  const { address, isConnected } = useAccount();
   const { data: presaleData, isLoading: presaleLoading, error: presaleError } = usePresaleData();
   const { data: marketData, error: marketError } = useMarketData();
   const { presaleInfo } = usePresale();
@@ -48,9 +46,10 @@ const PresaleMain: React.FC = () => {
   const handleBuy = async () => {
     console.log('Handle buy clicked');
     
-    if (!address) {
-      console.log('No address, showing wallet modal');
-      setShowWalletModal(true);
+    if (!isConnected) {
+      console.log('Wallet not connected');
+      // Optionally, you can trigger the modal here if you import useWeb3Modal
+      // For now, we assume the user connects via the navbar.
       return;
     }
 
@@ -91,25 +90,6 @@ const PresaleMain: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 to-blue-50/20 backdrop-blur-3xl"></div>
         
         <div className="relative z-10">
-          {/* Wallet Status Banner */}
-          {!address && (
-            <div className="bg-gradient-to-r from-orange-100 to-orange-50 border-l-4 border-orange-500 p-4 mb-6 rounded-lg">
-              <div className="flex items-center">
-                <FiCreditCard className="text-orange-600 mr-3" size={20} />
-                <div className="flex-1">
-                  <p className="text-orange-800 font-medium">Connect your wallet to participate in the presale</p>
-                  <p className="text-orange-600 text-sm">Secure transactions with MetaMask, Trust Wallet, or Coinbase</p>
-                </div>
-                <button
-                  onClick={() => setShowWalletModal(true)}
-                  className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:scale-105 shadow-lg"
-                >
-                  Connect
-                </button>
-              </div>
-            </div>
-          )}
-
           <PresaleStats presaleData={presaleData} />
           
           {presaleInfo?.timeLeft && (
@@ -136,12 +116,6 @@ const PresaleMain: React.FC = () => {
           />
         </div>
       </div>
-
-      {/* Wallet Connect Modal */}
-      <UniversalWalletModal 
-        isOpen={showWalletModal} 
-        onClose={() => setShowWalletModal(false)} 
-      />
     </>
   );
 };
