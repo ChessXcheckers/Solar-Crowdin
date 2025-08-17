@@ -1,7 +1,8 @@
-import { createWeb3Modal } from '@web3modal/wagmi'
+import { createWeb3Modal } from '@web3modal/wagmi/react'
 import { http, createConfig, WagmiProvider } from 'wagmi'
 import { mainnet, sepolia } from 'wagmi/chains'
 import { walletConnect, injected } from 'wagmi/connectors'
+import { useEffect } from 'react'
 
 // 1. Get projectId at https://cloud.walletconnect.com
 const projectId = 'YOUR_PROJECT_ID'
@@ -27,13 +28,15 @@ export const wagmiConfig = createConfig({
   ],
 })
 
-// 3. Create modal
-createWeb3Modal({
-  wagmiConfig,
-  projectId,
-})
-
 export function Web3ModalProvider({ children }) {
+  useEffect(() => {
+    // 3. Create modal after component mounts
+    createWeb3Modal({
+      wagmiConfig,
+      projectId,
+    })
+  }, [])
+
   return (
     <WagmiProvider config={wagmiConfig}>
       {children}
