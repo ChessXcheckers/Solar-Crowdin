@@ -7,13 +7,13 @@ const HowToBuy = () => {
       step: 1,
       icon: Wallet,
       title: 'Set Up Wallet',
-      description: 'Install MetaMask or connect your preferred wallet with BNB for gas fees'
+      description: 'Install MetaMask or connect your preferred wallet with MATIC for gas fees'
     },
     {
       step: 2,
       icon: CreditCard,
       title: 'Select Currency',
-      description: 'Choose from BNB, USDT, or USDC to purchase SLC tokens'
+      description: 'Choose from MATIC, USDT, or USDC to purchase SLC tokens'
     },
     {
       step: 3,

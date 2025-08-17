@@ -60,7 +60,7 @@ const PresaleCard = () => {
               className="w-full p-3 bg-solar-navy/50 border border-solar-gold/30 rounded-lg text-solar-warm-white focus:border-solar-gold focus:outline-none"
             >
               <option value="ETH">ETH</option>
-              <option value="BNB">BNB</option>
+              <option value="MATIC">MATIC</option>
               <option value="USDT">USDT</option>
               <option value="USDC">USDC</option>
             </select>
