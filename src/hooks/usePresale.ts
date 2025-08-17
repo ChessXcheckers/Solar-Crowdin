@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
-import { useWallet } from '../lib/wallets';
+import { useAccount } from 'wagmi';
 import { toast } from 'react-hot-toast';
 
 interface Stage {
@@ -47,7 +47,7 @@ interface TransactionStatus {
 }
 
 export function usePresale() {
-  const { address } = useWallet();
+  const { address } = useAccount();
   const [presaleInfo, setPresaleInfo] = useState<PresaleInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);

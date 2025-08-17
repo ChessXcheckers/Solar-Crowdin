@@ -4,8 +4,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiMessageCircle, FiX, FiSend, FiMinimize2, FiMaximize2 } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 
-const GOOGLE_AI_API_KEY = 'AIzaSyD_4IQvTGmdf1LNLVnmw46dKsEsJnw_C-w';
-
 interface Message {
   text: string;
   isBot: boolean;
@@ -35,59 +33,31 @@ const GoogleAIBot: React.FC = () => {
   }, [messages]);
 
   const callGoogleAI = async (userMessage: string): Promise<string> => {
+    // IMPORTANT: Replace with your actual Supabase project URL
+    const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+    const EDGE_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/google-ai-proxy`;
+
     try {
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GOOGLE_AI_API_KEY}`, {
+      const response = await fetch(EDGE_FUNCTION_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          // You might need to include Supabase anon key if you have row-level security
+          // 'apikey': 'YOUR_SUPABASE_ANON_KEY'
         },
-        body: JSON.stringify({
-          contents: [{
-            parts: [{
-              text: `You are SolarBot AI, an expert assistant for SolarCrowdin - a revolutionary solar energy crowdfunding platform. 
-
-Context:
-- SolarCrowdin is launching the SLC token presale at $0.063 per token
-- Listing price will be $0.14 (122% potential gain)
-- Total supply: 6 billion SLC tokens
-- VIP levels offer increasing bonuses (20% to 100%)
-- Platform supports ETH, BNB, USDT, USDC payments
-- Contract address: 0xeaa91F0ef29ECE13dB9F2B46982DDbFa9ff83412
-- Focus on solar energy, AI optimization, and sustainable technology
-
-User question: ${userMessage}
-
-Please provide a helpful, accurate response about SolarCrowdin, the SLC token, or related topics. Keep responses conversational but informative. Use relevant emojis. If asked about topics outside of SolarCrowdin/crypto/solar energy, politely redirect to SolarCrowdin topics.`
-            }]
-          }],
-          generationConfig: {
-            temperature: 0.7,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 1024,
-          },
-          safetySettings: [
-            {
-              category: "HARM_CATEGORY_HARASSMENT",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            },
-            {
-              category: "HARM_CATEGORY_HATE_SPEECH",
-              threshold: "BLOCK_MEDIUM_AND_ABOVE"
-            }
-          ]
-        })
+        body: JSON.stringify({ userMessage }),
       });
 
       if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`);
+        const errorData = await response.json();
+        throw new Error(errorData.error || `API request failed: ${response.status}`);
       }
 
       const data = await response.json();
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || 
-        "I apologize, but I'm having trouble processing your request right now. Please try asking about the SLC presale, tokenomics, or how to participate!";
+      return data.response;
     } catch (error) {
-      console.error('Google AI API Error:', error);
+      console.error('Supabase Edge Function Error:', error);
+      toast.error(`AI Error: ${error.message}`);
       return "I'm experiencing technical difficulties. Please try again in a moment, or ask me about the SLC token presale basics!";
     }
   };
