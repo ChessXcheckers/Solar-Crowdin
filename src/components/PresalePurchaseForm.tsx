@@ -43,10 +43,10 @@ const PresalePurchaseForm: React.FC<PresalePurchaseFormProps> = ({
         <select 
           value={paymentToken}
           onChange={(e) => setPaymentToken(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white/90"
+          className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-input text-foreground"
         >
           <option value="ETH">ETH {marketData && `($${marketData.eth.toLocaleString()})`}</option>
-          <option value="MATIC">MATIC {marketData && `($${marketData.matic.toLocaleString()})`}</option>
+          <option value="BNB">BNB {marketData && `($${marketData.bnb.toLocaleString()})`}</option>
           <option value="USDT">USDT {marketData && `($${marketData.usdt})`}</option>
           <option value="USDC">USDC {marketData && `($${marketData.usdc})`}</option>
         </select>
@@ -61,7 +61,7 @@ const PresalePurchaseForm: React.FC<PresalePurchaseFormProps> = ({
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="0.0"
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white/90"
+          className="w-full p-3 border border-border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-input text-foreground dark:text-primary placeholder-muted-foreground"
         />
         {amount && (
           <p className="text-sm text-gray-600 mt-1 font-medium">

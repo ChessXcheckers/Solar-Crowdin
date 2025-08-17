@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { Link, useLocation } from 'react-router-dom';
 import { ConnectButton } from './ConnectButton';
+import { ThemeToggle } from './ThemeToggle';
 
 const NAV_ITEMS = [
   { name: 'Home', path: '/' },
@@ -38,8 +39,8 @@ export function Navbar() {
     <nav
       className={`fixed w-full z-40 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-xl border-b border-orange-200' 
-          : 'bg-gradient-to-r from-white/10 to-orange-50/10 backdrop-blur-sm'
+          ? 'bg-background/95 backdrop-blur-md shadow-xl border-b border-border' 
+          : 'bg-gradient-to-r from-background/10 to-primary/10 backdrop-blur-sm'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,10 +64,8 @@ export function Navbar() {
                 to={item.path}
                 className={`text-sm font-medium transition-all duration-300 hover:scale-105 ${
                   location.pathname === item.path
-                    ? 'text-orange-600 font-semibold'
-                    : isScrolled
-                    ? 'text-gray-700 hover:text-orange-600'
-                    : 'text-gray-800 hover:text-orange-600'
+                    ? 'text-primary font-semibold'
+                    : 'text-foreground hover:text-primary'
                 }`}
               >
                 {item.name}
@@ -74,8 +73,9 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Wallet Connection */}
-          <div className="hidden md:flex items-center">
+          {/* Wallet Connection & Theme Toggle */}
+          <div className="hidden md:flex items-center space-x-3">
+            <ThemeToggle />
             <ConnectButton />
           </div>
 
@@ -83,9 +83,7 @@ export function Navbar() {
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className={`p-2 rounded-md transition-colors duration-300 ${
-                isScrolled ? 'text-gray-900 hover:text-orange-600' : 'text-gray-800 hover:text-orange-600'
-              }`}
+              className="p-2 rounded-md transition-colors duration-300 text-foreground hover:text-primary"
             >
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
@@ -100,7 +98,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/95 backdrop-blur-md shadow-xl border-t border-orange-200"
+            className="md:hidden bg-background/95 backdrop-blur-md shadow-xl border-t border-border"
           >
             <div className="px-4 py-6 space-y-4">
               {NAV_ITEMS.map((item) => (
@@ -109,16 +107,20 @@ export function Navbar() {
                   to={item.path}
                   className={`block text-sm font-medium transition-colors duration-300 ${
                     location.pathname === item.path
-                      ? 'text-orange-600 font-semibold'
-                      : 'text-gray-700 hover:text-orange-600'
+                      ? 'text-primary font-semibold'
+                      : 'text-foreground hover:text-primary'
                   }`}
                 >
                   {item.name}
                 </Link>
               ))}
               
-              {/* Mobile Wallet Connection */}
-              <div className="pt-4 border-t border-gray-200">
+              {/* Mobile Controls */}
+              <div className="pt-4 border-t border-border space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-foreground">Theme:</span>
+                  <ThemeToggle />
+                </div>
                 <ConnectButton />
               </div>
             </div>
