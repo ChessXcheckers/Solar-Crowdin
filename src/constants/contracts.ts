@@ -86,9 +86,18 @@ export const TOKEN_ALLOCATION = [
 // Core token information
 export const TOKEN_INFO = {
   name: 'SolarCrowdin Token',
-  symbol: 'SCL',
+  symbol: 'SLC',
   totalSupply: '1,000,000,000',
   decimals: 18,
   blockchain: 'BNB Smart Chain (BEP-20)',
   contractAddress: TOKEN_Contract_Address
 };
+
+// Export TOKEN_DISTRIBUTION for compatibility
+export const TOKEN_DISTRIBUTION = TOKEN_ALLOCATION.map(item => ({
+  category: item.category,
+  percentage: item.percentage,
+  amount: item.tokens,
+  description: item.vesting,
+  color: item.color
+}));

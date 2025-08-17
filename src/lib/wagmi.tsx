@@ -31,7 +31,6 @@ export const wagmiConfig = createConfig({
 createWeb3Modal({
   wagmiConfig,
   projectId,
-  chains,
 })
 
 export function Web3ModalProvider({ children }) {
