@@ -3,7 +3,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Toaster } from './components/Toaster';
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from './components/ThemeProvider';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
@@ -43,32 +42,30 @@ const App = () => {
   }, []);
 
   return (
-    <ThemeProvider defaultTheme="system" storageKey="solarcrowdin-theme">
-      <ProductionErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Router>
-                <div className="min-h-screen">
-                  <Navbar />
-                  <BreakingNews />
-                  <Toaster />
-                  <Sonner />
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/tokenomics" element={<Tokenomics />} />
-                    <Route path="/roadmap" element={<Roadmap />} />
-                    <Route path="/team" element={<Team />} />
-                    <Route path="/faq" element={<FAQ />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </div>
-            </Router>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </ProductionErrorBoundary>
-    </ThemeProvider>
+    <ProductionErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Router>
+              <div className="min-h-screen">
+                <Navbar />
+                <BreakingNews />
+                <Toaster />
+                <Sonner />
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/tokenomics" element={<Tokenomics />} />
+                  <Route path="/roadmap" element={<Roadmap />} />
+                  <Route path="/team" element={<Team />} />
+                  <Route path="/faq" element={<FAQ />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </div>
+          </Router>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ProductionErrorBoundary>
   );
 };
 
