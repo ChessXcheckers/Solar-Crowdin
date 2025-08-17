@@ -85,10 +85,10 @@ const PresalePurchaseForm: React.FC<PresalePurchaseFormProps> = ({
 
       <Button
         onClick={onBuy}
-        disabled={isLoading}
-        className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 text-lg font-semibold shadow-lg"
+        disabled={isLoading || !isConnected}
+        className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 text-lg font-semibold shadow-lg transition-all duration-300 hover:scale-105 disabled:opacity-50 animate-pulse-slow"
       >
-        {isLoading ? 'Processing...' : isConnected ? 'Buy Solar Crowding Tokens' : 'Connect Wallet'}
+        {isLoading ? 'Processing...' : 'Buy Now & Get Bonus'}
       </Button>
     </div>
   );

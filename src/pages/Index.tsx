@@ -4,7 +4,10 @@ import CountdownTimer from '@/components/CountdownTimer';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import GoogleAIBot from '@/components/GoogleAIBot';
 
+import PresalePopup from '@/components/PresalePopup';
+
 // Lazy load components with proper error handling
+const AboutSection = lazy(() => import('@/components/AboutSection'));
 const PresaleMain = lazy(() => import('@/components/PresaleMain'));
 const UserBalance = lazy(() => import('@/components/UserBalance'));
 const VIPStatus = lazy(() => import('@/components/VIPStatus'));
@@ -54,8 +57,15 @@ const Index: React.FC = () => {
           </div>
 
           {/* Main Presale Section */}
+          <div id="presale-section">
+            <LazySection>
+              <PresaleMain />
+            </LazySection>
+          </div>
+
+          {/* About Section */}
           <LazySection>
-            <PresaleMain />
+            <AboutSection />
           </LazySection>
 
           {/* User Balance */}
@@ -89,6 +99,9 @@ const Index: React.FC = () => {
           </LazySection>
         </div>
       </div>
+
+      {/* Pop-up Modal */}
+      <PresalePopup />
 
       {/* AI Chat Bot */}
       <GoogleAIBot />

@@ -3,8 +3,8 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/structs/Counters.sol";
 import "./SolarCrowdinToken.sol";
 
 contract SolarFarmFractionalization is ERC721, Ownable, ReentrancyGuard {
@@ -27,6 +27,8 @@ contract SolarFarmFractionalization is ERC721, Ownable, ReentrancyGuard {
     
     // Mapping from token ID to SolarFarm
     mapping(uint256 => SolarFarm) public solarFarms;
+    mapping(uint256 => uint256) public totalDistributedRevenue;
+    mapping(uint256 => mapping(address => uint256)) public withdrawnRevenue;
     
     // Events
     event SolarFarmCreated(uint256 indexed tokenId, string name, uint256 totalValue);
@@ -100,27 +102,46 @@ contract SolarFarmFractionalization is ERC721, Ownable, ReentrancyGuard {
         emit SharesSold(_tokenId, msg.sender, _shares);
     }
     
-    // Distribute revenue to investors
+    // Distribute revenue to a solar farm project (to be later withdrawn by investors)
     function distributeRevenue(uint256 _tokenId, uint256 _amount) external onlyOwner {
         SolarFarm storage farm = solarFarms[_tokenId];
         require(farm.isActive, "Solar farm is not active");
         require(_amount > 0, "Amount must be greater than 0");
+
+        // The contract must hold enough SLC tokens to distribute
+        require(slcToken.balanceOf(address(this)) >= totalDistributedRevenue[_tokenId] + _amount, "Insufficient balance for distribution");
         
-        uint256 totalShares = farm.totalValue - farm.availableShares;
-        require(totalShares > 0, "No shares have been sold");
-        
-        for (uint256 i = 0; i < farm.investors.length; i++) {
-            address investor = farm.investors[i];
-            uint256 investorShares = farm.investorShares[investor];
-            if (investorShares > 0) {
-                uint256 share = (_amount * investorShares) / totalShares;
-                if (share > 0) {
-                    require(slcToken.transfer(investor, share), "Token transfer failed");
-                }
-            }
-        }
+        totalDistributedRevenue[_tokenId] += _amount;
         
         emit RevenueDistributed(_tokenId, _amount);
+    }
+
+    // New function for investors to withdraw their share of revenue
+    function withdrawRevenue(uint256 _tokenId) external nonReentrant {
+        uint256 claimable = getClaimableRevenue(_tokenId, msg.sender);
+        require(claimable > 0, "No revenue to withdraw");
+
+        withdrawnRevenue[_tokenId][msg.sender] += claimable;
+        require(slcToken.transfer(msg.sender, claimable), "Token transfer failed");
+    }
+
+    // New view function to check claimable revenue for an investor
+    function getClaimableRevenue(uint256 _tokenId, address _investor) public view returns (uint256) {
+        SolarFarm storage farm = solarFarms[_tokenId];
+        uint256 totalShares = farm.totalValue - farm.availableShares;
+        if (totalShares == 0) {
+            return 0;
+        }
+
+        uint256 investorShares = farm.investorShares[_investor];
+        if (investorShares == 0) {
+            return 0;
+        }
+
+        uint256 totalOwed = (totalDistributedRevenue[_tokenId] * investorShares) / totalShares;
+        uint256 alreadyWithdrawn = withdrawnRevenue[_tokenId][_investor];
+
+        return totalOwed - alreadyWithdrawn;
     }
     
     // Get investor's share balance

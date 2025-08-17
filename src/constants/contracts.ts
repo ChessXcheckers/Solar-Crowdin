@@ -9,68 +9,86 @@ export const USDC_Contract_Abi = [{ "inputs": [], "stateMutability": "nonpayable
 export const TOKEN_Contract_Address = "0xeaa91F0ef29ECE13dB9F2B46982DDbFa9ff83412";
 export const TOKEN_Contract_Abi = [{ "inputs": [], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "owner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "spender", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "from", "type": "address" }, { "indexed": true, "internalType": "address", "name": "to", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "Transfer", "type": "event" }, { "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "address", "name": "spender", "type": "address" }], "name": "allowance", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "value", "type": "uint256" }], "name": "approve", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "account", "type": "address" }], "name": "balanceOf", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "decimals", "outputs": [{ "internalType": "uint8", "name": "", "type": "uint8" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "subtractedValue", "type": "uint256" }], "name": "decreaseAllowance", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "spender", "type": "address" }, { "internalType": "uint256", "name": "addedValue", "type": "uint256" }], "name": "increaseAllowance", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "name", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "symbol", "outputs": [{ "internalType": "string", "name": "", "type": "string" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalSupply", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "transfer", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "sender", "type": "address" }, { "internalType": "address", "name": "recipient", "type": "address" }, { "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "transferFrom", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" }];
 
-export const preSale_Contract_Address = "0x46718468baC0e1E6621BFa593f9CDEbA3f96D99e";
-export const preSale_Contract_ABI = [{ "inputs": [{ "internalType": "contract IBEP20", "name": "_token", "type": "address" }, { "internalType": "contract IBEP20", "name": "_USDC", "type": "address" }, { "internalType": "contract IBEP20", "name": "_USDT", "type": "address" }, { "internalType": "address payable", "name": "_paymentReceiver", "type": "address" }, { "internalType": "address", "name": "_priceFeedBNB", "type": "address" }], "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [{ "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" }, { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }], "name": "OwnershipTransferred", "type": "event" }, { "anonymous": false, "inputs": [{ "indexed": false, "internalType": "address", "name": "token", "type": "address" }, { "indexed": false, "internalType": "uint256", "name": "amount", "type": "uint256" }], "name": "Recovered", "type": "event" }, { "inputs": [{ "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "BNBToToken", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "BuyWithBNB", "outputs": [], "stateMutability": "payable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_USDCamount", "type": "uint256" }], "name": "BuyWithUSDC", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_USDTamount", "type": "uint256" }], "name": "BuyWithUSDT", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "Claimable", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "IsClaim", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "TokenPricePerUSDC", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "TokenSold", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "USDC", "outputs": [{ "internalType": "contract IBEP20", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "USDT", "outputs": [{ "internalType": "contract IBEP20", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address payable", "name": "_paymentReceiver", "type": "address" }], "name": "changeFundReceiver", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "contractbalance", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "getLatestPriceBNB", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_amt", "type": "uint256" }], "name": "getValuePerUSDC", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "", "type": "address" }], "name": "isBlacklist", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "maxTokeninPresale", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "owner", "outputs": [{ "internalType": "address", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "paymentReceiver", "outputs": [{ "internalType": "address payable", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "presaleStatus", "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "priceFeedBNB", "outputs": [{ "internalType": "contract AggregatorV3Interface", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "_tokenAddress", "type": "address" }, { "internalType": "uint256", "name": "_amount", "type": "uint256" }], "name": "releaseBEP20", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "releaseFunds", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "renounceOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "resumePresale", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "_addr", "type": "address" }, { "internalType": "bool", "name": "_state", "type": "bool" }], "name": "setBlacklist", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "contract IBEP20", "name": "_USDC", "type": "address" }], "name": "setUSDC", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "contract IBEP20", "name": "_USDT", "type": "address" }], "name": "setUSDT", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "_priceFeedBNB", "type": "address" }], "name": "setaggregatorv3", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_value", "type": "uint256" }], "name": "setmaxTokeninPresale", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_newmaxTokens", "type": "uint256" }], "name": "setmaxtoken", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_newprice", "type": "uint256" }], "name": "setprice", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "contract IBEP20", "name": "_token", "type": "address" }], "name": "settoken", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "starttokenClaim", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "stopPresale", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "stoptokenClaim", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [], "name": "token", "outputs": [{ "internalType": "contract IBEP20", "name": "", "type": "address" }], "stateMutability": "view", "type": "function" }, { "inputs": [], "name": "totalUSDTRaised", "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }], "stateMutability": "view", "type": "function" }, { "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }], "name": "transferOwnership", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "inputs": [{ "internalType": "uint256", "name": "_newTokenSold", "type": "uint256" }], "name": "updateTokenSold", "outputs": [], "stateMutability": "nonpayable", "type": "function" }, { "stateMutability": "payable", "type": "receive" }];
-
-// Token distribution data based on SLC tokenomics
-export const TOKEN_DISTRIBUTION = [
+// Token distribution data based on the new tokenomics model
+export const TOKEN_ALLOCATION = [
   {
     category: 'Public Sale',
-    percentage: 30,
-    amount: '1,800,000,000',
-    description: 'Available for public participation with fair opportunity for all investors',
+    percentage: 25,
+    tokens: '250,000,000',
+    vesting: '20% at TGE, then linear vesting over 12 months.',
     color: '#FF4500'
   },
   {
     category: 'Private Sale',
-    percentage: 15,
-    amount: '900,000,000', 
-    description: 'Early participation incentives with long-term holding benefits',
+    percentage: 12,
+    tokens: '120,000,000',
+    vesting: '10% at TGE, then linear vesting over 18 months.',
     color: '#FFD700'
   },
   {
-    category: 'Marketing & Development',
-    percentage: 10,
-    amount: '600,000,000',
-    description: 'Platform infrastructure and targeted marketing campaigns',
-    color: '#32CD32'
+    category: 'Seed & Strategic Partners',
+    percentage: 5,
+    tokens: '50,000,000',
+    vesting: 'No TGE unlock, 3-month cliff, then 24-month linear vesting.',
+    color: '#FF8C00'
   },
   {
-    category: 'Team Allocation',
-    percentage: 10,
-    amount: '600,000,000',
-    description: 'Team incentives with vesting period for long-term commitment',
+    category: 'Team & Advisors',
+    percentage: 12,
+    tokens: '120,000,000',
+    vesting: '6-month cliff, then 36-month linear vesting.',
     color: '#1E90FF'
   },
   {
-    category: 'Reserve/Future Development',
+    category: 'Ecosystem & Rewards',
+    percentage: 20,
+    tokens: '200,000,000',
+    vesting: '8-year distribution with a halving curve. Unused tokens burned.',
+    color: '#32CD32'
+  },
+  {
+    category: 'Development & Partnerships',
     percentage: 10,
-    amount: '600,000,000',
-    description: 'Future innovations, partnerships and platform sustainability',
+    tokens: '100,000,000',
+    vesting: 'Small upfront allocation, rest vested over 2 years (DAO oversight).',
     color: '#9370DB'
   },
   {
-    category: 'Charity',
-    percentage: 5,
-    amount: '300,000,000',
-    description: 'Education, environmental and health-related philanthropic initiatives',
+    category: 'Treasury & Reserves',
+    percentage: 10,
+    tokens: '100,000,000',
+    vesting: '12-month lock, max 1% quarterly spend (DAO oversight).',
+    color: '#4682B4'
+  },
+  {
+    category: 'Community Impact Fund',
+    percentage: 3,
+    tokens: '30,000,000',
+    vesting: 'Audited reporting for climate and energy access initiatives.',
     color: '#FF69B4'
   },
   {
-    category: 'Airdrop',
-    percentage: 5,
-    amount: '300,000,000',
-    description: 'Community rewards and early adopter incentives',
+    category: 'Liquidity & Market Making',
+    percentage: 2,
+    tokens: '20,000,000',
+    vesting: 'LP tokens locked for 24 months.',
     color: '#20B2AA'
+  },
+  {
+    category: 'User Incentives / Airdrops',
+    percentage: 1,
+    tokens: '10,000,000',
+    vesting: 'Earned through on-chain activity, not gifted.',
+    color: '#778899'
   }
 ];
 
-// Total supply information
+// Core token information
 export const TOKEN_INFO = {
-  name: 'Solar Crowding Token',
-  symbol: 'SLC',
-  totalSupply: '6,000,000,000',
+  name: 'SolarCrowdin Token',
+  symbol: 'SCL',
+  totalSupply: '1,000,000,000',
   decimals: 18,
-  blockchain: 'BSC (Binance Smart Chain)',
+  blockchain: 'BNB Smart Chain (BEP-20)',
   contractAddress: TOKEN_Contract_Address
 };
