@@ -46,7 +46,7 @@ const PresalePurchaseForm: React.FC<PresalePurchaseFormProps> = ({
           className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent bg-white/90"
         >
           <option value="ETH">ETH {marketData && `($${marketData.eth.toLocaleString()})`}</option>
-          <option value="MATIC">MATIC {marketData && `($${marketData.matic.toLocaleString()})`}</option>
+          <option value="BNB">BNB {marketData && `($${marketData.bnb.toLocaleString()})`}</option>
           <option value="USDT">USDT {marketData && `($${marketData.usdt})`}</option>
           <option value="USDC">USDC {marketData && `($${marketData.usdc})`}</option>
         </select>

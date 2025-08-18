@@ -13,7 +13,7 @@ const PresaleMain: React.FC = () => {
   console.log('PresaleMain rendering...');
   
   const [amount, setAmount] = useState('');
-  const [paymentToken, setPaymentToken] = useState('MATIC');
+  const [paymentToken, setPaymentToken] = useState('BNB');
   const { address, isConnected } = useAccount();
   const { data: presaleData, isLoading: presaleLoading, error: presaleError } = usePresaleData();
   const { data: marketData, error: marketError } = useMarketData();
@@ -35,7 +35,7 @@ const PresaleMain: React.FC = () => {
     if (!amount || !marketData) return '0';
     const rates: Record<string, number> = {
       'ETH': marketData.eth,
-      'MATIC': marketData.matic,
+      'BNB': marketData.bnb,
       'USDT': marketData.usdt,
       'USDC': marketData.usdc
     };
