@@ -17,7 +17,7 @@ const ChatBot = () => {
     setTimeout(() => {
       const responses = [
         "The $SOLAR presale is currently in Phase 1 at $0.063 per token. The listing price will be $0.14, offering a 122% potential gain! 🚀",
-        "You can purchase $SOLAR tokens using MATIC, USDT, or USDC. Simply connect your wallet and choose your payment method. ☀️",
+        "You can purchase $SOLAR tokens using ETH, BNB, USDT, or USDC. Simply connect your wallet and choose your payment method. ☀️",
         "Our solar AI technology uses machine learning to optimize energy production and distribution in real-time. 🧠",
         "The current presale has raised over $1.34M with 142.7M tokens sold. Join over 2,800 active investors! 💰",
         "Token vesting starts after TGE (Token Generation Event) scheduled for Q1 2025, with a 6-month gradual release. 📅",
