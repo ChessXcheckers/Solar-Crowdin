@@ -17,7 +17,7 @@ const BreakingNews = () => {
         x: {
           repeat: Infinity,
           repeatType: 'loop',
-          duration: 30,
+          duration: 90,
           ease: 'linear',
         },
       },
@@ -27,7 +27,7 @@ const BreakingNews = () => {
   return (
     <div className="fixed top-16 w-full z-30 bg-gradient-to-r from-solar-orange to-solar-gold text-solar-navy font-bold py-2 overflow-hidden">
       <div className="flex items-center whitespace-nowrap">
-        <span className="flex-shrink-0 mx-4 flex items-center">
+        <span className="flex-shrink-0 mx-4 pr-16 flex items-center">
             <FiZap className="mr-2"/>
             BREAKING NEWS
         </span>
