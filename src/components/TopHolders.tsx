@@ -21,7 +21,7 @@ const TopHolders = () => {
             </div>
             <div className="text-right">
               <p className="font-bold text-orange-600 dark:text-solar-gold">+{tier.bonus}%</p>
-              <p className="text-sm text-gray-600 dark:text-solar-grey">Bonus Tokens</p>
+              <p className="text-sm text-gray-800 dark:text-solar-grey">Bonus Tokens</p>
             </div>
           </div>
         ))}

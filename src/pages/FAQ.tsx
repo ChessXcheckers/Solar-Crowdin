@@ -71,13 +71,13 @@ const FAQ: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white pt-20">
+    <div className="min-h-screen bg-white dark:bg-black pt-20">
       <div className="max-w-4xl mx-auto px-4 py-16">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
-            Frequently Asked <span className="text-orange-600">Questions</span>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-solar-warm-white mb-4">
+            Frequently Asked <span className="nebulae-text">Questions</span>
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-gray-800 dark:text-solar-grey">
             Everything you need to know about the SolarCrowdin ICO and our mission.
           </p>
         </div>
@@ -85,10 +85,10 @@ const FAQ: React.FC = () => {
         <Accordion type="single" collapsible className="w-full">
           {faqs.map((faq, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
-              <AccordionTrigger className="text-left font-semibold text-lg hover:no-underline">
+              <AccordionTrigger className="text-left font-semibold text-lg hover:no-underline text-gray-900 dark:text-solar-warm-white">
                 {faq.question}
               </AccordionTrigger>
-              <AccordionContent className="text-gray-600 text-base">
+              <AccordionContent className="text-gray-800 dark:text-solar-grey text-base">
                 {faq.answer}
               </AccordionContent>
             </AccordionItem>

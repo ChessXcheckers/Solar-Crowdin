@@ -7,10 +7,10 @@ const AboutSection: React.FC = () => {
         <h2 className="text-3xl font-bold text-gray-800 mb-6">
           Welcome to <span className="text-orange-600">SolarCrowdin</span>
         </h2>
-        <p className="text-lg text-gray-600 mb-4">
+        <p className="text-lg text-gray-800 dark:text-solar-grey mb-4">
           At SolarCrowdin, we are not just building solar projects; we are using AI to power a cleaner, smarter future.
         </p>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-gray-800 dark:text-solar-grey">
           Our platform combines Artificial Intelligence, Blockchain, and Renewable Energy to deliver transparent, efficient, and scalable clean energy and forestation solutions. With Artificial Intelligence at the core, we predict energy needs, optimize solar systems, and verify carbon credits in real-time, ensuring impact for communities and trust for investors.
         </p>
         <p className="mt-4 font-semibold text-orange-600">

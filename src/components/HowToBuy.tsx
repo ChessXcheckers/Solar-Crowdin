@@ -57,7 +57,7 @@ const HowToBuy = () => {
               </div>
             </div>
             <h4 className="font-semibold text-gray-800 dark:text-solar-warm-white mb-2">{step.title}</h4>
-            <p className="text-sm text-gray-600 dark:text-solar-grey">{step.description}</p>
+            <p className="text-sm text-gray-800 dark:text-solar-grey">{step.description}</p>
           </div>
         ))}
       </div>
