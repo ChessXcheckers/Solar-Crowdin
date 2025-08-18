@@ -39,7 +39,7 @@ export function Navbar() {
     <nav
       className={`fixed w-full z-40 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-background/80 backdrop-blur-md shadow-lg'
+          ? 'bg-white/95 dark:bg-black/80 backdrop-blur-md shadow-xl border-b border-orange-200 dark:border-solar-dark'
           : 'bg-transparent'
       }`}
     >
@@ -57,15 +57,15 @@ export function Navbar() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6">
+          <div className="hidden md:flex items-center space-x-8">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
-                className={`text-sm font-medium transition-colors duration-300 ${
+                className={`text-sm font-medium transition-all duration-300 hover:scale-105 ${
                   location.pathname === item.path
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-primary'
+                    ? 'text-orange-600 dark:text-solar-gold font-semibold'
+                    : 'text-gray-700 dark:text-solar-grey hover:text-orange-600 dark:hover:text-solar-gold'
                 }`}
               >
                 {item.name}
@@ -84,7 +84,7 @@ export function Navbar() {
             <ThemeSwitcher />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-md text-muted-foreground hover:text-primary"
+              className="p-2 rounded-md text-gray-800 dark:text-solar-grey hover:text-orange-600 dark:hover:text-solar-gold"
             >
               {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
             </button>
@@ -99,7 +99,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-md shadow-xl border-t"
+            className="md:hidden bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-xl border-t border-orange-200 dark:border-solar-dark"
           >
             <div className="px-4 py-6 space-y-4">
               {NAV_ITEMS.map((item) => (
@@ -108,8 +108,8 @@ export function Navbar() {
                   to={item.path}
                   className={`block text-base font-medium transition-colors duration-300 ${
                     location.pathname === item.path
-                      ? 'text-primary'
-                      : 'text-muted-foreground hover:text-primary'
+                      ? 'text-orange-600 dark:text-solar-gold font-semibold'
+                      : 'text-gray-700 dark:text-solar-grey hover:text-orange-600 dark:hover:text-solar-gold'
                   }`}
                 >
                   {item.name}
@@ -117,7 +117,7 @@ export function Navbar() {
               ))}
               
               {/* Mobile Wallet Connection */}
-              <div className="pt-4 border-t">
+              <div className="pt-4 border-t border-gray-200 dark:border-solar-dark">
                 <ConnectButton />
               </div>
             </div>
