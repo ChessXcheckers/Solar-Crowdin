@@ -63,8 +63,8 @@
 
 @layer components {
   .solar-button {
-    @apply bg-solar-orange text-solar-warm-white font-semibold px-6 py-3 rounded-lg
-           hover:bg-solar-orange-hover hover:scale-110
+    @apply bg-solar-orange text-solar-warm-white font-semibold px-6 py-3 rounded-lg 
+           hover:bg-solar-orange-hover hover:scale-110 
            transition-all duration-300 ease-in-out
            shadow-lg hover:shadow-solar-orange/50
            relative overflow-hidden;
@@ -85,7 +85,7 @@
   }
 
   .starburst-border {
-    @apply border border-transparent bg-gradient-to-r from-solar-gold to-solar-orange
+    @apply border border-transparent bg-gradient-to-r from-solar-gold to-solar-orange 
            rounded-lg p-[1px];
   }
 
