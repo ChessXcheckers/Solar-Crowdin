@@ -16,7 +16,7 @@ const BreakingNews = () => {
       transition: {
         x: {
           repeat: Infinity,
-          repeatType: 'loop',
+          repeatType: 'loop' as const,
           duration: 90,
           ease: 'linear',
         },
@@ -33,8 +33,15 @@ const BreakingNews = () => {
         </span>
         <motion.div
           className="flex"
-          variants={marqueeVariants}
-          animate="animate"
+          animate={{
+            x: ['0%', '-100%'],
+            transition: {
+              repeat: Infinity,
+              repeatType: 'loop' as const,
+              duration: 90,
+              ease: 'linear',
+            },
+          }}
         >
           {newsItems.map((item, index) => (
             <span key={index} className="mx-8">
