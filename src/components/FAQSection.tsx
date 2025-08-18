@@ -23,7 +23,7 @@ const FAQSection = () => {
     },
     {
       question: "How can I participate in the presale?",
-      answer: "You can participate by connecting your Web3 wallet and purchasing $SOLAR tokens using MATIC, USDT, or USDC. The current presale price is $0.063 per token."
+      answer: "You can participate by connecting your Web3 wallet and purchasing $SOLAR tokens using ETH, BNB, USDT, or USDC. The current presale price is $0.063 per token."
     },
     {
       question: "Is the smart contract audited?",

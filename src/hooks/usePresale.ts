@@ -22,10 +22,10 @@ interface PresaleInfo {
   userReferralBonus: string;
   isActive: boolean;
   isClaimable: boolean;
-  maticPrice: string;
+  bnbPrice: string;
   isBlacklisted: boolean;
   userBalance: {
-    matic: string;
+    bnb: string;
     usdt: string;
     usdc: string;
     tokens: string;
@@ -70,32 +70,32 @@ export function usePresale() {
     };
   }, []);
 
-  const fetchMaticPrice = useCallback(async () => {
+  const fetchBNBPrice = useCallback(async () => {
     try {
-      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd');
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd');
       const data = await response.json();
-      return data['matic-network'].usd.toString();
+      return data.binancecoin.usd.toString();
     } catch (error) {
-      console.error('Failed to fetch MATIC price:', error);
-      return '1'; // Fallback price
+      console.error('Failed to fetch BNB price:', error);
+      return '600'; // Fallback price
     }
   }, []);
 
   const fetchUserBalance = useCallback(async () => {
-    if (!address) return { matic: '0', usdt: '0', usdc: '0', tokens: '0' };
+    if (!address) return { bnb: '0', usdt: '0', usdc: '0', tokens: '0' };
     
     try {
       // In a real implementation, you would fetch from blockchain
       // For now, return dynamic mock data
       return {
-        matic: (Math.random() * 100).toFixed(4),
+        bnb: (Math.random() * 10).toFixed(4),
         usdt: (Math.random() * 1000).toFixed(2),
         usdc: (Math.random() * 1000).toFixed(2),
         tokens: '0'
       };
     } catch (error) {
       console.error('Failed to fetch user balance:', error);
-      return { matic: '0', usdt: '0', usdc: '0', tokens: '0' };
+      return { bnb: '0', usdt: '0', usdc: '0', tokens: '0' };
     }
   }, [address]);
 
@@ -104,8 +104,8 @@ export function usePresale() {
       setLoading(true);
       setError(null);
 
-      const [maticPrice, userBalance] = await Promise.all([
-        fetchMaticPrice(),
+      const [bnbPrice, userBalance] = await Promise.all([
+        fetchBNBPrice(),
         fetchUserBalance()
       ]);
 
@@ -139,7 +139,7 @@ export function usePresale() {
         userReferralBonus: address ? (Math.random() * 100).toFixed(2) : '0',
         isActive: true,
         isClaimable: false,
-        maticPrice,
+        bnbPrice,
         isBlacklisted: false,
         userBalance,
         timeLeft: calculateTimeLeft(endTime)
@@ -152,7 +152,7 @@ export function usePresale() {
     } finally {
       setLoading(false);
     }
-  }, [address, fetchMaticPrice, fetchUserBalance, calculateTimeLeft]);
+  }, [address, fetchBNBPrice, fetchUserBalance, calculateTimeLeft]);
 
   // Update timer every second
   useEffect(() => {
@@ -178,7 +178,7 @@ export function usePresale() {
     return () => clearInterval(interval);
   }, [fetchPresaleInfo]);
 
-  const validateAmount = useCallback((amount: string, paymentMethod: 'MATIC' | 'USDT' | 'USDC') => {
+  const validateAmount = useCallback((amount: string, paymentMethod: 'BNB' | 'USDT' | 'USDC') => {
     const numAmount = parseFloat(amount);
     if (isNaN(numAmount) || numAmount <= 0) {
       throw new Error('Invalid amount');
@@ -196,7 +196,7 @@ export function usePresale() {
     }
   }, []);
 
-  const buyTokens = useCallback(async (amount: string, paymentMethod: 'MATIC' | 'USDT' | 'USDC') => {
+  const buyTokens = useCallback(async (amount: string, paymentMethod: 'BNB' | 'USDT' | 'USDC') => {
     try {
       validateAmount(amount, paymentMethod);
       setLoading(true);

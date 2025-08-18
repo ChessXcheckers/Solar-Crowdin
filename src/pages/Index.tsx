@@ -8,7 +8,6 @@ import PresalePopup from '@/components/PresalePopup';
 
 // Lazy load components with proper error handling
 const AboutSection = lazy(() => import('@/components/AboutSection'));
-const TechnologySection = lazy(() => import('@/components/TechnologySection'));
 const PresaleMain = lazy(() => import('@/components/PresaleMain'));
 const UserBalance = lazy(() => import('@/components/UserBalance'));
 const TopHolders = lazy(() => import('@/components/TopHolders'));
@@ -45,7 +44,7 @@ const Index: React.FC = () => {
       />
       
       {/* Main Content - Add proper top padding to account for fixed navbar */}
-      <div className="pt-20 relative z-10">
+      <div className="pt-28 relative z-10">
         <div className="max-w-7xl mx-auto px-4 py-8 space-y-8">
           {/* Countdown Timer */}
           <div className="text-center">
@@ -66,11 +65,6 @@ const Index: React.FC = () => {
           {/* About Section */}
           <LazySection>
             <AboutSection />
-          </LazySection>
-
-          {/* Technology Section */}
-          <LazySection>
-            <TechnologySection />
           </LazySection>
 
           {/* User Balance */}
