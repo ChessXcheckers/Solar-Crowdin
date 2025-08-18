@@ -1,49 +1,71 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Solar Crowding Design System - Sun/Starburst Nebulae Theme */
+/* Solar Crowding Design System */
 
 @layer base {
   :root {
-    --background: 26 26 46; /* #1A1A2E - Deep space navy */
-    --foreground: 255 248 225; /* #FFF8E1 - Warm white */
+    --background: hsl(248, 39%, 95%); /* Light solar background */
+    --foreground: hsl(220, 13%, 13%); /* Solar navy text */
 
-    --card: 42 42 62; /* #2A2A3E */
-    --card-foreground: 255 248 225;
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(220, 13%, 13%);
 
-    --popover: 42 42 62;
-    --popover-foreground: 255 248 225;
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(220, 13%, 13%);
 
-    --primary: 255 69 0; /* #FF4500 - Warm orange */
-    --primary-foreground: 255 248 225;
+    --primary: hsl(16, 100%, 50%); /* Solar orange */
+    --primary-foreground: hsl(48, 100%, 95%); /* Warm white */
 
-    --secondary: 255 215 0; /* #FFD700 - Gold */
-    --secondary-foreground: 26 26 46;
+    --secondary: hsl(51, 100%, 50%); /* Solar gold */
+    --secondary-foreground: hsl(220, 13%, 13%);
 
-    --muted: 42 42 62;
-    --muted-foreground: 211 211 211; /* #D3D3D3 */
+    --muted: hsl(210, 40%, 96%);
+    --muted-foreground: hsl(215, 16%, 47%);
 
-    --accent: 255 215 0; /* #FFD700 - Gold */
-    --accent-foreground: 26 26 46;
+    --accent: hsl(51, 100%, 50%); /* Solar gold */
+    --accent-foreground: hsl(220, 13%, 13%);
 
-    --destructive: 239 68 68;
-    --destructive-foreground: 255 248 225;
+    --destructive: hsl(0, 84%, 60%);
+    --destructive-foreground: hsl(0, 0%, 98%);
 
-    --border: 42 42 62;
-    --input: 42 42 62;
-    --ring: 255 69 0;
+    --border: hsl(214, 32%, 91%);
+    --input: hsl(214, 32%, 91%);
+    --ring: hsl(16, 100%, 50%);
 
     --radius: 0.5rem;
+  }
 
-    --sidebar-background: 42 42 62;
-    --sidebar-foreground: 255 248 225;
-    --sidebar-primary: 255 69 0;
-    --sidebar-primary-foreground: 255 248 225;
-    --sidebar-accent: 26 26 46;
-    --sidebar-accent-foreground: 255 248 225;
-    --sidebar-border: 42 42 62;
-    --sidebar-ring: 255 69 0;
+  .dark {
+    --background: hsl(220, 13%, 13%); /* Solar navy dark */
+    --foreground: hsl(48, 100%, 95%); /* Warm white */
+
+    --card: hsl(220, 13%, 18%);
+    --card-foreground: hsl(48, 100%, 95%);
+
+    --popover: hsl(220, 13%, 18%);
+    --popover-foreground: hsl(48, 100%, 95%);
+
+    --primary: hsl(16, 100%, 50%); /* Solar orange */
+    --primary-foreground: hsl(48, 100%, 95%);
+
+    --secondary: hsl(51, 100%, 50%); /* Solar gold */
+    --secondary-foreground: hsl(220, 13%, 13%);
+
+    --muted: hsl(220, 13%, 25%);
+    --muted-foreground: hsl(215, 20%, 65%);
+
+    --accent: hsl(51, 100%, 50%);
+    --accent-foreground: hsl(220, 13%, 13%);
+
+    --destructive: hsl(0, 63%, 31%);
+    --destructive-foreground: hsl(0, 0%, 98%);
+
+    --border: hsl(220, 13%, 25%);
+    --input: hsl(220, 13%, 25%);
+    --ring: hsl(16, 100%, 50%);
   }
 }
 
@@ -51,9 +73,8 @@
   * {
     @apply border-border;
   }
-
   body {
-    @apply bg-solar-navy text-solar-warm-white font-montserrat;
+    @apply bg-background text-foreground font-montserrat;
   }
 
   html {
@@ -63,8 +84,8 @@
 
 @layer components {
   .solar-button {
-    @apply bg-solar-orange text-solar-warm-white font-semibold px-6 py-3 rounded-lg 
-           hover:bg-solar-orange-hover hover:scale-110 
+    @apply bg-solar-orange text-solar-warm-white font-semibold px-6 py-3 rounded-lg
+           hover:bg-solar-orange-hover hover:scale-110
            transition-all duration-300 ease-in-out
            shadow-lg hover:shadow-solar-orange/50
            relative overflow-hidden;
@@ -85,7 +106,7 @@
   }
 
   .starburst-border {
-    @apply border border-transparent bg-gradient-to-r from-solar-gold to-solar-orange 
+    @apply border border-transparent bg-gradient-to-r from-solar-gold to-solar-orange
            rounded-lg p-[1px];
   }
 
