@@ -3,69 +3,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Solar Crowding Design System - Sun/Starburst Nebulae Theme */
+/* Solar Crowding Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* White */
-    --foreground: 222.2 84% 4.9%; /* Dark Gray */
+    --background: hsl(248, 39%, 95%); /* Light solar background */
+    --foreground: hsl(220, 13%, 13%); /* Solar navy text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: hsl(0, 0%, 100%);
+    --card-foreground: hsl(220, 13%, 13%);
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: hsl(0, 0%, 100%);
+    --popover-foreground: hsl(220, 13%, 13%);
 
-    --primary: 24.6 95% 53.1%; /* Orange */
-    --primary-foreground: 60 9.1% 97.8%;
+    --primary: hsl(16, 100%, 50%); /* Solar orange */
+    --primary-foreground: hsl(48, 100%, 95%); /* Warm white */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: hsl(51, 100%, 50%); /* Solar gold */
+    --secondary-foreground: hsl(220, 13%, 13%);
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: hsl(210, 40%, 96%);
+    --muted-foreground: hsl(215, 16%, 47%);
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: hsl(51, 100%, 50%); /* Solar gold */
+    --accent-foreground: hsl(220, 13%, 13%);
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 60 9.1% 97.8%;
+    --destructive: hsl(0, 84%, 60%);
+    --destructive-foreground: hsl(0, 0%, 98%);
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 24.6 95% 53.1%;
+    --border: hsl(214, 32%, 91%);
+    --input: hsl(214, 32%, 91%);
+    --ring: hsl(16, 100%, 50%);
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 0 0% 0%; /* AMOLED Black */
-    --foreground: 210 40% 98%; /* Almost White */
+    --background: hsl(220, 13%, 13%); /* Solar navy dark */
+    --foreground: hsl(48, 100%, 95%); /* Warm white */
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: hsl(220, 13%, 18%);
+    --card-foreground: hsl(48, 100%, 95%);
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: hsl(220, 13%, 18%);
+    --popover-foreground: hsl(48, 100%, 95%);
 
-    --primary: 24.6 95% 53.1%; /* Orange */
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: hsl(16, 100%, 50%); /* Solar orange */
+    --primary-foreground: hsl(48, 100%, 95%);
 
-    --secondary: 51 95% 53.1%; /* Gold */
-    --secondary-foreground: 210 40% 98%;
+    --secondary: hsl(51, 100%, 50%); /* Solar gold */
+    --secondary-foreground: hsl(220, 13%, 13%);
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: hsl(220, 13%, 25%);
+    --muted-foreground: hsl(215, 20%, 65%);
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: hsl(51, 100%, 50%);
+    --accent-foreground: hsl(220, 13%, 13%);
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: hsl(0, 63%, 31%);
+    --destructive-foreground: hsl(0, 0%, 98%);
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 24.6 95% 53.1%;
+    --border: hsl(220, 13%, 25%);
+    --input: hsl(220, 13%, 25%);
+    --ring: hsl(16, 100%, 50%);
   }
 }
 
