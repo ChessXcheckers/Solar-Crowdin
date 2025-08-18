@@ -13,7 +13,7 @@ const PresaleMain: React.FC = () => {
   console.log('PresaleMain rendering...');
   
   const [amount, setAmount] = useState('');
-  const [paymentToken, setPaymentToken] = useState('BNB');
+  const [paymentToken, setPaymentToken] = useState('ETH');
   const { address, isConnected } = useAccount();
   const { data: presaleData, isLoading: presaleLoading, error: presaleError } = usePresaleData();
   const { data: marketData, error: marketError } = useMarketData();
@@ -71,11 +71,11 @@ const PresaleMain: React.FC = () => {
   if (presaleLoading || !presaleData) {
     console.log('Presale loading or no data');
     return (
-      <div className="bg-transparent backdrop-blur-sm rounded-lg shadow-lg p-8 max-w-2xl mx-auto border border-solar-grey/20">
+      <div className="bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-8 max-w-2xl mx-auto border border-gray-200">
         <div className="animate-pulse space-y-4">
-          <div className="h-8 bg-solar-dark rounded"></div>
-          <div className="h-4 bg-solar-dark rounded w-3/4"></div>
-          <div className="h-32 bg-solar-dark rounded"></div>
+          <div className="h-8 bg-gray-200 rounded"></div>
+          <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div className="h-32 bg-gray-200 rounded"></div>
         </div>
       </div>
     );
@@ -85,7 +85,10 @@ const PresaleMain: React.FC = () => {
 
   return (
     <>
-      <div className="bg-transparent backdrop-blur-sm rounded-xl shadow-2xl p-8 max-w-2xl mx-auto border border-orange-200/30 relative overflow-hidden">
+      <div className="bg-white/95 backdrop-blur-sm rounded-xl shadow-2xl p-8 max-w-2xl mx-auto border border-orange-200/30 relative overflow-hidden">
+        {/* Glassmorphic background effect */}
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-50/20 to-blue-50/20 backdrop-blur-3xl"></div>
+
         <div className="relative z-10">
           <PresaleStats presaleData={presaleData} />
           
