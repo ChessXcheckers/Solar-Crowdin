@@ -15,19 +15,19 @@ const PresaleCountdown = ({ timeLeft }: PresaleCountdownProps) => {
     <div className="mt-6 flex justify-center space-x-4 bg-gray-50/80 rounded-lg p-4">
       <div className="text-center">
         <div className="text-2xl font-bold text-orange-600">{timeLeft.days}</div>
-        <div className="text-sm text-gray-600 font-medium">Days</div>
+        <div className="text-sm text-gray-800 dark:text-solar-grey font-medium">Days</div>
       </div>
       <div className="text-center">
         <div className="text-2xl font-bold text-orange-600">{timeLeft.hours}</div>
-        <div className="text-sm text-gray-600 font-medium">Hours</div>
+        <div className="text-sm text-gray-800 dark:text-solar-grey font-medium">Hours</div>
       </div>
       <div className="text-center">
         <div className="text-2xl font-bold text-orange-600">{timeLeft.minutes}</div>
-        <div className="text-sm text-gray-600 font-medium">Minutes</div>
+        <div className="text-sm text-gray-800 dark:text-solar-grey font-medium">Minutes</div>
       </div>
       <div className="text-center">
         <div className="text-2xl font-bold text-orange-600">{timeLeft.seconds}</div>
-        <div className="text-sm text-gray-600 font-medium">Seconds</div>
+        <div className="text-sm text-gray-800 dark:text-solar-grey font-medium">Seconds</div>
       </div>
     </div>
   );

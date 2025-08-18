@@ -25,14 +25,14 @@ const BreakingNews = () => {
   };
 
   return (
-    <div className="fixed top-16 w-full z-30 bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-bold py-2 overflow-hidden">
-      <div className="flex items-center whitespace-nowrap">
-        <span className="flex-shrink-0 mx-4 pr-16 flex items-center">
-            <FiZap className="mr-2"/>
-            BREAKING NEWS
-        </span>
+    <div className="fixed top-16 w-full z-30 bg-gradient-to-r from-orange-500 to-yellow-500 text-white font-bold py-2 flex items-center">
+      <span className="flex-shrink-0 mx-4 flex items-center z-10">
+          <FiZap className="mr-2"/>
+          BREAKING NEWS
+      </span>
+      <div className="flex-1 overflow-hidden">
         <motion.div
-          className="flex"
+          className="flex whitespace-nowrap"
           variants={marqueeVariants}
           animate="animate"
         >

@@ -111,7 +111,9 @@ export function usePresale() {
 
       // Simulate dynamic data from contract
       const currentTime = Math.floor(Date.now() / 1000);
-      const endTime = new Date('2025-09-10T00:00:00Z').getTime() / 1000;
+      const futureDate = new Date();
+      futureDate.setMonth(futureDate.getMonth() + 3);
+      const endTime = Math.floor(futureDate.getTime() / 1000);
       
       // Dynamic values that change over time
       const baseTime = Math.floor(Date.now() / 1000);
