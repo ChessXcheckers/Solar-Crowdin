@@ -89,7 +89,7 @@ export const TOKEN_INFO = {
   symbol: 'SLC',
   totalSupply: '1,000,000,000',
   decimals: 18,
-  blockchain: 'BNB Smart Chain (BEP-20)',
+  blockchain: 'Polygon',
   contractAddress: TOKEN_Contract_Address
 };
 

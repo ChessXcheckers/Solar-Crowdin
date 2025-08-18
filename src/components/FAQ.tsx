@@ -9,7 +9,7 @@ const FAQ_ITEMS = [
   },
   {
     question: 'How does the token presale work?',
-    answer: 'The token presale allows early investors to purchase SOLAR tokens at a discounted rate. Tokens can be bought using BNB, USDT, or USDC. The presale is divided into stages with increasing prices.'
+    answer: 'The token presale allows early investors to purchase SOLAR tokens at a discounted rate. Tokens can be bought using MATIC, USDT, or USDC. The presale is divided into stages with increasing prices.'
   },
   {
     question: 'What are the benefits of holding SOLAR tokens?',
@@ -21,7 +21,7 @@ const FAQ_ITEMS = [
   },
   {
     question: 'What is the minimum investment amount?',
-    answer: 'The minimum investment varies by project, but typically starts at 0.1 BNB or equivalent in USDT/USDC. This low barrier to entry makes solar investment accessible to everyone.'
+    answer: 'The minimum investment varies by project, but typically starts at 10 MATIC or equivalent in USDT/USDC. This low barrier to entry makes solar investment accessible to everyone.'
   },
   {
     question: 'How are returns distributed?',
