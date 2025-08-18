@@ -15,11 +15,9 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import ProductionErrorBoundary from './components/ProductionErrorBoundary';
 import Navbar from './components/Navbar';
-import BreakingNews from './components/BreakingNews';
 import { analytics, measureWebVitals } from './utils/analytics';
 import { setupCSP, performSecurityChecks } from './utils/security';
 import { useEffect } from 'react';
-import { ThemeProvider } from 'next-themes';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,12 +43,10 @@ const App = () => {
   return (
     <ProductionErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <TooltipProvider>
-            <Router>
-                <div className="min-h-screen">
-                  <Navbar />
-                  <BreakingNews />
+        <TooltipProvider>
+          <Router>
+              <div className="min-h-screen">
+                <Navbar />
                 <Toaster />
                 <Sonner />
                 <Routes>
@@ -63,10 +59,9 @@ const App = () => {
                   <Route path="/contact" element={<Contact />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
-                </div>
-            </Router>
-          </TooltipProvider>
-        </ThemeProvider>
+              </div>
+          </Router>
+        </TooltipProvider>
       </QueryClientProvider>
     </ProductionErrorBoundary>
   );

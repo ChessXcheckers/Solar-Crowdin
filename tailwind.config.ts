@@ -68,13 +68,13 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				solar: {
-					navy: 'hsl(220, 13%, 13%)',
-					orange: 'hsl(16, 100%, 50%)',
-					'orange-hover': 'hsl(16, 100%, 45%)',
-					gold: 'hsl(51, 100%, 50%)',
-					'warm-white': 'hsl(48, 100%, 95%)',
-					grey: 'hsl(210, 14%, 83%)',
-					dark: 'hsl(220, 13%, 18%)'
+					navy: '#1A1A2E',
+					orange: '#FF4500',
+					'orange-hover': '#E63E00',
+					gold: '#FFD700',
+					'warm-white': '#FFF8E1',
+					grey: '#D3D3D3',
+					dark: '#2A2A3E'
 				}
 			},
 			borderRadius: {
