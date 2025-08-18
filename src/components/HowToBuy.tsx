@@ -42,12 +42,12 @@ const HowToBuy = () => {
   ];
 
   return (
-    <div className="bg-white dark:bg-solar-dark rounded-lg shadow-lg p-8">
-      <h3 className="text-2xl font-bold text-center mb-6 text-gray-800 dark:text-solar-warm-white">How to Buy Solar Crowding Tokens</h3>
+    <div className="bg-solar-dark/80 backdrop-blur-sm rounded-lg shadow-lg p-8 border border-solar-grey/20">
+      <h3 className="text-2xl font-bold text-center mb-6 text-solar-warm-white">How to Buy Solar Crowding Tokens</h3>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {steps.map((step) => (
-          <div key={step.step} className="text-center p-4 border dark:border-solar-grey/20 rounded-lg hover:shadow-md dark:hover:bg-solar-navy/50 transition-all">
+          <div key={step.step} className="text-center p-4 border border-solar-grey/20 rounded-lg hover:shadow-md hover:bg-solar-navy/50 transition-all">
             <div className="flex items-center justify-center mb-4">
               <div className="w-16 h-16 bg-gradient-to-r from-orange-400 to-yellow-500 rounded-full flex items-center justify-center text-white font-bold text-lg relative">
                 <step.icon className="w-8 h-8" />
@@ -56,14 +56,14 @@ const HowToBuy = () => {
                 </div>
               </div>
             </div>
-            <h4 className="font-semibold text-gray-800 dark:text-solar-warm-white mb-2">{step.title}</h4>
-            <p className="text-sm text-gray-600 dark:text-solar-grey">{step.description}</p>
+            <h4 className="font-semibold text-solar-warm-white mb-2">{step.title}</h4>
+            <p className="text-sm text-solar-grey">{step.description}</p>
           </div>
         ))}
       </div>
       
-      <div className="mt-8 p-4 bg-blue-50 dark:bg-solar-navy/70 border border-blue-200 dark:border-blue-200/30 rounded-lg">
-        <p className="text-sm text-blue-800 dark:text-solar-grey text-center">
+      <div className="mt-8 p-4 bg-solar-navy/70 border border-blue-200/30 rounded-lg">
+        <p className="text-sm text-solar-grey text-center">
           💡 Need help? Join our community for step-by-step guidance and support
         </p>
       </div>
