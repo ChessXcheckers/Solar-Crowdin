@@ -8,8 +8,8 @@ const CountdownTimer = () => {
   return (
     <div className="flex justify-center space-x-4 md:space-x-8 mb-8">
       {Object.entries(timeLeft).map(([unit, value]) => (
-        <div key={unit} className="text-center starburst-border">
-          <div className="bg-white/10 dark:bg-solar-dark rounded-lg p-4">
+        <div key={unit} className="text-center">
+          <div className="bg-white/10 dark:bg-solar-dark rounded-lg p-4 shadow-lg">
             <div className="text-2xl md:text-4xl font-bold nebulae-text cosmic-glow">
               {String(value).padStart(2, '0')}
             </div>

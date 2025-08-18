@@ -39,7 +39,7 @@ export function Navbar() {
     <nav
       className={`fixed w-full z-40 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/95 dark:bg-black/80 backdrop-blur-md shadow-xl border-b border-orange-200 dark:border-solar-dark'
+          ? 'bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-lg border-b border-gray-200/50 dark:border-solar-dark'
           : 'bg-transparent'
       }`}
     >
@@ -99,7 +99,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-xl border-t border-orange-200 dark:border-solar-dark"
+            className="md:hidden bg-white/95 dark:bg-black/95 backdrop-blur-md shadow-xl border-t border-gray-200 dark:border-solar-dark"
           >
             <div className="px-4 py-6 space-y-4">
               {NAV_ITEMS.map((item) => (

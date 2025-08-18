@@ -15,6 +15,7 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import ProductionErrorBoundary from './components/ProductionErrorBoundary';
 import Navbar from './components/Navbar';
+import BreakingNews from './components/BreakingNews';
 import { analytics, measureWebVitals } from './utils/analytics';
 import { setupCSP, performSecurityChecks } from './utils/security';
 import { useEffect } from 'react';
@@ -44,11 +45,12 @@ const App = () => {
   return (
     <ProductionErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <TooltipProvider>
             <Router>
                 <div className="min-h-screen">
                   <Navbar />
+                <BreakingNews />
                   <Toaster />
                 <Sonner />
                 <Routes>
